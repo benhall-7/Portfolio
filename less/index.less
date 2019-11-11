@@ -54,10 +54,10 @@ table {
 }
 
 html, body {
-    height: 100%;
+    height: 100vh;
 }
 
-/*  MY CODE STARTS HERE  */
+// end of css reset
 
 @bgcol: black;
 @textcol: green;
@@ -65,8 +65,8 @@ html, body {
 
 @normal-width: 49%;
 @normal-margin: 100% - @normal-width * 2;
-@lr-padding: 40px;
-@mobile-width: 820px;
+@pad: 40px;
+@mobile: ~"(max-width: 500px)";
 
 @basic-flex: {
 	display: flex;
@@ -74,7 +74,7 @@ html, body {
 	flex-wrap: wrap;
 }
 
-@std_bottom_margin: {
+@bottom-margin: {
 	margin-bottom: 40px;
 }
 
@@ -113,14 +113,14 @@ li {
 }
 
 .desktop-only {
-	@media (max-width: @mobile-width) {
+	@media @mobile {
 		display: none;
 	}
 }
 
 body {
 	width: 100%;
-	padding: 0 @lr-padding/2;
+	padding: 0 @pad/2;
 	font-family: VT323, monospace;
 	font-size: 20px;
 	background: @bgcol;
@@ -128,85 +128,5 @@ body {
 
 	h1 { color: @emph-col; }
 
-	header {
-		@std_bottom_margin();
-
-		nav {
-			@basic-flex();
 	
-			a {
-				padding: 20px;
-			}
-		}
-	}
-
-	.about {
-		@basic-flex();
-		@std_bottom_margin();
-
-		div {
-			max-width: @normal-width;
-		}
-
-		img {
-			max-width: @normal-width;
-			margin-left: @normal-margin;
-		}
-	}
-
-	.work {
-		@std_bottom_margin();
-		
-		#work-header h1 {
-			text-align: center;
-			border: 1px solid @emph-col;
-		}
-
-		.content {
-			@basic-flex();
-			@media (max-width: @mobile-width) {
-				flex-direction: column;
-				align-items: center;
-			}
-	
-			@width-diff: 10%;
-	
-			.projects {
-				width: @normal-width - @width-diff;
-				@media (max-width: @mobile-width) {
-					width: auto;
-				}
-				
-				a {
-					display: inline-block;
-					width: 100%;
-					height: 40px;
-					margin-bottom: 20px;
-					text-align: center;
-					border: 1px solid @emph-col;
-				}
-
-				a:hover {
-					border: 1px solid @emph-col;
-				}
-			}
-	
-			.experience {
-				margin-left: @normal-margin;
-				width: @normal-width + @width-diff;
-
-				@media (max-width: @mobile-width) {
-					width: 100%;
-					margin-left: 0;
-					text-align: center;
-				}
-			}
-		}
-	}
-
-	footer {
-		text-align: center;
-		border-top: 1px solid @emph-col;
-		color: white;
-	}
 }
