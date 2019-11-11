@@ -1,0 +1,212 @@
+// Is this working?
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Set every element's box-sizing to border-box */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+/*  MY CODE STARTS HERE  */
+
+@bgcol: black;
+@textcol: green;
+@emph-col: yellow;
+
+@normal-width: 49%;
+@normal-margin: 100% - @normal-width * 2;
+@lr-padding: 40px;
+@mobile-width: 820px;
+
+@basic-flex: {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+@std_bottom_margin: {
+	margin-bottom: 40px;
+}
+
+a {
+	color: unset;
+	text-decoration: unset;
+	border-bottom: transparent dashed 1px;
+}
+
+a:hover {
+	color: @emph-col;
+	border-bottom: @emph-col dashed 1px;
+}
+
+li {
+	list-style: square;
+	list-style-position: inside;
+}
+
+.align-right {
+	text-align: right;
+}
+
+@keyframes blink {
+	50% {
+		color: transparent;
+	}
+}
+
+.blinking {
+	animation-name: blink;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: step-start;
+	font-size: 0.8em;
+}
+
+.desktop-only {
+	@media (max-width: @mobile-width) {
+		display: none;
+	}
+}
+
+body {
+	width: 100%;
+	padding: 0 @lr-padding/2;
+	font-family: VT323, monospace;
+	font-size: 20px;
+	background: @bgcol;
+	color: @textcol;
+
+	h1 { color: @emph-col; }
+
+	header {
+		@std_bottom_margin();
+
+		nav {
+			@basic-flex();
+	
+			a {
+				padding: 20px;
+			}
+		}
+	}
+
+	.about {
+		@basic-flex();
+		@std_bottom_margin();
+
+		div {
+			max-width: @normal-width;
+		}
+
+		img {
+			max-width: @normal-width;
+			margin-left: @normal-margin;
+		}
+	}
+
+	.work {
+		@std_bottom_margin();
+		
+		#work-header h1 {
+			text-align: center;
+			border: 1px solid @emph-col;
+		}
+
+		.content {
+			@basic-flex();
+			@media (max-width: @mobile-width) {
+				flex-direction: column;
+				align-items: center;
+			}
+	
+			@width-diff: 10%;
+	
+			.projects {
+				width: @normal-width - @width-diff;
+				@media (max-width: @mobile-width) {
+					width: auto;
+				}
+				
+				a {
+					display: inline-block;
+					width: 100%;
+					height: 40px;
+					margin-bottom: 20px;
+					text-align: center;
+					border: 1px solid @emph-col;
+				}
+
+				a:hover {
+					border: 1px solid @emph-col;
+				}
+			}
+	
+			.experience {
+				margin-left: @normal-margin;
+				width: @normal-width + @width-diff;
+
+				@media (max-width: @mobile-width) {
+					width: 100%;
+					margin-left: 0;
+					text-align: center;
+				}
+			}
+		}
+	}
+
+	footer {
+		text-align: center;
+		border-top: 1px solid @emph-col;
+		color: white;
+	}
+}
