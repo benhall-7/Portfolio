@@ -137,18 +137,21 @@ body {
 a {
   color: unset;
   text-decoration: unset;
-  border-bottom: transparent dashed 1px;
+  border-bottom: transparent solid 1px;
 }
 a:hover {
-  color: yellow;
-  border-bottom: yellow dashed 1px;
+  border-bottom: solid 1px;
+}
+.clickable {
+  cursor: pointer;
+  border-bottom: transparent solid 1px;
+}
+.clickable:hover {
+  border-bottom: solid 1px;
 }
 li {
   list-style: square;
   list-style-position: inside;
-}
-.align-right {
-  text-align: right;
 }
 @keyframes blink {
   50% {
@@ -168,13 +171,63 @@ li {
   }
 }
 body {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  flex-direction: column;
   width: 100%;
   padding: 0 20px;
-  font-family: VT323, monospace;
+  font-family: 'PT Mono', monospace;
   font-size: 20px;
   background: black;
   color: green;
+  min-width: 500px;
+  min-height: 500px;
 }
 body h1 {
   color: yellow;
+  font-size: 1.5em;
+}
+body header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  height: 60px;
+  border-bottom: 1px dashed green;
+  margin-bottom: 40px;
+}
+body header h1 {
+  margin: auto 0;
+}
+body header img {
+  display: none;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+body .content {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+}
+body .content .menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  padding-right: 40px;
+  border-right: 1px dashed green;
+  margin-right: 40px;
+}
+body .content .menu .selected {
+  color: yellow;
+}
+body .content .data {
+  color: white;
 }

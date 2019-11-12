@@ -59,19 +59,20 @@ html, body {
 
 // end of css reset
 
-@bgcol: black;
-@textcol: green;
+@bg-col: black;
 @emph-col: yellow;
-
-@normal-width: 49%;
-@normal-margin: 100% - @normal-width * 2;
+@text-col: green;
+@sub-text-col: white;
+@warning-col: red;
 @pad: 40px;
+@font-size: 20px;
 @mobile: ~"(max-width: 500px)";
 
-@basic-flex: {
+.flex(@direction, @jc, @wrap) {
 	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
+	flex-direction: @direction;
+	justify-content: @jc;
+	flex-wrap: @wrap;
 }
 
 @bottom-margin: {
@@ -81,21 +82,25 @@ html, body {
 a {
 	color: unset;
 	text-decoration: unset;
-	border-bottom: transparent dashed 1px;
+	border-bottom: transparent solid 1px;
+
+	&:hover {
+		border-bottom: solid 1px;
+	}
 }
 
-a:hover {
-	color: @emph-col;
-	border-bottom: @emph-col dashed 1px;
+.clickable {
+	cursor: pointer;
+	border-bottom: transparent solid 1px;
+
+	&:hover {
+		border-bottom: solid 1px;
+	}
 }
 
 li {
 	list-style: square;
 	list-style-position: inside;
-}
-
-.align-right {
-	text-align: right;
 }
 
 @keyframes blink {
@@ -119,14 +124,61 @@ li {
 }
 
 body {
+	.flex(column, space-between, nowrap);
+	flex-direction: column;
 	width: 100%;
 	padding: 0 @pad/2;
-	font-family: VT323, monospace;
-	font-size: 20px;
-	background: @bgcol;
-	color: @textcol;
+	font-family: 'PT Mono', monospace;
+	font-size: @font-size;
+	background: @bg-col;
+	color: @text-col;
 
-	h1 { color: @emph-col; }
+	min-width: 500px;
+	min-height: 500px;
 
-	
+	h1 {
+		color: @emph-col;
+		font-size: 1.5em;
+	}
+
+	header {
+		.flex(row, flex-end, nowrap);
+		align-content: space-around;
+		height: 60px;
+		border-bottom: 1px dashed @text-col;
+		@bottom-margin();
+
+		h1 {
+			margin: auto 0;
+		}
+
+		img {
+			display: none;
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+			border-radius: 50%;
+			vertical-align: middle;
+		}
+	}
+
+	.content {
+		.flex(row, flex-start, nowrap);
+		flex-grow: 1;
+
+		.menu {
+			.flex(column, space-evenly, nowrap);
+			padding-right: @pad;
+			border-right: 1px dashed @text-col;
+			margin-right: @pad;
+
+			.selected {
+				color: @emph-col;
+			}
+		}
+
+		.data {
+			color: @sub-text-col;
+		}
+	}
 }
