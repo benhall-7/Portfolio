@@ -135,7 +135,7 @@ body {
   height: 100vh;
 }
 a {
-  color: unset;
+  color: green;
   text-decoration: unset;
   border-bottom: transparent solid 1px;
 }
@@ -183,7 +183,7 @@ body {
   flex-wrap: nowrap;
   flex-direction: column;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   font-family: 'PT Mono', monospace;
   font-size: 20px;
   line-height: 1.2em;
@@ -199,8 +199,9 @@ body header {
   flex-wrap: nowrap;
   align-content: space-around;
   height: 60px;
+  min-height: 60px;
   border-bottom: 1px dashed green;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 body header h1 {
   margin: auto 0;
@@ -257,4 +258,10 @@ body .content .data .data-about div img {
     float: none;
     margin: 20px auto;
   }
+}
+body footer {
+  margin-top: 20px;
+  padding: 10px 0;
+  border-top: 1px dashed green;
+  text-align: center;
 }
