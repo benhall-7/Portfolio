@@ -231,3 +231,6 @@ body .content .menu .selected {
 body .content .data {
   color: white;
 }
+body .content .data div {
+  display: none;
+}
