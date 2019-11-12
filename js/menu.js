@@ -27,8 +27,6 @@ function select_from_menu(target) {
     let arrow = document.createElement("span");
     arrow.textContent = ">";
     arrow.classList.add("arrow");
-    arrow.style.position = "absolute";
-    arrow.style.marginLeft = "-20px";
 
     data_node.style.display = "block";
     target.classList.add("selected");

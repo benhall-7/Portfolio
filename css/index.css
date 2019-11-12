@@ -178,6 +178,10 @@ h1 {
     display: none;
   }
 }
+.arrow {
+  position: absolute;
+  margin-left: -20px;
+}
 body {
   display: flex;
   justify-content: space-between;
