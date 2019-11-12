@@ -15,12 +15,24 @@ function select_from_menu(target) {
 
     Array.from(menu.children).forEach(node => {
         node.classList.remove("selected");
+        let arrow = node.querySelector(".arrow");
+        if (arrow) {
+            arrow.remove();
+        }
     });
     Array.from(data.children).forEach(node => {
         node.style.display = "none";
     })
+
+    let arrow = document.createElement("span");
+    arrow.textContent = ">";
+    arrow.classList.add("arrow");
+    arrow.style.position = "absolute";
+    arrow.style.marginLeft = "-20px";
+
     data_node.style.display = "block";
     target.classList.add("selected");
+    target.prepend(arrow);
 }
 
 classes.forEach(name => {

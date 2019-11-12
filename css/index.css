@@ -153,6 +153,13 @@ li {
   list-style: square;
   list-style-position: inside;
 }
+h1 {
+  color: yellow;
+  font-size: 1.5em;
+}
+.emph {
+  color: yellow;
+}
 @keyframes blink {
   50% {
     color: transparent;
@@ -165,7 +172,7 @@ li {
   animation-timing-function: step-start;
   font-size: 0.8em;
 }
-@media (max-width: 500px) {
+@media (max-width: 800px) {
   .desktop-only {
     display: none;
   }
@@ -179,14 +186,11 @@ body {
   padding: 0 20px;
   font-family: 'PT Mono', monospace;
   font-size: 20px;
+  line-height: 1.2em;
   background: black;
   color: green;
   min-width: 500px;
   min-height: 500px;
-}
-body h1 {
-  color: yellow;
-  font-size: 1.5em;
 }
 body header {
   display: flex;
@@ -201,36 +205,56 @@ body header {
 body header h1 {
   margin: auto 0;
 }
-body header img {
-  display: none;
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
-  vertical-align: middle;
-}
 body .content {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: nowrap;
   flex-grow: 1;
+  margin: 0 20px;
 }
 body .content .menu {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   flex-wrap: nowrap;
-  padding-right: 40px;
+  padding-right: 20px;
   border-right: 1px dashed green;
-  margin-right: 40px;
+  margin-right: 20px;
 }
 body .content .menu .selected {
   color: yellow;
 }
+body .content .menu div {
+  margin: 20px 0 20px;
+}
 body .content .data {
   color: white;
 }
-body .content .data div {
+body .content .data .hide {
   display: none;
+}
+@media (max-width: 800px) {
+  body .content .data .data-about {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+body .content .data .data-about div img {
+  text-align: center;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 3px solid white;
+  border-radius: 50%;
+  float: right;
+  margin: 20px;
+}
+@media (max-width: 800px) {
+  body .content .data .data-about div img {
+    float: none;
+    margin: 20px auto;
+  }
 }
