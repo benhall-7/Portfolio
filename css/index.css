@@ -135,7 +135,7 @@ body {
   height: 100vh;
 }
 a {
-  color: green;
+  color: teal;
   text-decoration: unset;
   border-bottom: transparent solid 1px;
 }
@@ -155,8 +155,11 @@ li {
 }
 h1 {
   color: yellow;
-  font-size: 1.2em;
+  font-size: 1.4em;
   line-height: 2em;
+}
+h1 a {
+  color: inherit;
 }
 .emph {
   color: yellow;
@@ -263,6 +266,9 @@ body .content .data .data-about div img {
     float: none;
     margin: 20px auto;
   }
+}
+body .content .data .data-projects .project {
+  margin: 20px;
 }
 body footer {
   margin-top: 20px;

@@ -64,6 +64,7 @@ html, body {
 @text-col: green;
 @sub-text-col: white;
 @warning-col: red;
+@link-col: teal;
 @pad: 20px;
 @font-size: 20px;
 @tablet: ~"(max-width: 800px)";
@@ -76,7 +77,7 @@ html, body {
 }
 
 a {
-	color: @text-col;
+	color: @link-col;
 	text-decoration: unset;
 	border-bottom: transparent solid 1px;
 
@@ -101,8 +102,12 @@ li {
 
 h1 {
 	color: @emph-col;
-	font-size: 1.2em;
+	font-size: 1.4em;
 	line-height: 2em;
+
+	a {
+		color: inherit;
+	}
 }
 
 .emph {
@@ -213,6 +218,12 @@ body {
 			}
 
 			// .data-skills { }
+
+			.data-projects {
+				.project {
+					margin: @pad;
+				}
+			}
 		}
 	}
 
