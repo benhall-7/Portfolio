@@ -270,6 +270,9 @@ body .content .data .data-about div img {
 body .content .data .data-projects .project {
   margin: 20px;
 }
+body .content .data .data-projects .project ul {
+  margin: 10px 0;
+}
 body footer {
   margin-top: 20px;
   padding: 10px 0;
