@@ -1,75 +1,69 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content= "width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
 
-  <title>Ben Hall's Resume</title>
+    <title>Benjamin Hall</title>
 
-  <link rel="stylesheet" href="css/index.css">
-  <link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=PT+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/projects.js" async></script>
+    <script src="js/menu.js" async></script>
+  </head>
 
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
-</head>
-
-<body>
-  <header>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="https://github.com/BenHall-7">GitHub</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
-
-  <section class="about">
-    <div class="about-text">
-      <h1>> Benjamin Hall - Lambda School student</h1>
-      <br/>
-      <p>> Hey there! I'm a software/web dev in training, hoping to hone my skills to make great apps. I'm strong with multiple languages, including C#, Rust, other C variants, Lua, web markup, etc</p>
-      <br/>
-      <p class="align-right desktop-only">(this is my dog, cutest in the land) -></p>
-    </div>
-    
-    <img class="desktop-only" src="img/Alana.jpeg" alt="An image of the dog looking at the camera"/>
-  </section>
-
-  <section class="work">
-    <div id="work-header">
-      <h1>> Projects and Experience:</h1>
-      <br/>
-    </div>
+  <body>
+    <header>
+      <h1>Benjamin Hall's Page</h1>
+    </header>
 
     <section class="content">
-      <div class="projects">
-        <a href="">Great Idea! Website</a>
-        <a href="">Sprint Challenge I</a>
-        <a href="">paracobNET</a>
+      <div class="menu">
+        <div class="clickable menu-about">About</div>
+        <div class="clickable menu-skills">Skills</div>
+        <div class="clickable menu-projects">Projects</div>
       </div>
-  
-      <div class="experience">
-        <h1>> Places I've worked:</h1>
-        <br/>
-        <ul>
-          <li>Placeholder 1</li>
-          <li>Placeholder 2</li>
-          <li>Placeholder 3</li>
-          <li>Placeholder 4</li>
-        </ul>
+      <div class="data">
+        <div class="hide data-about">
+          <div><img src="img/self.png"></div>
+          <p>
+            Hi! My name is <span class="emph">Benjamin Hall</span>,
+            I'm a developer for software applications and a full-stack web engineer (in training).
+            Although born and raised in Northern California, I'm currently living near Pittsburgh, PA.<br/><br/>
+            I seek out creative ways to improve the quality of work for both users and collaborators,
+            and in everything I do, I'm passionate for learning new skills.<br/><br/>
+          </p>
+          <h2>Contact links:</h2>
+          <ul>
+            <li><a href="mailto:Benjaminjahall@gmail.com">Email</a></li>
+            <li><a href="https://github.com/BenHall-7">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/ben-hall-09b121191/">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="hide data-skills">
+          <h1>Web development related:</h1>
+          <ul>
+            <li>Experience writing pages in HTML, CSS, and Javascript</li>
+            <li>Modules such as Flexbox and LESS</li>
+            <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
+          </ul>
+          <h1>Software related</h1>
+          <ul>
+            <li>Emphasis on cross-platform technologies (where possible)</li>
+            <li>Years of C# / .NET experience including CLIs, Libraries, WinForms and WPF</li>
+            <li>Recently, experience in writing applications in Rust</li>
+            <li>Utilizing Lua as an application scripting language</li>
+          </ul>
+        </div>
+        <div class="hide data-projects"></div>
       </div>
     </section>
-  </section>
 
-  <footer>
-    <p>This should be copyrighted but it isn't /shrug</p>
-    <br/>
-    <p class="contact">
-      Benjamin Hall; Contact me at:<br/>
-      Email: Benjaminjahall@gmail.com <span class="blinking">&#9608;</span>
-    </p>
-  </footer>
-</body>
+    <footer>
+      <p>&copy; Benjamin Hall 2019</p>
+      <p><a href="https://github.com/BenHall-7/Portfolio/blob/master/LICENSE">License</a></p>
+    </footer>
+  </body>
 </html>

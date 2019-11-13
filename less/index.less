@@ -54,39 +54,45 @@ table {
 }
 
 html, body {
-    height: 100%;
+    height: 100vh;
 }
 
-/*  MY CODE STARTS HERE  */
+// end of css reset
 
-@bgcol: black;
-@textcol: green;
+@bg-col: black;
 @emph-col: yellow;
+@text-col: green;
+@sub-text-col: white;
+@warning-col: red;
+@link-col: teal;
+@pad: 20px;
+@font-size: 20px;
+@tablet: ~"(max-width: 800px)";
 
-@normal-width: 49%;
-@normal-margin: 100% - @normal-width * 2;
-@lr-padding: 40px;
-@mobile-width: 820px;
-
-@basic-flex: {
+.flex(@direction, @jc, @wrap) {
 	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-
-@std_bottom_margin: {
-	margin-bottom: 40px;
+	flex-direction: @direction;
+	justify-content: @jc;
+	flex-wrap: @wrap;
 }
 
 a {
-	color: unset;
+	color: @link-col;
 	text-decoration: unset;
-	border-bottom: transparent dashed 1px;
+	border-bottom: transparent solid 1px;
+
+	&:hover {
+		border-bottom: solid 1px;
+	}
 }
 
-a:hover {
-	color: @emph-col;
-	border-bottom: @emph-col dashed 1px;
+.clickable {
+	cursor: pointer;
+	border-bottom: transparent solid 1px;
+
+	&:hover {
+		border-bottom: solid 1px;
+	}
 }
 
 li {
@@ -94,8 +100,18 @@ li {
 	list-style-position: inside;
 }
 
-.align-right {
-	text-align: right;
+h1 {
+	color: @emph-col;
+	font-size: 1.4em;
+	line-height: 2em;
+
+	a {
+		color: inherit;
+	}
+}
+
+.emph {
+	color: @emph-col;
 }
 
 @keyframes blink {
@@ -113,100 +129,112 @@ li {
 }
 
 .desktop-only {
-	@media (max-width: @mobile-width) {
+	@media @tablet {
 		display: none;
 	}
 }
 
-body {
-	width: 100%;
-	padding: 0 @lr-padding/2;
-	font-family: VT323, monospace;
-	font-size: 20px;
-	background: @bgcol;
-	color: @textcol;
+.arrow {
+	position: absolute;
+	margin-left: -@pad;
+}
 
-	h1 { color: @emph-col; }
+body {
+	.flex(column, space-between, nowrap);
+	flex-direction: column;
+	width: 100%;
+	padding: 0 @pad/2;
+	font-family: 'PT Mono', monospace;
+	font-size: @font-size;
+	line-height: 1.2em;
+	background: @bg-col;
+	color: @text-col;
+
+	min-width: 500px;
+	min-height: 500px;
 
 	header {
-		@std_bottom_margin();
+		.flex(row, flex-end, nowrap);
+		align-content: space-around;
+		height: 60px;
+		min-height: 60px;
+		border-bottom: 1px dashed @text-col;
+		margin-bottom: @pad;
 
-		nav {
-			@basic-flex();
-	
-			a {
-				padding: 20px;
-			}
+		h1 {
+			margin: auto 0;
 		}
 	}
 
-	.about {
-		@basic-flex();
-		@std_bottom_margin();
+	.content {
+		.flex(row, flex-start, nowrap);
+		flex-grow: 1;
+		margin: 0 @pad;
 
-		div {
-			max-width: @normal-width;
-		}
+		.menu {
+			.flex(column, flex-start, nowrap);
+			padding-right: @pad;
+			border-right: 1px dashed @text-col;
+			margin-right: @pad;
 
-		img {
-			max-width: @normal-width;
-			margin-left: @normal-margin;
-		}
-	}
-
-	.work {
-		@std_bottom_margin();
-		
-		#work-header h1 {
-			text-align: center;
-			border: 1px solid @emph-col;
-		}
-
-		.content {
-			@basic-flex();
-			@media (max-width: @mobile-width) {
-				flex-direction: column;
-				align-items: center;
+			.selected {
+				color: @emph-col;
 			}
-	
-			@width-diff: 10%;
-	
-			.projects {
-				width: @normal-width - @width-diff;
-				@media (max-width: @mobile-width) {
-					width: auto;
-				}
-				
-				a {
-					display: inline-block;
-					width: 100%;
-					height: 40px;
-					margin-bottom: 20px;
-					text-align: center;
-					border: 1px solid @emph-col;
+
+			div {
+				margin: @pad 0 @pad;
+			}
+		}
+
+		.data {
+			color: @sub-text-col;
+			
+			.hide {
+				display: none;
+			}
+
+			.data-about {
+				@media @tablet {
+					.flex(column, flex-start, wrap);
 				}
 
-				a:hover {
-					border: 1px solid @emph-col;
+				div {
+					img {
+						text-align: center;
+						width: 200px;
+						height: 200px;
+						object-fit: cover;
+						border: 3px solid @sub-text-col;
+						border-radius: 50%;
+						float: right;
+						margin: @pad;
+	
+						@media @tablet {
+							float: none;
+							margin: @pad auto;
+						}
+					}
 				}
 			}
-	
-			.experience {
-				margin-left: @normal-margin;
-				width: @normal-width + @width-diff;
 
-				@media (max-width: @mobile-width) {
-					width: 100%;
-					margin-left: 0;
-					text-align: center;
+			// .data-skills { }
+
+			.data-projects {
+				.project {
+					margin: @pad;
+
+					ul {
+						margin: @pad / 2 0;
+					}
 				}
 			}
 		}
 	}
 
 	footer {
+		margin-top: @pad;
+		padding: @pad / 2 0;
+		border-top: 1px dashed @text-col;
 		text-align: center;
-		border-top: 1px solid @emph-col;
-		color: white;
 	}
 }
