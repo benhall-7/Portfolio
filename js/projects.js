@@ -4,8 +4,8 @@ projects = [
         "description": "Potluck Planner provides users a way to manage potlucks; see guests attending, what food they want to bring, and more.",
         "tech": [
             "The 'home' and 'about' page of this project is designed simply through HTML, CSS, and some Javascript",
-            "This side of the project was my own work; our team managed early on out styles to be consistent",
-            "The rest of the application is written using the React framework."
+            "This side of the project was my own work; early on, our team planned a set of styles to work with so we would stay consistent",
+            "The rest of the application is written with ReactJS."
         ],
         "deployment": "https://potluck-planner-lambda.github.io/ui-ben/",
         "repo": "https://github.com/Potluck-Planner-Lambda"
