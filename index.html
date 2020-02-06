@@ -10,60 +10,68 @@
     <link rel="stylesheet" href="css/index.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Mono&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/projects.js" async></script>
-    <script src="js/menu.js" async></script>
+    <!-- <script src="js/projects.js" async></script> -->
+    <script src="js/index.js"></script>
   </head>
 
-  <body>
+  <body onload="loadData()">
     <header>
       <h1>Benjamin Hall's Page</h1>
     </header>
 
     <section class="content">
       <div class="menu">
-        <div class="clickable menu-about">About</div>
-        <div class="clickable menu-skills">Skills</div>
-        <div class="clickable menu-projects">Projects</div>
+        <div class="clickable"
+          onclick="setAboutMe()"
+        >About</div>
+        <div class="clickable menu-skills"
+          onclick="setSkills()"
+        >Skills</div>
+        <div class="clickable menu-projects"
+          onclick="setProjects()"
+        >Projects</div>
       </div>
-      <div class="data">
-        <div class="hide data-about">
-          <div><img src="img/self.png"></div>
-          <p>
-            Hi! My name is <span class="emph">Benjamin Hall</span>,
-            I'm a developer for software applications and a full-stack web engineer (in training).
-            Although born and raised in Northern California, I'm currently living near Pittsburgh, PA.<br/><br/>
-            I seek out creative ways to improve the quality of work for both users and collaborators,
-            and in everything I do, I'm passionate for learning new skills.<br/><br/>
-          </p>
-          <h2>Contact links:</h2>
-          <ul>
-            <li><a href="mailto:Benjaminjahall@gmail.com">Email</a></li>
-            <li><a href="https://github.com/BenHall-7">GitHub</a></li>
-            <li><a href="https://www.linkedin.com/in/ben-hall-09b121191/">LinkedIn</a></li>
-          </ul>
-        </div>
-        <div class="hide data-skills">
-          <h1>Web development related:</h1>
-          <ul>
-            <li>Experience writing pages in HTML, CSS, and Javascript</li>
-            <li>Modules such as Flexbox and LESS</li>
-            <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
-          </ul>
-          <h1>Software related</h1>
-          <ul>
-            <li>Emphasis on cross-platform technologies (where possible)</li>
-            <li>Years of C# / .NET experience including CLIs, Libraries, WinForms and WPF</li>
-            <li>Recently, experience in writing applications in Rust</li>
-            <li>Utilizing Lua as an application scripting language</li>
-          </ul>
-        </div>
-        <div class="hide data-projects"></div>
-      </div>
+      <div id="data"></div>
     </section>
 
     <footer>
       <p>&copy; Benjamin Hall 2019</p>
       <p><a href="https://github.com/BenHall-7/Portfolio/blob/master/LICENSE">License</a></p>
     </footer>
+
+    <div id="hidden">
+      <div id="about">
+        <div><img src="img/self.png"></div>
+        <p>
+          Hi! My name is <span class="emph">Benjamin Hall</span>,
+          I'm a developer for software applications and a full-stack web engineer (in training).
+          Although born and raised in Northern California, I'm currently living near Pittsburgh, PA.<br/><br/>
+          I seek out creative ways to improve the quality of work for both users and collaborators,
+          and in everything I do, I'm passionate for learning new skills.<br/><br/>
+        </p>
+        <h2>Contact links:</h2>
+        <ul>
+          <li><a href="mailto:Benjaminjahall@gmail.com">Email</a></li>
+          <li><a href="https://github.com/BenHall-7">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/ben-hall-09b121191/">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div id="skills">
+        <h1>Web development related:</h1>
+        <ul>
+          <li>Experience writing pages in HTML, CSS, and Javascript</li>
+          <li>Modules such as Flexbox and LESS</li>
+          <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
+        </ul>
+        <h1>Software related</h1>
+        <ul>
+          <li>Emphasis on cross-platform technologies (where possible)</li>
+          <li>Years of C# / .NET experience including CLIs, Libraries, WinForms and WPF</li>
+          <li>Recently, experience in writing applications in Rust</li>
+          <li>Utilizing Lua as an application scripting language</li>
+        </ul>
+      </div>
+      <div id="projects"/>
+    </div>
   </body>
 </html>

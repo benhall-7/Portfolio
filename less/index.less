@@ -95,6 +95,10 @@ a {
 	}
 }
 
+#hidden {
+	display: none;
+}
+
 li {
 	list-style: square;
 	list-style-position: inside;
@@ -186,14 +190,10 @@ body {
 			}
 		}
 
-		.data {
+		#data {
 			color: @sub-text-col;
-			
-			.hide {
-				display: none;
-			}
 
-			.data-about {
+			#about {
 				@media @tablet {
 					.flex(column, flex-start, wrap);
 				}
@@ -219,7 +219,7 @@ body {
 
 			// .data-skills { }
 
-			.data-projects {
+			#projects {
 				.project {
 					margin: @pad;
 

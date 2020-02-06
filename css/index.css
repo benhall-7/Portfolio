@@ -149,6 +149,9 @@ a:hover {
 .clickable:hover {
   border-bottom: solid 1px;
 }
+#hidden {
+  display: none;
+}
 li {
   list-style: square;
   list-style-position: inside;
@@ -237,21 +240,18 @@ body .content .menu .selected {
 body .content .menu div {
   margin: 20px 0 20px;
 }
-body .content .data {
+body .content #data {
   color: white;
 }
-body .content .data .hide {
-  display: none;
-}
 @media (max-width: 800px) {
-  body .content .data .data-about {
+  body .content #data #about {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     flex-wrap: wrap;
   }
 }
-body .content .data .data-about div img {
+body .content #data #about div img {
   text-align: center;
   width: 200px;
   height: 200px;
@@ -262,15 +262,15 @@ body .content .data .data-about div img {
   margin: 20px;
 }
 @media (max-width: 800px) {
-  body .content .data .data-about div img {
+  body .content #data #about div img {
     float: none;
     margin: 20px auto;
   }
 }
-body .content .data .data-projects .project {
+body .content #data #projects .project {
   margin: 20px;
 }
-body .content .data .data-projects .project ul {
+body .content #data #projects .project ul {
   margin: 10px 0;
 }
 body footer {
