@@ -144,6 +144,16 @@ h1 {
 	margin-left: -@pad;
 }
 
+#console {
+	outline: none;
+	border: 1px solid @text-col;
+	padding: @pad;
+
+	&:focus {
+		border-color: @emph-col;
+	}
+}
+
 body {
 	.flex(column, space-between, nowrap);
 	flex-direction: column;

@@ -1,3 +1,4 @@
+let consoleMain = document.getElementById("console");
 let consoleInput = document.getElementById("console-input");
 const NBSP = "\u00A0";
 
@@ -14,12 +15,19 @@ class ConsoleHistory {
 
     push(h) {
         this.history.push(h);
+        localStorage.setItem("console-history", JSON.stringify(this.history));
         this.historyIndex = null;
     }
 
     inc() {
+        let before = this.historyIndex;
         if (this.historyIndex) {
             this.clampIndex(this.historyIndex + 1);
+        }
+        if (this.historyIndex === before) {
+            return false;
+        } else {
+            return this.historyIndex;
         }
     }
 
@@ -43,7 +51,7 @@ class ConsoleHistory {
 
 let state = {
     console: {
-        focused: true,
+        focused: false,
         text: "",
         position: 0,
         history: new ConsoleHistory(),
@@ -80,21 +88,19 @@ function updateConsole() {
     setConsoleHtml();
 }
 
-consoleInput.addEventListener("focus", e => {
-    console.log("focused");
+consoleMain.addEventListener("focus", e => {
     state.console.focused = true;
     let cursor = consoleInput.querySelector(".console-cursor");
     cursor.classList.add("cursor-blink");
 });
 
-consoleInput.addEventListener("blur", e => {
-    console.log("blurred");
+consoleMain.addEventListener("blur", e => {
     state.console.focused = false;
     let cursor = consoleInput.querySelector(".console-cursor");
     cursor.classList.remove("cursor-blink");
 });
 
-consoleInput.addEventListener("keydown", e => {
+consoleMain.addEventListener("keydown", e => {
     switch (e.key) {
         case "ArrowUp": {
             if (e.shiftKey) {
@@ -149,15 +155,24 @@ consoleInput.addEventListener("keydown", e => {
             e.stopPropagation();
             break;
         }
+        case "Enter": {
+            state.console.history.push(state.console.text);
+            state.console.text = "";
+            state.console.position = 0;
+            updateConsole();
+            e.stopPropagation();
+            break;
+        }
     }
 });
 
-consoleInput.addEventListener("keypress", e => {
+consoleMain.addEventListener("keypress", e => {
+    if (e.key.length !== 1) return;
     state.console.text += e.key;
     state.console.position += 1;
     updateConsole();
 })
 
-consoleInput.addEventListener("submit", e => {
-    console.log("Submitted");
+consoleMain.addEventListener("submit", e => {
+    console.log("submit");
 })

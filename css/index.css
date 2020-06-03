@@ -189,6 +189,14 @@ h1 a {
   position: absolute;
   margin-left: -20px;
 }
+#console {
+  outline: none;
+  border: 1px solid green;
+  padding: 20px;
+}
+#console:focus {
+  border-color: yellow;
+}
 body {
   display: flex;
   justify-content: space-between;
