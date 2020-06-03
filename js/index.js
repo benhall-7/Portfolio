@@ -4,7 +4,7 @@ const NBSP = "\u00A0";
 
 class ConsoleHistory {
     constructor() {
-        let storage = localStorage.getItem("console-history");
+        let storage = sessionStorage.getItem("console-history");
         this.history = storage && JSON.parse(storage) || [];
         this.historyIndex = null;
     }
@@ -15,28 +15,32 @@ class ConsoleHistory {
 
     push(h) {
         this.history.push(h);
-        localStorage.setItem("console-history", JSON.stringify(this.history));
+        sessionStorage.setItem("console-history", JSON.stringify(this.history));
         this.historyIndex = null;
     }
 
     inc() {
-        let before = this.historyIndex;
-        if (this.historyIndex) {
+        if (this.historyIndex !== null) {
             this.clampIndex(this.historyIndex + 1);
-        }
-        if (this.historyIndex === before) {
-            return false;
+            return this.history[this.historyIndex];
         } else {
-            return this.historyIndex;
+            return false;
         }
     }
 
     dec() {
-        if (this.historyIndex) {
-            this.clampIndex(this.historyIndex - 1)
+        let before = this.historyIndex;
+        if (this.historyIndex !== null) {
+            this.clampIndex(this.historyIndex - 1);
         } else {
             // automatically clamped to max value
             this.clampIndex(Infinity);
+        }
+
+        if (this.historyIndex !== before) {
+            return this.history[this.historyIndex];
+        } else {
+            return false;
         }
     }
 
@@ -104,7 +108,11 @@ consoleMain.addEventListener("keydown", e => {
     switch (e.key) {
         case "ArrowUp": {
             if (e.shiftKey) {
-                state.console.history.dec();
+                let entry = state.console.history.dec();
+                if (entry) {
+                    state.console.text = entry;
+                    state.console.position = entry.length;
+                }
             } else {
                 state.console.position = 0;
             }
@@ -114,7 +122,11 @@ consoleMain.addEventListener("keydown", e => {
         }
         case "ArrowDown": {
             if (e.shiftKey) {
-                state.console.history.inc();
+                let entry = state.console.history.inc();
+                if (entry) {
+                    state.console.text = entry;
+                    state.console.position = entry.length;
+                }
             } else {
                 state.console.position = state.console.text.length;
             }
