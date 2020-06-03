@@ -69,6 +69,21 @@ html, body {
 @font-size: 20px;
 @tablet: ~"(max-width: 800px)";
 
+@keyframes blink {
+	50% {
+		border-bottom: 4px white solid;
+		padding-bottom: -4px;
+		color: @emph-col;
+	}
+}
+
+.cursor-blink {
+	animation-name: blink;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: step-start;
+}
+
 .flex(@direction, @jc, @wrap) {
 	display: flex;
 	flex-direction: @direction;
@@ -116,20 +131,6 @@ h1 {
 
 .emph {
 	color: @emph-col;
-}
-
-@keyframes blink {
-	50% {
-		color: transparent;
-	}
-}
-
-.blinking {
-	animation-name: blink;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-timing-function: step-start;
-	font-size: 0.8em;
 }
 
 .desktop-only {

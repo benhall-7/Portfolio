@@ -9,12 +9,21 @@
 
     <link rel="stylesheet" href="css/index.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Mono&display=swap" rel="stylesheet">
+    <link rel="prefetch" href="img/self.png">
     <script src="js/projects.js" async></script>
     <script src="js/index.js" async></script>
   </head>
 
-  <body onload="loadData()">
-    <header>
+  <body onload="setConsoleHtml()">
+    <header>~~~ Benjamin Hall's Portfolio Terminal ~~~</header>
+    <p>$ <span id="console-input" tabindex="0"></span></p>
+    <!-- Will only display when nothing is typed in, or when a command is typed wrong -->
+    <p id="console-help">For help, try the "<span class="emph">help</span>" command</p>
+    <!-- <div id="traditional">
+
+    </div> -->
+
+    <!-- <header>
       <h1>Benjamin Hall's Page</h1>
     </header>
 
@@ -40,7 +49,7 @@
 
     <div hidden id="hidden">
       <div id="about">
-        <div><img src="img/self.png"></div>
+        <div><img src="img/self.png" alt="photo of self"></div>
         <p>
           Hi! My name is <span class="emph">Benjamin Hall</span>,
           I'm a developer for software applications and a full-stack web engineer (in training).
@@ -71,6 +80,6 @@
         </ul>
       </div>
       <div id="projects"/>
-    </div>
+    </div> -->
   </body>
 </html>
