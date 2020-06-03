@@ -140,8 +140,12 @@ consoleInput.addEventListener("keydown", e => {
             break;
         }
         case "Delete": {
-            
-            updateConsole();
+            let text = state.console.text;
+            let position = state.console.position;
+            if (position < text.length) {
+                state.console.text = text.slice(0, position) + text.slice(position + 1);
+                updateConsole();
+            }
             e.stopPropagation();
             break;
         }
