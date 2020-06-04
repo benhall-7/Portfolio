@@ -15,7 +15,7 @@
   </head>
 
   <body onload="setConsoleHtml()">
-    <header>~~~ Benjamin Hall's Portfolio Terminal ~~~</header>
+    <header><h1>~~~ Portfolio Terminal ~~~</h1></header>
     <p id="console" autofocus tabindex="0">$ 
       <span id="console-input"></span>
     </p>
@@ -23,6 +23,15 @@
     <main id="content">
       
     </main>
+
+    <template id="input-none">
+      <p>For list of available commands, see the <span class="emph">"help"</span> command</p>
+    </template>
+
+    <template id="input-invalid">
+      <p>The command "<span class="arg0 emph"></span>" does not exist!</p>
+      <p>For list of available commands, see the <span class="emph">"help"</span> command</p>
+    </template>
     <!-- <div id="traditional">
 
     </div> -->
@@ -44,13 +53,14 @@
         >Projects</div>
       </div>
       <div id="data"></div>
-    </section>
+    </section> -->
 
     <footer>
       <p>&copy; Benjamin Hall 2020</p>
       <p><a href="https://github.com/BenHall-7/Portfolio/blob/master/LICENSE">License</a></p>
     </footer>
 
+    <!--
     <div hidden id="hidden">
       <div id="about">
         <div><img src="img/self.png" alt="photo of self"></div>

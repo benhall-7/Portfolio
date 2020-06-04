@@ -65,8 +65,8 @@ html, body {
 @sub-text-col: white;
 @warning-col: red;
 @link-col: teal;
-@pad: 20px;
-@font-size: 20px;
+@pad: 12pt;
+@font-size: 12pt;
 @tablet: ~"(max-width: 800px)";
 
 @keyframes blink {
@@ -144,19 +144,8 @@ h1 {
 	margin-left: -@pad;
 }
 
-#console {
-	outline: none;
-	border: 1px solid @text-col;
-	padding: @pad;
-
-	&:focus {
-		border-color: @emph-col;
-	}
-}
-
 body {
 	.flex(column, space-between, nowrap);
-	flex-direction: column;
 	width: 100%;
 	padding: 0 @pad/2;
 	font-family: 'PT Mono', monospace;
@@ -167,85 +156,93 @@ body {
 
 	min-width: 500px;
 	min-height: 500px;
+}
 
-	header {
-		.flex(row, flex-end, nowrap);
-		align-content: space-around;
-		height: 60px;
-		min-height: 60px;
-		border-bottom: 1px dashed @text-col;
-		margin-bottom: @pad;
+header {
+	.flex(column, center, nowrap);
+	align-content: space-around;
+	height: 60px;
+	min-height: 60px;
+	border-bottom: 1px dashed @text-col;
+	margin-bottom: @pad;
 
-		h1 {
-			margin: auto 0;
+	h1 {
+		margin: 0 auto;
+	}
+}
+
+#console {
+	outline: none;
+	border: 1px solid @text-col;
+	padding: @pad;
+
+	&:focus {
+		border-color: @emph-col;
+	}
+}
+
+#content {
+	.flex(row, flex-start, nowrap);
+	flex-grow: 1;
+	margin: 0 @pad;
+
+	.menu {
+		.flex(column, flex-start, nowrap);
+		padding-right: @pad;
+		border-right: 1px dashed @text-col;
+		margin-right: @pad;
+
+		.selected {
+			color: @emph-col;
+		}
+
+		div {
+			margin: @pad 0 @pad;
 		}
 	}
 
-	.content {
-		.flex(row, flex-start, nowrap);
-		flex-grow: 1;
-		margin: 0 @pad;
+	#data {
+		color: @sub-text-col;
 
-		.menu {
-			.flex(column, flex-start, nowrap);
-			padding-right: @pad;
-			border-right: 1px dashed @text-col;
-			margin-right: @pad;
-
-			.selected {
-				color: @emph-col;
+		#about {
+			@media @tablet {
+				.flex(column, flex-start, wrap);
 			}
 
 			div {
-				margin: @pad 0 @pad;
-			}
-		}
-
-		#data {
-			color: @sub-text-col;
-
-			#about {
-				@media @tablet {
-					.flex(column, flex-start, wrap);
-				}
-
-				div {
-					img {
-						text-align: center;
-						width: 200px;
-						height: 200px;
-						object-fit: cover;
-						border: 3px solid @sub-text-col;
-						border-radius: 50%;
-						float: right;
-						margin: @pad;
-	
-						@media @tablet {
-							float: none;
-							margin: @pad auto;
-						}
-					}
-				}
-			}
-
-			// .data-skills { }
-
-			#projects {
-				.project {
+				img {
+					text-align: center;
+					width: 200px;
+					height: 200px;
+					object-fit: cover;
+					border: 3px solid @sub-text-col;
+					border-radius: 50%;
+					float: right;
 					margin: @pad;
 
-					ul {
-						margin: @pad / 2 0;
+					@media @tablet {
+						float: none;
+						margin: @pad auto;
 					}
 				}
 			}
 		}
-	}
 
-	footer {
-		margin-top: @pad;
-		padding: @pad / 2 0;
-		border-top: 1px dashed @text-col;
-		text-align: center;
+		#projects {
+			.project {
+				margin: @pad;
+
+				ul {
+					margin: @pad / 2 0;
+				}
+			}
+		}
 	}
+}
+
+footer {
+	margin-top: @pad;
+	padding: @pad / 2 0;
+	border-top: 1px dashed @text-col;
+	text-align: center;
 }

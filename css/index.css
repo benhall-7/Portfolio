@@ -187,80 +187,80 @@ h1 a {
 }
 .arrow {
   position: absolute;
-  margin-left: -20px;
-}
-#console {
-  outline: none;
-  border: 1px solid green;
-  padding: 20px;
-}
-#console:focus {
-  border-color: yellow;
+  margin-left: -12pt;
 }
 body {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   flex-wrap: nowrap;
-  flex-direction: column;
   width: 100%;
-  padding: 0 10px;
+  padding: 0 6pt;
   font-family: 'PT Mono', monospace;
-  font-size: 20px;
+  font-size: 12pt;
   line-height: 1.2em;
   background: black;
   color: green;
   min-width: 500px;
   min-height: 500px;
 }
-body header {
+header {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: center;
   flex-wrap: nowrap;
   align-content: space-around;
   height: 60px;
   min-height: 60px;
   border-bottom: 1px dashed green;
-  margin-bottom: 20px;
+  margin-bottom: 12pt;
 }
-body header h1 {
-  margin: auto 0;
+header h1 {
+  margin: 0 auto;
 }
-body .content {
+#console {
+  outline: none;
+  border: 1px solid green;
+  padding: 12pt;
+}
+#console:focus {
+  border-color: yellow;
+}
+#content {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: nowrap;
   flex-grow: 1;
-  margin: 0 20px;
+  margin: 0 12pt;
 }
-body .content .menu {
+#content .menu {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex-wrap: nowrap;
-  padding-right: 20px;
+  padding-right: 12pt;
   border-right: 1px dashed green;
-  margin-right: 20px;
+  margin-right: 12pt;
 }
-body .content .menu .selected {
+#content .menu .selected {
   color: yellow;
 }
-body .content .menu div {
-  margin: 20px 0 20px;
+#content .menu div {
+  margin: 12pt 0 12pt;
 }
-body .content #data {
+#content #data {
   color: white;
 }
 @media (max-width: 800px) {
-  body .content #data #about {
+  #content #data #about {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     flex-wrap: wrap;
   }
 }
-body .content #data #about div img {
+#content #data #about div img {
   text-align: center;
   width: 200px;
   height: 200px;
@@ -268,23 +268,23 @@ body .content #data #about div img {
   border: 3px solid white;
   border-radius: 50%;
   float: right;
-  margin: 20px;
+  margin: 12pt;
 }
 @media (max-width: 800px) {
-  body .content #data #about div img {
+  #content #data #about div img {
     float: none;
-    margin: 20px auto;
+    margin: 12pt auto;
   }
 }
-body .content #data #projects .project {
-  margin: 20px;
+#content #data #projects .project {
+  margin: 12pt;
 }
-body .content #data #projects .project ul {
-  margin: 10px 0;
+#content #data #projects .project ul {
+  margin: 6pt 0;
 }
-body footer {
-  margin-top: 20px;
-  padding: 10px 0;
+footer {
+  margin-top: 12pt;
+  padding: 6pt 0;
   border-top: 1px dashed green;
   text-align: center;
 }

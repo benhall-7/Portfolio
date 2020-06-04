@@ -2,15 +2,17 @@ let consoleMain = document.getElementById("console");
 let consoleInput = document.getElementById("console-input");
 const NBSP = "\u00A0";
 
+// create a map of all the templates in the document by id
+let templates = Array.from(document.getElementsByTagName("template")).reduce((prev, cur) => {
+    prev[cur.id] = cur;
+    return prev;
+}, {});
+
 class ConsoleHistory {
     constructor() {
         let storage = sessionStorage.getItem("console-history");
         this.history = storage && JSON.parse(storage) || [];
         this.historyIndex = null;
-    }
-
-    get() {
-        return this.history;
     }
 
     push(h) {
@@ -92,6 +94,32 @@ function updateConsole() {
     setConsoleHtml();
 }
 
+function handleCommand(commands) {
+    let content = document.getElementById("content");
+    content.innerHTML = "";
+
+    switch (commands[0]) {
+        case "": {
+            content.appendChild(templates["input-none"].content.cloneNode(true));
+            break;
+        }
+        case "?":
+        case "h":
+        case "help": {
+            break;
+        }
+        case "": {
+            break;
+        }
+        default: {
+            let response = templates["input-invalid"].content.cloneNode(true);
+            response.querySelector(".arg0").append(commands[0]);
+            content.appendChild(response);
+            break;
+        }
+    }
+}
+
 consoleMain.addEventListener("focus", e => {
     state.console.focused = true;
     let cursor = consoleInput.querySelector(".console-cursor");
@@ -168,6 +196,8 @@ consoleMain.addEventListener("keydown", e => {
             break;
         }
         case "Enter": {
+            // trim front and back, and split words up by spaces
+            handleCommand(state.console.text.trim().split(/ +/g));
             state.console.history.push(state.console.text);
             state.console.text = "";
             state.console.position = 0;
@@ -179,12 +209,10 @@ consoleMain.addEventListener("keydown", e => {
 });
 
 consoleMain.addEventListener("keypress", e => {
+    // for some reason, "Enter" is passed to this event
     if (e.key.length !== 1) return;
-    state.console.text += e.key;
+    const {text, position} = state.console;
+    state.console.text = text.slice(0, position) + e.key + text.slice(position);
     state.console.position += 1;
     updateConsole();
-})
-
-consoleMain.addEventListener("submit", e => {
-    console.log("submit");
 })
