@@ -147,23 +147,18 @@ body {
   animation-iteration-count: infinite;
   animation-timing-function: step-start;
 }
-a {
-  color: teal;
-  text-decoration: unset;
-  border-bottom: transparent solid 1px;
+.emph {
+  color: yellow;
 }
-a:hover {
-  border-bottom: solid 1px;
-}
+a,
 .clickable {
   cursor: pointer;
-  border-bottom: transparent solid 1px;
+  color: teal;
+  text-decoration: unset;
 }
+a:hover,
 .clickable:hover {
-  border-bottom: solid 1px;
-}
-#hidden {
-  display: none;
+  text-decoration: underline;
 }
 li {
   list-style: square;
@@ -177,8 +172,14 @@ h1 {
 h1 a {
   color: inherit;
 }
-.emph {
-  color: yellow;
+h2 {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+h3 {
+  text-decoration: underline;
 }
 @media (max-width: 800px) {
   .desktop-only {
@@ -199,10 +200,21 @@ body {
   font-family: 'PT Mono', monospace;
   font-size: 12pt;
   line-height: 1.2em;
+  word-wrap: break-word;
   background: black;
   color: green;
   min-width: 500px;
   min-height: 500px;
+}
+img.icon {
+  text-align: center;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 3px solid white;
+  border-radius: 50%;
+  float: right;
+  margin: 12pt;
 }
 header {
   display: flex;
@@ -222,15 +234,12 @@ header h1 {
   outline: none;
   border: 1px solid green;
   padding: 12pt;
+  margin-bottom: 12pt;
 }
 #console:focus {
   border-color: yellow;
 }
 #content {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
   flex-grow: 1;
   margin: 0 12pt;
 }
@@ -259,16 +268,6 @@ header h1 {
     justify-content: flex-start;
     flex-wrap: wrap;
   }
-}
-#content #data #about div img {
-  text-align: center;
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border: 3px solid white;
-  border-radius: 50%;
-  float: right;
-  margin: 12pt;
 }
 @media (max-width: 800px) {
   #content #data #about div img {

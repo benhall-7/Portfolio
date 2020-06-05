@@ -91,27 +91,18 @@ html, body {
 	flex-wrap: @wrap;
 }
 
-a {
+.emph {
+	color: @emph-col;
+}
+
+a, .clickable {
+	cursor: pointer;
 	color: @link-col;
 	text-decoration: unset;
-	border-bottom: transparent solid 1px;
-
+	
 	&:hover {
-		border-bottom: solid 1px;
+		text-decoration: underline;
 	}
-}
-
-.clickable {
-	cursor: pointer;
-	border-bottom: transparent solid 1px;
-
-	&:hover {
-		border-bottom: solid 1px;
-	}
-}
-
-#hidden {
-	display: none;
 }
 
 li {
@@ -129,8 +120,15 @@ h1 {
 	}
 }
 
-.emph {
-	color: @emph-col;
+h2 {
+	text-decoration: underline;
+	font-weight: bold;
+	font-size: 1.2em;
+	line-height: 1.5em;
+}
+
+h3 {
+	text-decoration: underline;
 }
 
 .desktop-only {
@@ -151,11 +149,23 @@ body {
 	font-family: 'PT Mono', monospace;
 	font-size: @font-size;
 	line-height: 1.2em;
+	word-wrap: break-word;
 	background: @bg-col;
 	color: @text-col;
 
 	min-width: 500px;
 	min-height: 500px;
+}
+
+img.icon {
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border: 3px solid @sub-text-col;
+	border-radius: 50%;
+	float: right;
+	margin: @pad;
 }
 
 header {
@@ -175,6 +185,7 @@ header {
 	outline: none;
 	border: 1px solid @text-col;
 	padding: @pad;
+	margin-bottom: @pad;
 
 	&:focus {
 		border-color: @emph-col;
@@ -182,7 +193,7 @@ header {
 }
 
 #content {
-	.flex(row, flex-start, nowrap);
+	// .flex(row, flex-start, nowrap);
 	flex-grow: 1;
 	margin: 0 @pad;
 
@@ -211,15 +222,6 @@ header {
 
 			div {
 				img {
-					text-align: center;
-					width: 200px;
-					height: 200px;
-					object-fit: cover;
-					border: 3px solid @sub-text-col;
-					border-radius: 50%;
-					float: right;
-					margin: @pad;
-
 					@media @tablet {
 						float: none;
 						margin: @pad auto;

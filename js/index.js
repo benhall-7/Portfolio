@@ -94,7 +94,7 @@ function updateConsole() {
     setConsoleHtml();
 }
 
-function handleCommand(commands) {
+async function handleCommand(commands) {
     let content = document.getElementById("content");
     content.innerHTML = "";
 
@@ -103,12 +103,12 @@ function handleCommand(commands) {
             content.appendChild(templates["input-none"].content.cloneNode(true));
             break;
         }
-        case "?":
-        case "h":
         case "help": {
+            content.appendChild(templates["input-help"].content.cloneNode(true));
             break;
         }
-        case "": {
+        case "about": {
+            content.appendChild(templates["input-about"].content.cloneNode(true));
             break;
         }
         default: {
@@ -118,6 +118,16 @@ function handleCommand(commands) {
             break;
         }
     }
+}
+
+function inputToConsole(commandStr) {
+    if (commandStr) state.console.text = commandStr;
+    // trim front and back, and split words up by spaces
+    handleCommand(state.console.text.trim().split(/ +/g));
+    state.console.history.push(state.console.text);
+    state.console.text = "";
+    state.console.position = 0;
+    updateConsole();
 }
 
 consoleMain.addEventListener("focus", e => {
@@ -196,12 +206,7 @@ consoleMain.addEventListener("keydown", e => {
             break;
         }
         case "Enter": {
-            // trim front and back, and split words up by spaces
-            handleCommand(state.console.text.trim().split(/ +/g));
-            state.console.history.push(state.console.text);
-            state.console.text = "";
-            state.console.position = 0;
-            updateConsole();
+            inputToConsole();
             e.stopPropagation();
             break;
         }
