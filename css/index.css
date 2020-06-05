@@ -151,13 +151,15 @@ body {
   color: yellow;
 }
 a,
-.clickable {
+.clickable,
+.command {
   cursor: pointer;
   color: teal;
   text-decoration: unset;
 }
 a:hover,
-.clickable:hover {
+.clickable:hover,
+.command:hover {
   text-decoration: underline;
 }
 li {
@@ -214,7 +216,7 @@ img.icon {
   border: 3px solid white;
   border-radius: 50%;
   float: right;
-  margin: 12pt;
+  margin: 0 12pt 12pt;
 }
 header {
   display: flex;
