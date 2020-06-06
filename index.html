@@ -21,34 +21,34 @@
     </p>
     <!-- Will only display when nothing is typed in, or when a command is typed wrong -->
     <main id="content" role="main">
-      <p>For list of available commands, see the "<span class="command" onclick="inputToConsole('help')">help</span>" command</p>
+      <p>For list of available commands, see the "<span class="clickable" onclick="inputToConsole('help')">help</span>" command</p>
     </main>
 
     <template id="input-none">
-      <p>For list of available commands, see the "<span class="command" onclick="inputToConsole('help')">help</span>" command</p>
+      <p>For list of available commands, see the "<span class="clickable" onclick="inputToConsole('help')">help</span>" command</p>
     </template>
 
     <template id="input-invalid">
       <p>The command "<span class="arg0 emph"></span>" does not exist!</p>
-      <p>For list of available commands, see the "<span class="command" onclick="inputToConsole('help')">help</span>" command</p>
+      <p>For list of available commands, see the "<span class="clickable" onclick="inputToConsole('help')">help</span>" command</p>
     </template>
 
     <template id="input-help">
       <h2>Main commands</h2>
       <ul>
-        <li><span class="command" onclick="inputToConsole('help')">help</span></li>
-        <li><span class="command" onclick="inputToConsole('traditional')">traditional</span></li>
-        <li><span class="command" onclick="inputToConsole('about')">about</span></li>
-        <li><span class="command" onclick="inputToConsole('projects')">projects</span></li>
-        <li><span class="command" onclick="inputToConsole('viewport')">skills</span></li>
-        <li><span class="command" onclick="inputToConsole('contact')">contact</span></li>
+        <li><span class="clickable" onclick="inputToConsole('help')">help</span></li>
+        <li><span class="clickable" onclick="inputToConsole('traditional')">traditional</span></li>
+        <li><span class="clickable" onclick="inputToConsole('about')">about</span></li>
+        <li><span class="clickable" onclick="inputToConsole('projects')">projects</span></li>
+        <li><span class="clickable" onclick="inputToConsole('skills')">skills</span></li>
+        <li><span class="clickable" onclick="inputToConsole('contact')">contact</span></li>
       </ul>
       <h3>Other commands</h3>
       <ul>
-        <li><span class="command" onclick="inputToConsole('help')">?</span></li>
-        <li><span class="command" onclick="inputToConsole('help')">?</span></li>
-        <li><span class="command" onclick="inputToConsole('help')">?</span></li>
-        <li><span class="command" onclick="inputToConsole('help')">?</span></li>
+        <li><span class="clickable" onclick="inputToConsole('help')">?</span></li>
+        <li><span class="clickable" onclick="inputToConsole('help')">?</span></li>
+        <li><span class="clickable" onclick="inputToConsole('help')">?</span></li>
+        <li><span class="clickable" onclick="inputToConsole('help')">?</span></li>
       </ul>
     </template>
 
@@ -62,68 +62,35 @@
         and in everything I do, I'm passionate for learning new skills.<br/><br/>
       </p>
     </template>
-    <!-- <div id="traditional">
-
-    </div> -->
-
-    <!-- <header>
-      <h1>Benjamin Hall's Page</h1>
-    </header>
-
-    <section class="content">
-      <div class="menu">
-        <div class="clickable"
-          onclick="setAboutMe()"
-        >About</div>
-        <div class="clickable menu-skills"
-          onclick="setSkills()"
-        >Skills</div>
-        <div class="clickable menu-projects"
-          onclick="setProjects()"
-        >Projects</div>
-      </div>
-      <div id="data"></div>
-    </section> -->
+    
+    <template id="input-contact">
+      <h2>Contact links:</h2>
+      <ul>
+        <li><a href="mailto:Benjaminjahall@gmail.com">Email</a></li>
+        <li><a href="https://github.com/BenHall-7">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/benjaminjahall/">LinkedIn</a></li>
+      </ul>
+    </template>
+    
+    <template id="input-skills">
+      <h2>Web development related:</h2>
+      <ul>
+        <li>Experience writing pages in HTML, CSS, and Javascript</li>
+        <li>Modules such as Flexbox and LESS</li>
+        <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
+      </ul>
+      <h2>Software related</h2>
+      <ul>
+        <li>Emphasis on cross-platform technologies (where possible)</li>
+        <li>Years of C# / .NET experience including CLIs, Libraries, WinForms and WPF</li>
+        <li>Recently, experience in writing applications in Rust</li>
+        <li>Utilizing Lua as an application scripting language</li>
+      </ul>
+    </template>
 
     <footer>
       <p>&copy; Benjamin Hall 2020</p>
       <p><a href="https://github.com/BenHall-7/Portfolio/blob/master/LICENSE">License</a></p>
     </footer>
-
-    <!--
-    <div hidden id="hidden">
-      <div id="about">
-        <div><img src="img/self.png" alt="photo of self"></div>
-        <p>
-          Hi! My name is <span class="emph">Benjamin Hall</span>,
-          I'm a developer for software applications and a full-stack web engineer (in training).
-          Although born and raised in Northern California, I'm currently living near Pittsburgh, PA.<br/><br/>
-          I seek out creative ways to improve the quality of work for both users and collaborators,
-          and in everything I do, I'm passionate for learning new skills.<br/><br/>
-        </p>
-        <h2>Contact links:</h2>
-        <ul>
-          <li><a href="mailto:Benjaminjahall@gmail.com">Email</a></li>
-          <li><a href="https://github.com/BenHall-7">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/benjaminjahall/">LinkedIn</a></li>
-        </ul>
-      </div>
-      <div id="skills">
-        <h1>Web development related:</h1>
-        <ul>
-          <li>Experience writing pages in HTML, CSS, and Javascript</li>
-          <li>Modules such as Flexbox and LESS</li>
-          <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
-        </ul>
-        <h1>Software related</h1>
-        <ul>
-          <li>Emphasis on cross-platform technologies (where possible)</li>
-          <li>Years of C# / .NET experience including CLIs, Libraries, WinForms and WPF</li>
-          <li>Recently, experience in writing applications in Rust</li>
-          <li>Utilizing Lua as an application scripting language</li>
-        </ul>
-      </div>
-      <div id="projects"/>
-    </div> -->
   </body>
 </html>

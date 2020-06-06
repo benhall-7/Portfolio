@@ -151,15 +151,13 @@ body {
   color: yellow;
 }
 a,
-.clickable,
-.command {
+.clickable {
   cursor: pointer;
   color: teal;
   text-decoration: unset;
 }
 a:hover,
-.clickable:hover,
-.command:hover {
+.clickable:hover {
   text-decoration: underline;
 }
 li {
@@ -175,12 +173,12 @@ h1 a {
   color: inherit;
 }
 h2 {
+  color: yellow;
   text-decoration: underline;
   font-weight: bold;
-  font-size: 1.2em;
-  line-height: 1.5em;
 }
 h3 {
+  color: yellow;
   text-decoration: underline;
 }
 @media (max-width: 800px) {
