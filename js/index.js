@@ -75,7 +75,10 @@ function setConsoleHtml() {
 
         let cursorElem = document.createElement("span");
         cursorElem.append(on);
-        cursorElem.classList.add("console-cursor", "cursor-blink");
+        cursorElem.classList.add("console-cursor");
+        if (document.activeElement === consoleMain) {
+            cursorElem.classList.add("cursor-blink");
+        }
 
         consoleInput.innerHTML = null;
         consoleInput.append(before, cursorElem, after);
@@ -83,7 +86,10 @@ function setConsoleHtml() {
         let cursorElem = document.createElement("span");
         // non-breaking space (U-00A0). Can't use a regular " " character because HTML truncates it
         cursorElem.append(NBSP);
-        cursorElem.classList.add("console-cursor", "cursor-blink");
+        cursorElem.classList.add("console-cursor");
+        if (document.activeElement === consoleMain) {
+            cursorElem.classList.add("cursor-blink");
+        }
 
         consoleInput.innerHTML = null;
         consoleInput.append(text, cursorElem);

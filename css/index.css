@@ -153,7 +153,7 @@ body {
 a,
 .clickable {
   cursor: pointer;
-  color: teal;
+  color: skyblue;
   text-decoration: unset;
 }
 a:hover,
@@ -188,7 +188,7 @@ h3 {
 }
 .arrow {
   position: absolute;
-  margin-left: -12pt;
+  margin-left: -16pt;
 }
 body {
   display: flex;
@@ -196,9 +196,9 @@ body {
   justify-content: space-between;
   flex-wrap: nowrap;
   width: 100%;
-  padding: 0 6pt;
-  font-family: 'PT Mono', monospace;
-  font-size: 12pt;
+  padding: 0 8pt;
+  font-family: courier, 'PT Mono', monospace;
+  font-size: 16pt;
   line-height: 1.2em;
   word-wrap: break-word;
   background: black;
@@ -214,7 +214,7 @@ img.icon {
   border: 3px solid white;
   border-radius: 50%;
   float: right;
-  margin: 0 12pt 12pt;
+  margin: 0 16pt 16pt;
 }
 header {
   display: flex;
@@ -225,7 +225,7 @@ header {
   height: 60px;
   min-height: 60px;
   border-bottom: 1px dashed green;
-  margin-bottom: 12pt;
+  margin-bottom: 16pt;
 }
 header h1 {
   margin: 0 auto;
@@ -233,57 +233,19 @@ header h1 {
 #console {
   outline: none;
   border: 1px solid green;
-  padding: 12pt;
-  margin-bottom: 12pt;
+  padding: 16pt;
+  margin-bottom: 16pt;
 }
 #console:focus {
   border-color: yellow;
 }
 #content {
   flex-grow: 1;
-  margin: 0 12pt;
-}
-#content .menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  padding-right: 12pt;
-  border-right: 1px dashed green;
-  margin-right: 12pt;
-}
-#content .menu .selected {
-  color: yellow;
-}
-#content .menu div {
-  margin: 12pt 0 12pt;
-}
-#content #data {
-  color: white;
-}
-@media (max-width: 800px) {
-  #content #data #about {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-}
-@media (max-width: 800px) {
-  #content #data #about div img {
-    float: none;
-    margin: 12pt auto;
-  }
-}
-#content #data #projects .project {
-  margin: 12pt;
-}
-#content #data #projects .project ul {
-  margin: 6pt 0;
+  margin: 0 16pt;
 }
 footer {
-  margin-top: 12pt;
-  padding: 6pt 0;
+  margin-top: 16pt;
+  padding: 8pt 0;
   border-top: 1px dashed green;
   text-align: center;
 }
