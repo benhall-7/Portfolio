@@ -119,6 +119,10 @@ async function handleCommand(commands) {
             content.appendChild(templates["input-skills"].content.cloneNode(true));
             break;
         }
+        case "projects": {
+            content.appendChild(templates["input-projects"].content.cloneNode(true));
+            break;
+        }
         default: {
             let response = templates["input-invalid"].content.cloneNode(true);
             response.querySelector(".arg0").append(commands[0]);
