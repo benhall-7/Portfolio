@@ -84,7 +84,7 @@ function setConsoleHtml() {
         consoleInput.append(before, cursorElem, after);
     } else {
         let cursorElem = document.createElement("span");
-        // non-breaking space (U-00A0). Can't use a regular " " character because HTML truncates it
+        // Can't use a regular " " character because HTML truncates it
         cursorElem.append(NBSP);
         cursorElem.classList.add("console-cursor");
         if (document.activeElement === consoleMain) {

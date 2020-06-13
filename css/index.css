@@ -162,7 +162,8 @@ a:hover,
 }
 li {
   list-style: square;
-  list-style-position: inside;
+  list-style-position: outside;
+  margin-left: 16pt;
 }
 h1 {
   color: yellow;
@@ -175,11 +176,11 @@ h1 a {
 h2 {
   color: yellow;
   text-decoration: underline;
-  font-weight: bold;
+  line-height: 2em;
 }
 h3 {
   color: yellow;
-  text-decoration: underline;
+  line-height: 2em;
 }
 @media (max-width: 800px) {
   .desktop-only {
@@ -197,7 +198,7 @@ body {
   flex-wrap: nowrap;
   width: 100%;
   padding: 0 8pt;
-  font-family: courier, 'PT Mono', monospace;
+  font-family: courier, monospace;
   font-size: 16pt;
   line-height: 1.2em;
   word-wrap: break-word;

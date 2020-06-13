@@ -62,7 +62,6 @@ html, body {
 @bg-col: black;
 @emph-col: yellow;
 @text-col: green;
-@sub-text-col: white;
 @warning-col: red;
 @link-col: aqua;
 @pad: 16pt;
@@ -107,7 +106,8 @@ a, .clickable {
 
 li {
 	list-style: square;
-	list-style-position: inside;
+	list-style-position: outside;
+	margin-left: @pad;
 }
 
 h1 {
@@ -123,12 +123,12 @@ h1 {
 h2 {
 	color: @emph-col;
 	text-decoration: underline;
-	font-weight: bold;
+	line-height: 2em;
 }
 
 h3 {
 	color: @emph-col;
-	text-decoration: underline;
+	line-height: 2em;
 }
 
 .desktop-only {
@@ -146,7 +146,7 @@ body {
 	.flex(column, space-between, nowrap);
 	width: 100%;
 	padding: 0 @pad/2;
-	font-family: courier, 'PT Mono', monospace;
+	font-family: courier, monospace;
 	font-size: @font-size;
 	line-height: 1.2em;
 	word-wrap: break-word;
@@ -162,7 +162,7 @@ img.icon {
 	width: 200px;
 	height: 200px;
 	object-fit: cover;
-	border: 3px solid @sub-text-col;
+	border: 3px solid white;
 	border-radius: 50%;
 	float: right;
 	margin: 0 @pad @pad;
