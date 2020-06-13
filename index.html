@@ -3,74 +3,126 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Benjamin Hall</title>
 
     <link rel="stylesheet" href="css/index.css">
-    <link href="https://fonts.googleapis.com/css?family=PT+Mono&display=swap" rel="stylesheet">
-    <script src="js/projects.js" async></script>
+    <link rel="prefetch" href="img/self.png">
     <script src="js/index.js" async></script>
   </head>
 
-  <body onload="loadData()">
-    <header>
-      <h1>Benjamin Hall's Page</h1>
-    </header>
+  <body onload="setConsoleHtml()">
+    <header><h1>~~~ Portfolio Terminal ~~~</h1></header>
+    <p id="console" autofocus tabindex="0" role="textbox">
+      $&nbsp;<span id="console-input"></span>
+    </p>
+    <!-- Will only display when nothing is typed in, or when a command is typed wrong -->
+    <main id="content" role="main">
+      <p>For list of available commands, see the "<span class="clickable" onclick="inputToConsole('help')">help</span>" command</p>
+    </main>
 
-    <section class="content">
-      <div class="menu">
-        <div class="clickable"
-          onclick="setAboutMe()"
-        >About</div>
-        <div class="clickable menu-skills"
-          onclick="setSkills()"
-        >Skills</div>
-        <div class="clickable menu-projects"
-          onclick="setProjects()"
-        >Projects</div>
-      </div>
-      <div id="data"></div>
-    </section>
+    <template id="input-none">
+      <p>For list of available commands, see the "<span class="clickable" onclick="inputToConsole('help')">help</span>" command</p>
+    </template>
+
+    <template id="input-invalid">
+      <p>The command "<span class="arg0 emph"></span>" does not exist!</p>
+      <p>For list of available commands, see the "<span class="clickable" onclick="inputToConsole('help')">help</span>" command</p>
+    </template>
+
+    <template id="input-help">
+      <h2>Main commands</h2>
+      <ul>
+        <li><span class="clickable" onclick="inputToConsole('help')">help</span></li>
+        <li><span class="clickable" onclick="inputToConsole('about')">about</span></li>
+        <li><span class="clickable" onclick="inputToConsole('projects')">projects</span></li>
+        <li><span class="clickable" onclick="inputToConsole('skills')">skills</span></li>
+        <li><span class="clickable" onclick="inputToConsole('contact')">contact</span></li>
+      </ul>
+      <h3>Other commands</h3>
+      <p>(In progress!)</p>
+      <h3>How to use this terminal</h3>
+      <p>To type into the terminal, simply press or otherwise focus on the console element above.</p>
+      <p>You can also click command names to execute them.</p>
+      <p>Asides from basic letters, the terminal also supports a few special inputs:</p>
+      <ul>
+        <li><span class="emph">Enter</span>: enters the text, executing a command</li>
+        <li><span class="emph">Backspace</span>: deletes a character immediately preceding the console's cursor location</li>
+        <li><span class="emph">Delete</span>: deletes a character on the console's cursor location</li>
+        <li><span class="emph">Left</span>: Moves the console cursor to the left by 1 character</li>
+        <li><span class="emph">Right</span>: Moves the console cursor to the right by 1 character</li>
+        <li><span class="emph">Up</span>: Moves the console cursor to the start of the command</li>
+        <li><span class="emph">Down</span>: Moves the console cursor to the end of the command</li>
+        <li><span class="emph">Shift + Up</span>: Changes the console text into the previous command in console history</li>
+        <li><span class="emph">Shift + Down</span>: Changes the console text into the next command in console history</li>
+      </ul>
+    </template>
+
+    <template id="input-about">
+      <div><img class="icon" src="img/self.png" alt="photo of self"></div>
+      <p>
+        Hi! My name is <span class="emph">Benjamin Hall</span>,
+        I'm a developer for software applications and a full-stack web engineer (in training).
+        Although born and raised in Northern California, I'm currently living near Pittsburgh, PA.<br/><br/>
+        I seek out creative ways to improve the quality of work for both users and collaborators,
+        and in everything I do, I'm passionate for learning new skills.<br/><br/>
+      </p>
+    </template>
+    
+    <template id="input-contact">
+      <h2>Contact links:</h2>
+      <ul>
+        <li><a href="mailto:Benjaminjahall@gmail.com">Email</a></li>
+        <li><a href="https://github.com/BenHall-7">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/benjaminjahall/">LinkedIn</a></li>
+      </ul>
+    </template>
+    
+    <template id="input-skills">
+      <h2>Web development related:</h2>
+      <ul>
+        <li>Experience writing pages in HTML, CSS, and Javascript</li>
+        <li>Modules such as Flexbox and LESS</li>
+        <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
+      </ul>
+      <h2>Software related</h2>
+      <ul>
+        <li>Emphasis on cross-platform technologies (where possible)</li>
+        <li>Years of C# / .NET experience including CLIs, Libraries, WinForms and WPF</li>
+        <li>Recently, experience in writing applications in Rust</li>
+        <li>Utilizing Lua as an application scripting language</li>
+      </ul>
+    </template>
+
+    <template id="input-projects">
+      <ul>
+        <li>
+          <h1><a href="https://potluck-planner-lambda.github.io/ui-ben/">Potluck Planner</a></h1>
+          <p>Potluck Planner provides users a way to manage potlucks; see guests attending, what food they want to bring, and more</p>
+          <ul>
+            <li>The 'home' and 'about' page of this project is designed simply through HTML, CSS, and some Javascript</li>
+            <li>This side of the project was my own work; early on, our team planned a set of styles to work with so we would stay consistent</li>
+            <li>The rest of the application is written with ReactJS</li>
+          </ul>
+          <a href="https://github.com/Potluck-Planner-Lambda">Source</a>
+        </li>
+        <li>
+          <h1><a href="https://github.com/BenHall-7/paracobNET/releases/latest">paracobNET</a></h1>
+          <p>A 4-tool suite of programs allowing loading and editing of the proprietary '.prc' filetype in Super Smash Bros. Ultimate</p>
+          <ul>
+            <li>Currently I am the sole author of the project</li>
+            <li>Written in C#, and utilizing the .NET Core framework</li>
+            <li>Designed for portability as it can be used within other applications and on any computer architecture supported by .NET Core, like Windows, Linux, and MacOS</li>
+          </ul>
+          <a href="https://github.com/BenHall-7/paracobNET">Source</a>
+        </li>
+      </ul>
+    </template>
 
     <footer>
       <p>&copy; Benjamin Hall 2020</p>
       <p><a href="https://github.com/BenHall-7/Portfolio/blob/master/LICENSE">License</a></p>
     </footer>
-
-    <div hidden id="hidden">
-      <div id="about">
-        <div><img src="img/self.png"></div>
-        <p>
-          Hi! My name is <span class="emph">Benjamin Hall</span>,
-          I'm a developer for software applications and a full-stack web engineer (in training).
-          Although born and raised in Northern California, I'm currently living near Pittsburgh, PA.<br/><br/>
-          I seek out creative ways to improve the quality of work for both users and collaborators,
-          and in everything I do, I'm passionate for learning new skills.<br/><br/>
-        </p>
-        <h2>Contact links:</h2>
-        <ul>
-          <li><a href="mailto:Benjaminjahall@gmail.com">Email</a></li>
-          <li><a href="https://github.com/BenHall-7">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/benjaminjahall/">LinkedIn</a></li>
-        </ul>
-      </div>
-      <div id="skills">
-        <h1>Web development related:</h1>
-        <ul>
-          <li>Experience writing pages in HTML, CSS, and Javascript</li>
-          <li>Modules such as Flexbox and LESS</li>
-          <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
-        </ul>
-        <h1>Software related</h1>
-        <ul>
-          <li>Emphasis on cross-platform technologies (where possible)</li>
-          <li>Years of C# / .NET experience including CLIs, Libraries, WinForms and WPF</li>
-          <li>Recently, experience in writing applications in Rust</li>
-          <li>Utilizing Lua as an application scripting language</li>
-        </ul>
-      </div>
-      <div id="projects"/>
-    </div>
   </body>
 </html>

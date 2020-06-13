@@ -62,12 +62,26 @@ html, body {
 @bg-col: black;
 @emph-col: yellow;
 @text-col: green;
-@sub-text-col: white;
 @warning-col: red;
-@link-col: teal;
-@pad: 20px;
-@font-size: 20px;
+@link-col: aqua;
+@pad: 16pt;
+@font-size: 16pt;
 @tablet: ~"(max-width: 800px)";
+
+@keyframes blink {
+	50% {
+		border-bottom: 4px white solid;
+		padding-bottom: -4px;
+		color: @emph-col;
+	}
+}
+
+.cursor-blink {
+	animation-name: blink;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: step-start;
+}
 
 .flex(@direction, @jc, @wrap) {
 	display: flex;
@@ -76,32 +90,24 @@ html, body {
 	flex-wrap: @wrap;
 }
 
-a {
+.emph {
+	color: @emph-col;
+}
+
+a, .clickable {
+	cursor: pointer;
 	color: @link-col;
 	text-decoration: unset;
-	border-bottom: transparent solid 1px;
-
+	
 	&:hover {
-		border-bottom: solid 1px;
+		text-decoration: underline;
 	}
-}
-
-.clickable {
-	cursor: pointer;
-	border-bottom: transparent solid 1px;
-
-	&:hover {
-		border-bottom: solid 1px;
-	}
-}
-
-#hidden {
-	display: none;
 }
 
 li {
 	list-style: square;
-	list-style-position: inside;
+	list-style-position: outside;
+	margin-left: @pad;
 }
 
 h1 {
@@ -114,22 +120,15 @@ h1 {
 	}
 }
 
-.emph {
+h2 {
 	color: @emph-col;
+	text-decoration: underline;
+	line-height: 2em;
 }
 
-@keyframes blink {
-	50% {
-		color: transparent;
-	}
-}
-
-.blinking {
-	animation-name: blink;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-timing-function: step-start;
-	font-size: 0.8em;
+h3 {
+	color: @emph-col;
+	line-height: 2em;
 }
 
 .desktop-only {
@@ -145,96 +144,63 @@ h1 {
 
 body {
 	.flex(column, space-between, nowrap);
-	flex-direction: column;
 	width: 100%;
 	padding: 0 @pad/2;
-	font-family: 'PT Mono', monospace;
+	font-family: courier, monospace;
 	font-size: @font-size;
 	line-height: 1.2em;
+	word-wrap: break-word;
 	background: @bg-col;
 	color: @text-col;
 
 	min-width: 500px;
 	min-height: 500px;
+}
 
-	header {
-		.flex(row, flex-end, nowrap);
-		align-content: space-around;
-		height: 60px;
-		min-height: 60px;
-		border-bottom: 1px dashed @text-col;
-		margin-bottom: @pad;
+img.icon {
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border: 3px solid white;
+	border-radius: 50%;
+	float: right;
+	margin: 0 @pad @pad;
+}
 
-		h1 {
-			margin: auto 0;
-		}
+header {
+	.flex(column, center, nowrap);
+	align-content: space-around;
+	height: 60px;
+	min-height: 60px;
+	border-bottom: 1px dashed @text-col;
+	margin-bottom: @pad;
+
+	h1 {
+		margin: 0 auto;
 	}
+}
 
-	.content {
-		.flex(row, flex-start, nowrap);
-		flex-grow: 1;
-		margin: 0 @pad;
+#console {
+	outline: none;
+	border: 1px solid @text-col;
+	padding: @pad;
+	margin-bottom: @pad;
 
-		.menu {
-			.flex(column, flex-start, nowrap);
-			padding-right: @pad;
-			border-right: 1px dashed @text-col;
-			margin-right: @pad;
-
-			.selected {
-				color: @emph-col;
-			}
-
-			div {
-				margin: @pad 0 @pad;
-			}
-		}
-
-		#data {
-			color: @sub-text-col;
-
-			#about {
-				@media @tablet {
-					.flex(column, flex-start, wrap);
-				}
-
-				div {
-					img {
-						text-align: center;
-						width: 200px;
-						height: 200px;
-						object-fit: cover;
-						border: 3px solid @sub-text-col;
-						border-radius: 50%;
-						float: right;
-						margin: @pad;
-	
-						@media @tablet {
-							float: none;
-							margin: @pad auto;
-						}
-					}
-				}
-			}
-
-			// .data-skills { }
-
-			#projects {
-				.project {
-					margin: @pad;
-
-					ul {
-						margin: @pad / 2 0;
-					}
-				}
-			}
-		}
+	&:focus {
+		border-color: @emph-col;
 	}
+}
 
-	footer {
-		margin-top: @pad;
-		padding: @pad / 2 0;
-		border-top: 1px dashed @text-col;
-		text-align: center;
-	}
+#content {
+	// .flex(row, flex-start, nowrap);
+	flex-grow: 1;
+	margin: 0 @pad;
+}
+
+footer {
+	margin-top: @pad;
+	padding: @pad / 2 0;
+	border-top: 1px dashed @text-col;
+	text-align: center;
 }
