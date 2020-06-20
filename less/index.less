@@ -182,15 +182,21 @@ header {
 }
 
 #console {
-	outline: none;
+	width: 100%;
+	outline: unset;
+	background: unset;
+	color: unset;
+	font: unset;
+	// caret-color: transparent;
 	border: 1px solid @text-col;
+
 	padding: @pad;
 	margin-bottom: @pad;
 
 	&:focus {
 		border-color: @emph-col;
 	}
-}
+} 
 
 #content {
 	// .flex(row, flex-start, nowrap);
