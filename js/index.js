@@ -109,10 +109,11 @@ consoleMain.addEventListener("keydown", e => {
     switch (e.key) {
         case "ArrowUp": {
             if (e.shiftKey) {
+                console.log("HERE");
                 let entry = state.cmdHistory.dec();
                 if (entry)
                     consoleMain.value = entry; 
-                e.stopPropagation();
+                e.preventDefault();
             }
             break;
         }
@@ -121,7 +122,7 @@ consoleMain.addEventListener("keydown", e => {
                 let entry = state.cmdHistory.inc();
                 if (entry)
                     consoleMain.value = entry;
-                e.stopPropagation();
+                e.preventDefault();
             }
             break;
         }
