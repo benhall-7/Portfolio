@@ -151,13 +151,13 @@ body {
   color: yellow;
 }
 a,
-.clickable {
+.cmd {
   cursor: pointer;
   color: aqua;
   text-decoration: unset;
 }
 a:hover,
-.clickable:hover {
+.cmd:hover {
   text-decoration: underline;
 }
 li {

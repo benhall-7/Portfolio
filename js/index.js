@@ -16,6 +16,8 @@ class ConsoleHistory {
     }
 
     push(h) {
+        if (this.history.length >= 50)
+            this.history.shift();
         this.history.push(h);
         sessionStorage.setItem("console-history", JSON.stringify(this.history));
         this.historyIndex = null;
@@ -53,6 +55,20 @@ class ConsoleHistory {
             this.historyIndex = Math.min(Math.max(0, index), this.history.length - 1);
         }
     }
+
+    length() {
+        return this.history.length;
+    }
+
+    get(index) {
+        return this.history[index];
+    }
+
+    clear() {
+        this.history = [];
+        this.historyIndex = null;
+        localStorage.removeItem('console-history');
+    }
 }
 
 let state = {
@@ -88,6 +104,62 @@ async function handleCommand(commands) {
             content.appendChild(templates["input-projects"].content.cloneNode(true));
             break;
         }
+        case "history": {
+            if (commands.length > 1) {
+                const second = commands[1];
+                if (second == "help") {
+                    content.appendChild(templates["input-history-help"].content.cloneNode(true));
+                } else if (second === "clear") {
+                    // since default behavior is to push new commands after this function exits
+                    // we send this callback to remove it later instead
+                    return () => {
+                        state.cmdHistory.clear();
+                        content.append("Command history cleared.");
+                    };
+                } else if (Number.isInteger(Number(second))) {
+                    let value = Number(second);
+                    if (value < 0)
+                        value += state.cmdHistory.length();
+                    if (value >= 0 && value < state.cmdHistory.length()) {
+                        let output = document.createElement("p");
+                        let text = state.cmdHistory.get(value);
+                        output.textContent = text;
+                        output.tabIndex = 0;
+                        output.classList.add("cmd");
+                        output.onclick = () => submitCmd(text);
+                        content.appendChild(output);
+                    } else {
+                        let output = document.createElement("p");
+                        output.textContent = "The specified index was not in the bounds of the history array";
+                        content.appendChild(output);
+                    }
+                } else {
+                    let response = templates["input-history-invalid"].content.cloneNode(true);
+                    response.querySelector(".arg0").append(commands[1]);
+                    content.appendChild(response);
+                }
+            } else {
+                let header = document.createElement("h2");
+                header.textContent = "Command history"
+                let count = document.createElement("p");
+                count.textContent = "count: " + state.cmdHistory.length();
+                let list = document.createElement("ul");
+                for (let i = state.cmdHistory.length() - 1; i >= 0; i--) {
+                    let entry = document.createElement("li");
+                    let value = state.cmdHistory.get(i);
+                    entry.append(`${i} - `);
+                    let cmd = document.createElement("span");
+                    cmd.tabIndex = 0;
+                    cmd.classList.add("cmd");
+                    cmd.onclick = () => submitCmd(value);
+                    cmd.textContent = value;
+                    entry.append(cmd);
+                    list.appendChild(entry);
+                }
+                content.append(header, count, list);
+            }
+            break;
+        }
         default: {
             let response = templates["input-invalid"].content.cloneNode(true);
             response.querySelector(".arg0").append(commands[0]);
@@ -100,9 +172,11 @@ async function handleCommand(commands) {
 function submitCmd(commandStr) {
     let cmd = commandStr || consoleMain.value;
     // trim front and back, and split words up by spaces
-    handleCommand(cmd.trim().split(/ +/g));
-    state.cmdHistory.push(cmd);
-    consoleMain.value = "";
+    handleCommand(cmd.trim().split(/ +/g)).then(cb => {
+        state.cmdHistory.push(cmd);
+        consoleMain.value = "";    
+        if (typeof cb == "function") cb();
+    });
 }
 
 consoleMain.addEventListener("keydown", e => {
