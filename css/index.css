@@ -138,7 +138,7 @@ body {
   50% {
     border-bottom: 4px white solid;
     padding-bottom: -4px;
-    color: yellow;
+    color: #b8b08d;
   }
 }
 .cursor-blink {
@@ -148,12 +148,12 @@ body {
   animation-timing-function: step-start;
 }
 .emph {
-  color: yellow;
+  color: #b8b08d;
 }
 a,
 .cmd {
   cursor: pointer;
-  color: aqua;
+  color: #f2d492;
   text-decoration: unset;
 }
 a:hover,
@@ -166,7 +166,7 @@ li {
   margin-left: 16pt;
 }
 h1 {
-  color: yellow;
+  color: #b8b08d;
   font-size: 1.4em;
   line-height: 2em;
 }
@@ -174,12 +174,12 @@ h1 a {
   color: inherit;
 }
 h2 {
-  color: yellow;
+  color: #b8b08d;
   text-decoration: underline;
   line-height: 2em;
 }
 h3 {
-  color: yellow;
+  color: #b8b08d;
   line-height: 2em;
 }
 @media (max-width: 800px) {
@@ -202,8 +202,8 @@ body {
   font-size: 16pt;
   line-height: 1.2em;
   word-wrap: break-word;
-  background: black;
-  color: green;
+  background: #202c39;
+  color: #f29559;
   min-width: 500px;
   min-height: 500px;
 }
@@ -225,7 +225,7 @@ header {
   align-content: space-around;
   height: 60px;
   min-height: 60px;
-  border-bottom: 1px dashed green;
+  border-bottom: 1px dashed #f29559;
   margin-bottom: 16pt;
 }
 header h1 {
@@ -234,15 +234,16 @@ header h1 {
 #console {
   width: 100%;
   outline: unset;
-  background: unset;
+  background: #283845;
   color: unset;
   font: unset;
-  border: 1px solid green;
+  border: none;
+  border-radius: 20px;
   padding: 16pt;
   margin-bottom: 16pt;
 }
 #console:focus {
-  border-color: yellow;
+  border-color: #b8b08d;
 }
 #content {
   flex-grow: 1;
@@ -251,6 +252,6 @@ header h1 {
 footer {
   margin-top: 16pt;
   padding: 8pt 0;
-  border-top: 1px dashed green;
+  border-top: 1px dashed #f29559;
   text-align: center;
 }

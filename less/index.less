@@ -59,11 +59,11 @@ html, body {
 
 // end of css reset
 
-@bg-col: black;
-@emph-col: yellow;
-@text-col: green;
-@warning-col: red;
-@link-col: aqua;
+@bg-col: #202c39;
+@bg-col-light: #283845;
+@emph-col: #b8b08d;
+@link-col: #f2d492;
+@text-col: #f29559;
 @pad: 16pt;
 @font-size: 16pt;
 @tablet: ~"(max-width: 800px)";
@@ -184,11 +184,11 @@ header {
 #console {
 	width: 100%;
 	outline: unset;
-	background: unset;
+	background: @bg-col-light;
 	color: unset;
 	font: unset;
-	// caret-color: transparent;
-	border: 1px solid @text-col;
+	border: none;
+	border-radius: 20px;
 
 	padding: @pad;
 	margin-bottom: @pad;

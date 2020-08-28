@@ -247,6 +247,7 @@ function submitCmd(commandStr) {
     let cb = handleCommand(cmd.trim().split(/ +/g));
     state.cmdHistory.push(cmd);
     consoleMain.value = "";
+    consoleMain.blur();
     if (typeof cb == "function") cb();
 }
 
