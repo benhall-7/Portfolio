@@ -138,7 +138,7 @@ body {
   50% {
     border-bottom: 4px white solid;
     padding-bottom: -4px;
-    color: #b8b08d;
+    color: #ccc39c;
   }
 }
 .cursor-blink {
@@ -148,12 +148,12 @@ body {
   animation-timing-function: step-start;
 }
 .emph {
-  color: #b8b08d;
+  color: #ccc39c;
 }
 a,
 .cmd {
   cursor: pointer;
-  color: #f2d492;
+  color: #f1ca74;
   text-decoration: unset;
 }
 a:hover,
@@ -166,20 +166,20 @@ li {
   margin-left: 16pt;
 }
 h1 {
-  color: #b8b08d;
+  color: #ccc39c;
   font-size: 1.4em;
-  line-height: 2em;
+  line-height: 1.4em;
 }
 h1 a {
   color: inherit;
 }
 h2 {
-  color: #b8b08d;
+  color: #ccc39c;
   text-decoration: underline;
   line-height: 2em;
 }
 h3 {
-  color: #b8b08d;
+  color: #ccc39c;
   line-height: 2em;
 }
 @media (max-width: 800px) {
@@ -204,50 +204,82 @@ body {
   word-wrap: break-word;
   background: #202c39;
   color: #f29559;
-  min-width: 500px;
-  min-height: 500px;
-}
-img.icon {
-  text-align: center;
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border: 3px solid white;
-  border-radius: 50%;
-  float: right;
-  margin: 0 16pt 16pt;
+  min-width: 250px;
 }
 header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-wrap: nowrap;
-  align-content: space-around;
-  height: 60px;
-  min-height: 60px;
   border-bottom: 1px dashed #f29559;
-  margin-bottom: 16pt;
+  margin-bottom: 8pt;
 }
 header h1 {
-  margin: 0 auto;
-}
-#console {
-  width: 100%;
-  outline: unset;
-  background: #283845;
-  color: unset;
-  font: unset;
-  border: none;
-  border-radius: 20px;
-  padding: 16pt;
-  margin-bottom: 16pt;
-}
-#console:focus {
-  border-color: #b8b08d;
+  text-align: center;
 }
 #content {
   flex-grow: 1;
   margin: 0 16pt;
+}
+@media (max-width: 500px) {
+  #content {
+    margin: 0;
+  }
+}
+img.icon {
+  text-align: center;
+  width: 200px;
+  max-width: 33vw;
+  height: 200px;
+  max-height: 33vw;
+  object-fit: cover;
+  border: 3px solid white;
+  border-radius: 50%;
+  float: right;
+  margin: 0 0 16pt 16pt;
+}
+#console-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16pt;
+}
+#console-wrapper label {
+  background: #d8ceab;
+  color: #304252;
+  font-weight: bold;
+  border-radius: 20px 0 0 20px;
+  padding: 16pt;
+}
+@media (max-width: 800px) {
+  #console-wrapper label {
+    padding: 12pt;
+  }
+}
+@media (max-width: 500px) {
+  #console-wrapper label {
+    padding: 8pt;
+  }
+}
+#console {
+  flex-grow: 1;
+  outline: unset;
+  background: #304252;
+  color: unset;
+  font: unset;
+  border: none;
+  border-radius: 0 20px 20px 0;
+  padding: 16pt;
+  min-width: 100px;
+}
+#console:focus {
+  border-color: #ccc39c;
+}
+@media (max-width: 800px) {
+  #console {
+    padding: 12pt;
+  }
+}
+@media (max-width: 500px) {
+  #console {
+    padding: 8pt;
+  }
 }
 footer {
   margin-top: 16pt;

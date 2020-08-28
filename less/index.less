@@ -59,14 +59,20 @@ html, body {
 
 // end of css reset
 
+// don't change these colors
 @bg-col: #202c39;
-@bg-col-light: #283845;
-@emph-col: #b8b08d;
-@link-col: #f2d492;
 @text-col: #f29559;
+
+// up for debate
+@bg-col-light: #304252;
+@emph-col: #ccc39c;
+@emph-col-bg: #d8ceab;
+@link-col: #f1ca74;
+
 @pad: 16pt;
 @font-size: 16pt;
 @tablet: ~"(max-width: 800px)";
+@mobile: ~"(max-width: 500px)";
 
 @keyframes blink {
 	50% {
@@ -113,7 +119,7 @@ li {
 h1 {
 	color: @emph-col;
 	font-size: 1.4em;
-	line-height: 2em;
+	line-height: 1.4em;
 
 	a {
 		color: inherit;
@@ -153,55 +159,86 @@ body {
 	background: @bg-col;
 	color: @text-col;
 
-	min-width: 500px;
-	min-height: 500px;
-}
-
-img.icon {
-	text-align: center;
-	width: 200px;
-	height: 200px;
-	object-fit: cover;
-	border: 3px solid white;
-	border-radius: 50%;
-	float: right;
-	margin: 0 @pad @pad;
+	min-width: 250px;
 }
 
 header {
-	.flex(column, center, nowrap);
-	align-content: space-around;
-	height: 60px;
-	min-height: 60px;
 	border-bottom: 1px dashed @text-col;
-	margin-bottom: @pad;
+	margin-bottom: @pad / 2;
 
 	h1 {
-		margin: 0 auto;
+		text-align: center;
 	}
 }
-
-#console {
-	width: 100%;
-	outline: unset;
-	background: @bg-col-light;
-	color: unset;
-	font: unset;
-	border: none;
-	border-radius: 20px;
-
-	padding: @pad;
-	margin-bottom: @pad;
-
-	&:focus {
-		border-color: @emph-col;
-	}
-} 
 
 #content {
 	// .flex(row, flex-start, nowrap);
 	flex-grow: 1;
 	margin: 0 @pad;
+
+	@media @mobile {
+		margin: 0;
+	}
+}
+
+img.icon {
+	text-align: center;
+	width: 200px;
+	max-width: 33vw;
+	height: 200px;
+	max-height: 33vw;
+	object-fit: cover;
+	border: 3px solid white;
+	border-radius: 50%;
+	float: right;
+	margin: 0 0 @pad @pad;
+}
+
+#console-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: @pad;
+}
+
+#console-wrapper label {
+	background: @emph-col-bg;
+	color: @bg-col-light;
+	font-weight: bold;
+	border-radius: 20px 0 0 20px;
+	padding: @pad;
+
+	@media @tablet {
+		padding: @pad * 3/4;
+	}
+
+	@media @mobile {
+		padding: @pad / 2;
+	}
+}
+
+#console {
+	flex-grow: 1;
+	outline: unset;
+	background: @bg-col-light;
+	color: unset;
+	font: unset;
+	border: none;
+	border-radius: 0 20px 20px 0;
+	padding: @pad;
+	min-width: 100px;
+
+	&:focus {
+		border-color: @emph-col;
+	}
+
+	@media @tablet {
+		padding: @pad * 3/4;
+	}
+
+	@media @mobile {
+		padding: @pad / 2;
+	}
 }
 
 footer {
