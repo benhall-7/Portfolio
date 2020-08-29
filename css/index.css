@@ -153,7 +153,7 @@ body {
 a,
 .cmd {
   cursor: pointer;
-  color: #f1ca74;
+  color: #ffd000;
   text-decoration: unset;
 }
 a:hover,
