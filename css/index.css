@@ -238,16 +238,6 @@ img.icon {
   flex-direction: row;
   padding: 8pt 0;
 }
-@media (max-width: 800px) {
-  #console-wrapper {
-    padding: 24pt;
-  }
-}
-@media (max-width: 500px) {
-  #console-wrapper {
-    padding: 16pt;
-  }
-}
 #console-wrapper label {
   display: flex;
   flex-direction: column;
@@ -258,6 +248,16 @@ img.icon {
   background: #d8ceab;
   color: #304252;
   font-weight: bold;
+}
+@media (max-width: 800px) {
+  #console-wrapper label {
+    height: 50px;
+  }
+}
+@media (max-width: 500px) {
+  #console-wrapper label {
+    height: 40px;
+  }
 }
 #console {
   flex-grow: 1;
@@ -276,12 +276,12 @@ img.icon {
 }
 @media (max-width: 800px) {
   #console {
-    padding: 24pt;
+    height: 50px;
   }
 }
 @media (max-width: 500px) {
   #console {
-    padding: 16pt;
+    height: 40px;
   }
 }
 footer {

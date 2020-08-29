@@ -198,14 +198,6 @@ img.icon {
 	flex-direction: row;
 	// align-items: center;
 	padding: @pad / 2 0;
-
-	@media @tablet {
-		padding: @pad * 3/2;
-	}
-
-	@media @mobile {
-		padding: @pad;
-	}
 }
 
 #console-wrapper label {
@@ -218,6 +210,14 @@ img.icon {
 	background: @emph-col-bg;
 	color: @bg-col-light;
 	font-weight: bold;
+
+	@media @tablet {
+		height: 50px;
+	}
+
+	@media @mobile {
+		height: 40px;
+	}
 }
 
 #console {
@@ -237,11 +237,11 @@ img.icon {
 	}
 
 	@media @tablet {
-		padding: @pad * 3/2;
+		height: 50px;
 	}
 
 	@media @mobile {
-		padding: @pad;
+		height: 40px;
 	}
 }
 
