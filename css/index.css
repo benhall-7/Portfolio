@@ -208,7 +208,6 @@ body {
 }
 header {
   border-bottom: 1px dashed #f29559;
-  margin-bottom: 8pt;
 }
 header h1 {
   text-align: center;
@@ -237,48 +236,52 @@ img.icon {
 #console-wrapper {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  margin-bottom: 16pt;
-}
-#console-wrapper label {
-  background: #d8ceab;
-  color: #304252;
-  font-weight: bold;
-  border-radius: 20px 0 0 20px;
-  padding: 16pt;
+  padding: 8pt 0;
 }
 @media (max-width: 800px) {
-  #console-wrapper label {
-    padding: 12pt;
+  #console-wrapper {
+    padding: 24pt;
   }
 }
 @media (max-width: 500px) {
-  #console-wrapper label {
-    padding: 8pt;
+  #console-wrapper {
+    padding: 16pt;
   }
+}
+#console-wrapper label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 60px;
+  padding: 0 16pt;
+  border-radius: 20px 0 0 20px;
+  background: #d8ceab;
+  color: #304252;
+  font-weight: bold;
 }
 #console {
   flex-grow: 1;
+  min-width: 100px;
+  height: 60px;
+  padding: 0 16pt;
   outline: unset;
   background: #304252;
   color: unset;
   font: unset;
   border: none;
   border-radius: 0 20px 20px 0;
-  padding: 16pt;
-  min-width: 100px;
 }
 #console:focus {
   border-color: #ccc39c;
 }
 @media (max-width: 800px) {
   #console {
-    padding: 12pt;
+    padding: 24pt;
   }
 }
 @media (max-width: 500px) {
   #console {
-    padding: 8pt;
+    padding: 16pt;
   }
 }
 footer {

@@ -164,7 +164,6 @@ body {
 
 header {
 	border-bottom: 1px dashed @text-col;
-	margin-bottom: @pad / 2;
 
 	h1 {
 		text-align: center;
@@ -197,47 +196,52 @@ img.icon {
 #console-wrapper {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
-	margin-bottom: @pad;
-}
-
-#console-wrapper label {
-	background: @emph-col-bg;
-	color: @bg-col-light;
-	font-weight: bold;
-	border-radius: 20px 0 0 20px;
-	padding: @pad;
+	// align-items: center;
+	padding: @pad / 2 0;
 
 	@media @tablet {
-		padding: @pad * 3/4;
+		padding: @pad * 3/2;
 	}
 
 	@media @mobile {
-		padding: @pad / 2;
+		padding: @pad;
 	}
+}
+
+#console-wrapper label {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 60px;
+	padding: 0 @pad;
+	border-radius: 20px 0 0 20px;
+	background: @emph-col-bg;
+	color: @bg-col-light;
+	font-weight: bold;
 }
 
 #console {
 	flex-grow: 1;
+	min-width: 100px;
+	height: 60px;
+	padding: 0 @pad;
 	outline: unset;
 	background: @bg-col-light;
 	color: unset;
 	font: unset;
 	border: none;
 	border-radius: 0 20px 20px 0;
-	padding: @pad;
-	min-width: 100px;
 
 	&:focus {
 		border-color: @emph-col;
 	}
 
 	@media @tablet {
-		padding: @pad * 3/4;
+		padding: @pad * 3/2;
 	}
 
 	@media @mobile {
-		padding: @pad / 2;
+		padding: @pad;
 	}
 }
 
