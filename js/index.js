@@ -244,7 +244,7 @@ function handleCommand(args) {
 function submitCmd(commandStr) {
     let cmd = commandStr || consoleMain.value;
     // trim front and back, and split words up by spaces
-    let cb = handleCommand(cmd.trim().split(/ +/g));
+    let cb = handleCommand(cmd.toLowerCase().trim().split(/ +/g));
     state.cmdHistory.push(cmd);
     consoleMain.value = "";
     consoleMain.blur();
