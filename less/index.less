@@ -163,7 +163,7 @@ body {
 }
 
 header {
-	border-bottom: 1px dashed @text-col;
+	border-bottom: 1px dashed @emph-col;
 
 	h1 {
 		text-align: center;
@@ -173,7 +173,7 @@ header {
 #content {
 	// .flex(row, flex-start, nowrap);
 	flex-grow: 1;
-	margin: 0 @pad;
+	margin: 0 @pad @pad / 2;
 
 	@media @mobile {
 		margin: 0;
@@ -245,9 +245,26 @@ img.icon {
 	}
 }
 
+.help {
+	text-align: center;
+	font-size: 0.8em;
+	font-style: italic;
+	margin-bottom: @pad / 2;
+
+	.short-border {
+		width: 200px;
+		padding: 0;
+		margin: 0 auto @pad / 2;
+		border-top: 1px dashed @emph-col;
+	}
+
+	p {
+		display: inline-block;
+	}
+}
+
 footer {
-	margin-top: @pad;
 	padding: @pad / 2 0;
-	border-top: 1px dashed @text-col;
+	border-top: 1px dashed @emph-col;
 	text-align: center;
 }

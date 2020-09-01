@@ -207,14 +207,14 @@ body {
   min-width: 250px;
 }
 header {
-  border-bottom: 1px dashed #f29559;
+  border-bottom: 1px dashed #ccc39c;
 }
 header h1 {
   text-align: center;
 }
 #content {
   flex-grow: 1;
-  margin: 0 16pt;
+  margin: 0 16pt 8pt;
 }
 @media (max-width: 500px) {
   #content {
@@ -284,9 +284,23 @@ img.icon {
     height: 40px;
   }
 }
+.help {
+  text-align: center;
+  font-size: 0.8em;
+  font-style: italic;
+  margin-bottom: 8pt;
+}
+.help .short-border {
+  width: 200px;
+  padding: 0;
+  margin: 0 auto 8pt;
+  border-top: 1px dashed #ccc39c;
+}
+.help p {
+  display: inline-block;
+}
 footer {
-  margin-top: 16pt;
   padding: 8pt 0;
-  border-top: 1px dashed #f29559;
+  border-top: 1px dashed #ccc39c;
   text-align: center;
 }
