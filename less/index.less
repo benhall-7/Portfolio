@@ -164,6 +164,7 @@ body {
 
 header {
 	border-bottom: 1px dashed @emph-col;
+	margin-bottom: @pad / 2;
 
 	h1 {
 		text-align: center;
@@ -176,7 +177,7 @@ header {
 	margin: 0 @pad @pad / 2;
 
 	@media @mobile {
-		margin: 0;
+		margin: 0 0 @pad / 2;
 	}
 }
 
@@ -196,8 +197,7 @@ img.icon {
 #console-wrapper {
 	display: flex;
 	flex-direction: row;
-	// align-items: center;
-	padding: @pad / 2 0;
+	margin-bottom: @pad / 2;
 }
 
 #console-wrapper label {
@@ -211,37 +211,31 @@ img.icon {
 	color: @bg-col-light;
 	font-weight: bold;
 
-	@media @tablet {
-		height: 50px;
-	}
-
-	@media @mobile {
-		height: 40px;
-	}
 }
 
 #console {
 	flex-grow: 1;
 	min-width: 100px;
-	height: 60px;
-	padding: 0 @pad;
 	outline: unset;
 	background: @bg-col-light;
 	color: unset;
 	font: unset;
 	border: none;
 	border-radius: 0 20px 20px 0;
+}
 
-	&:focus {
-		border-color: @emph-col;
-	}
-
+#console-wrapper label, #console {
+	height: 60px;
+	padding: 0 @pad;
+	
 	@media @tablet {
 		height: 50px;
+		padding: 0 @pad * 3 / 4;
 	}
 
 	@media @mobile {
 		height: 40px;
+		padding: 0 @pad / 2;
 	}
 }
 

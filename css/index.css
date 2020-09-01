@@ -208,6 +208,7 @@ body {
 }
 header {
   border-bottom: 1px dashed #ccc39c;
+  margin-bottom: 8pt;
 }
 header h1 {
   text-align: center;
@@ -218,7 +219,7 @@ header h1 {
 }
 @media (max-width: 500px) {
   #content {
-    margin: 0;
+    margin: 0 0 8pt;
   }
 }
 img.icon {
@@ -236,7 +237,7 @@ img.icon {
 #console-wrapper {
   display: flex;
   flex-direction: row;
-  padding: 8pt 0;
+  margin-bottom: 8pt;
 }
 #console-wrapper label {
   display: flex;
@@ -249,21 +250,9 @@ img.icon {
   color: #304252;
   font-weight: bold;
 }
-@media (max-width: 800px) {
-  #console-wrapper label {
-    height: 50px;
-  }
-}
-@media (max-width: 500px) {
-  #console-wrapper label {
-    height: 40px;
-  }
-}
 #console {
   flex-grow: 1;
   min-width: 100px;
-  height: 60px;
-  padding: 0 16pt;
   outline: unset;
   background: #304252;
   color: unset;
@@ -271,17 +260,23 @@ img.icon {
   border: none;
   border-radius: 0 20px 20px 0;
 }
-#console:focus {
-  border-color: #ccc39c;
+#console-wrapper label,
+#console {
+  height: 60px;
+  padding: 0 16pt;
 }
 @media (max-width: 800px) {
+  #console-wrapper label,
   #console {
     height: 50px;
+    padding: 0 12pt;
   }
 }
 @media (max-width: 500px) {
+  #console-wrapper label,
   #console {
     height: 40px;
+    padding: 0 8pt;
   }
 }
 .help {

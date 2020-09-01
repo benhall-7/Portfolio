@@ -28,7 +28,7 @@
 
       <div class="help">
         <div class="short-border"></div>
-        <p>For a list of commands, press, or type and enter the "<span class="cmd" tabindex="0" onclick="submitCmd('help')">help</span>" command</p>
+        <p>(For a list of commands, press, or type and enter the "<span class="cmd" tabindex="0" onclick="submitCmd('help')">help</span>" command)</p>
       </div>
 
       <template id="input-none">
@@ -37,13 +37,10 @@
 
       <template id="input-invalid">
         <p>The command "<span class="arg0 emph"></span>" does not exist!</p>
-        <p>For list of available commands, see the "<span class="cmd" tabindex="0" onclick="submitCmd('help')">help</span>" command</p>
       </template>
 
       <template id="input-default-invalid">
         <p>The command "<span class="arg0 emph"></span>" has no default behavior</p>
-        <!-- onclick has to be assigned in javascript to work dynamically -->
-        <p>For list of available commands, see the "<span class="cmd" tabindex="0" onclick="submitCmd('help')">help</span>" command</p>
       </template>
 
       <template id="input-help">
@@ -55,7 +52,6 @@
         </ul>
         <h3>Main commands</h3>
         <ul>
-          <li><span class="cmd" tabindex="0" onclick="submitCmd('help')">help</span>: this help text</li>
           <li><span class="cmd" tabindex="0" onclick="submitCmd('about')">about</span>: overview of me</li>
           <li><span class="cmd" tabindex="0" onclick="submitCmd('projects')">projects</span>: some larger projects I've worked on</li>
           <li><span class="cmd" tabindex="0" onclick="submitCmd('skills')">skills</span>: a list of my skillsets</li>
@@ -81,7 +77,8 @@
           Hi! My name is <span class="emph">Benjamin Hall</span>,
           I'm a software engineer and full-stack web developer.
           Although born and raised in Northern California, I'm currently living near Pittsburgh, PA.<br/><br/>
-          As a lifelong advocate (and prior student) for Mathematics, I seek to find creative and generic solutions to problems to make future work easier and more intuitive.<br/><br/>
+          As a lifelong advocate (and prior student) for Mathematics, I seek to find creative and generic
+          solutions to problems to improve the quality and ease of future work.
         </p>
         <!-- guarantees the containing div at least matches the height of the floating image -->
         <div style="clear:both;"></div>
