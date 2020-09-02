@@ -74,14 +74,6 @@ html, body {
 @tablet: ~"(max-width: 800px)";
 @mobile: ~"(max-width: 500px)";
 
-@keyframes blink {
-	50% {
-		border-bottom: 4px white solid;
-		padding-bottom: -4px;
-		color: @emph-col;
-	}
-}
-
 .cursor-blink {
 	animation-name: blink;
 	animation-duration: 1s;
@@ -137,15 +129,23 @@ h3 {
 	line-height: 2em;
 }
 
+input {
+	min-width: 100px;
+	outline: unset;
+	background: @bg-col-light;
+	color: unset;
+	font: unset;
+	border: none;
+}
+
 .desktop-only {
 	@media @tablet {
 		display: none;
 	}
 }
 
-.arrow {
-	position: absolute;
-	margin-left: -@pad;
+.space {
+	width: @pad;
 }
 
 body {
@@ -215,12 +215,6 @@ img.icon {
 
 #console {
 	flex-grow: 1;
-	min-width: 100px;
-	outline: unset;
-	background: @bg-col-light;
-	color: unset;
-	font: unset;
-	border: none;
 	border-radius: 0 20px 20px 0;
 }
 
@@ -240,27 +234,68 @@ img.icon {
 }
 
 #diff-form {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 
+	@media @mobile {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+
+#diff-form div {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	align-items: center;
+	margin-left: @pad;
+
+	@media @mobile {
+		align-items: flex-start;
+		margin: 0;
+		width: 100%;
+	}
+}
+
+#diff-form div:first-child {
+	margin-left: 0;
+}
+
+#diff-form input {
+	width: 100%;
+	flex-grow: 1;
+	height: 40px;
+	padding: 0 @pad / 2;
+
+	@media @mobile {
+		width: 100%;
+	}
 }
 
 #diff-output {
-	color: white;
+	color: @emph-col;
+	text-align: center;
 }
 
 .diff-remove {
 	background: red;
+	margin: 0 @pad / 4;
 }
 
 .diff-insert {
 	background: green;
+	margin: 0 @pad / 4;
 }
 
 .diff-alter-a {
-	background: orange;
+	background: red;
+	margin-left: @pad / 4;
 }
 
 .diff-alter-b {
-	background: blueviolet;
+	background: green;
+	margin-right: @pad / 4;
 }
 
 .help {
