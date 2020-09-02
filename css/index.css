@@ -279,6 +279,21 @@ img.icon {
     padding: 0 8pt;
   }
 }
+#diff-output {
+  color: white;
+}
+.diff-remove {
+  background: red;
+}
+.diff-insert {
+  background: green;
+}
+.diff-alter-a {
+  background: orange;
+}
+.diff-alter-b {
+  background: blueviolet;
+}
 .help {
   text-align: center;
   font-size: 0.8em;

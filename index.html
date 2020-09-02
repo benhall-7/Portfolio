@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="prefetch" href="img/self.jpg">
+    <script src="diff.js" async></script>
     <script src="js/index.js" async></script>
   </head>
 
@@ -96,7 +97,8 @@
       <template id="input-skills">
         <h2>Web development related:</h2>
         <ul>
-          <li>Experience writing pages in HTML, CSS, and Javascript</li>
+          <li>HTML5, CSS, and Javascript</li>
+          <li>Modules such as Flexbox and LESS</li>
           <li>Modules such as Flexbox and LESS</li>
           <li>Modern design paradigms such as using components, APIs, and handling asynchronous HTTP requests</li>
         </ul>
@@ -150,6 +152,14 @@
       
       <template id="input-history-clear">
         <p class="emph">Command history cleared.</p>
+      </template>
+
+      <template id="input-diff">
+        <form id="diff-form">
+          <input type="text" id="diff-a" oninput="handleDiffChange()"/>
+          <input type="text" id="diff-b" oninput="handleDiffChange()"/>
+        </form>
+        <p id="diff-output"></p>
       </template>
     </section>
     <footer>

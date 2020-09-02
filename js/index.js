@@ -1,7 +1,7 @@
 let consoleMain = document.getElementById("console");
 let consoleWrapper = document.getElementById("console-wrapper");
 let content = document.getElementById("content");
-const NBSP = "\u00A0";
+let diff_parts = { a: "", b: "" };
 
 // create a map of all the templates in the document by id
 let templates = Array.from(document.getElementsByTagName("template")).reduce((prev, cur) => {
@@ -163,6 +163,7 @@ const COMMANDS = {
             },
         ]
     },
+    diff: { template: "input-diff" },
 }
 
 function findCommand(commands, arg) {
@@ -278,3 +279,52 @@ consoleWrapper.addEventListener("submit", e => {
     submitCmd();
     e.preventDefault();
 });
+
+function handleDiffChange() {
+    let a = document.getElementById("diff-a").value;
+    let b = document.getElementById("diff-b").value;
+    let diff = Diff(a, b);
+    let output = document.getElementById("diff-output");
+    output.textContent = "";
+    let pos = 0;
+    console.clear();
+    console.log(diff);
+    for (const change of diff) {
+        const next = change.get("index");
+        if (next > 0) {
+            output.append(a.slice(pos, next));
+            pos = next;
+        }
+        switch (change.get("type")) {
+            case "removed": {
+                let deleted = document.createElement("span");
+                deleted.classList.add("diff-remove");
+                deleted.append(a.slice(pos, pos + change.get("len")));
+                output.append(deleted);
+                pos += change.get("len");
+                break;
+            }
+            case "inserted": {
+                let inserted = document.createElement("span");
+                inserted.classList.add("diff-insert");
+                inserted.append(change.get("changes"));
+                output.append(inserted);
+                break;
+            }
+            case "altered": {
+                let deleted = document.createElement("span");
+                deleted.classList.add("diff-alter-a");
+                deleted.append(a.slice(pos, pos + change.get("changes").length));
+                let inserted = document.createElement("span");
+                inserted.classList.add("diff-alter-b");
+                inserted.append(change.get("changes"));
+                output.append(deleted, inserted);
+                pos += change.get("changes").length;
+                break;
+            }
+        }
+    }
+    if (pos < a.length) {
+        output.append(a.slice(pos));
+    }
+}
