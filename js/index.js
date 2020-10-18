@@ -287,8 +287,6 @@ function handleDiffChange() {
     let output = document.getElementById("diff-output");
     output.textContent = "";
     let pos = 0;
-    console.clear();
-    console.log(diff);
     for (const change of diff) {
         const next = change.get("index");
         if (next > 0) {

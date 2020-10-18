@@ -9,8 +9,18 @@
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="prefetch" href="img/self.jpg">
+    <!-- LOAD DIFF WASM MODULE -->
+    <script type="module">
+      import init, { diff_string } from "./js/diff/diff.js";
+      init().then(() => { window.Diff = diff_string });
+    </script>
+    <!-- LOAD GAME OF LIFE WASM MODULE -->
+    <script type="module">
+      import init, { GameOfLife } from "./js/conway/conway.js";
+      init().then(() => { window.GameOfLife = GameOfLife });
+    </script>
+    <!-- LOAD MAIN PAGE CODE -->
     <script src="js/index.js" async></script>
-    <script src="js/diff/diff.js" async></script>
   </head>
 
   <body>
