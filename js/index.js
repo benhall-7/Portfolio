@@ -164,6 +164,7 @@ const COMMANDS = {
         ]
     },
     diff: { template: "input-diff" },
+    conway: { template: "input-conway" }
 }
 
 function findCommand(commands, arg) {
@@ -325,4 +326,17 @@ function handleDiffChange() {
     if (pos < a.length) {
         output.append(a.slice(pos));
     }
+}
+
+async function conwayStart() {
+    let canvas = document.getElementById("game-canvas");
+    window.GAME = new GameOfLife(10, 10, 20);
+    GAME.set_on([[0, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
+    GAME.draw(canvas, "#FFFFFF", "#808080");
+}
+
+async function conwayStep() {
+    let canvas = document.getElementById("game-canvas");
+    GAME.step();
+    GAME.draw(canvas, "#FFFFFF", "#808080");
 }

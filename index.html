@@ -179,6 +179,15 @@
         <h2>Diff output:</h2>
         <p id="diff-output"></p>
       </template>
+
+      <template id="input-conway">
+        <h2>Conway's Game of Life</h2>
+        <iframe hidden onload="conwayStart()"></iframe>
+        <canvas
+          id="game-canvas"
+        ><p>This browser does not support the canvas element!</p></canvas>
+        <button onclick="conwayStep()">Step</button>
+      </template>
     </section>
     <footer>
       <p>&copy; Benjamin Hall 2020</p>
