@@ -334,6 +334,8 @@ function handleDiffChange() {
     }
 }
 
+let gameIntervalHandle = null;
+
 async function conwayStart() {
     let canvas = document.getElementById("game-canvas");
     window.GAME = new GameOfLife(gameParams.x, gameParams.y, gameParams.size);
@@ -352,4 +354,17 @@ async function conwayStep() {
     let canvas = document.getElementById("game-canvas");
     GAME.step();
     GAME.draw(canvas, gameParams.alive, gameParams.dead);
+}
+
+async function conwayPlay() {
+    if (!gameIntervalHandle) {
+        gameIntervalHandle = setInterval(() => conwayStep(), 1000 / 10);
+    }
+}
+
+async function conwayStop() {
+    if (gameIntervalHandle) {
+        clearInterval(gameIntervalHandle)
+        gameIntervalHandle = null;
+    }
 }

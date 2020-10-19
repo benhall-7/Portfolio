@@ -183,7 +183,9 @@
       <template id="input-conway">
         <h2>Conway's Game of Life</h2>
         <canvas id="game-canvas"><p>This browser does not support the canvas element!</p></canvas>
-        <button onclick="conwayStep()">Step</button>
+        <button onclick="conwayStep()">1 Step</button>
+        <button onclick="conwayPlay()">Play</button>
+        <button onclick="conwayStop()">Stop</button>
         <!-- this will run on load. Note also that conwayStart is async -->
         <script>conwayStart()</script>
       </template>
