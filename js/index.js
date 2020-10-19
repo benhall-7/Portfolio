@@ -1,7 +1,13 @@
 let consoleMain = document.getElementById("console");
 let consoleWrapper = document.getElementById("console-wrapper");
 let content = document.getElementById("content");
-let diff_parts = { a: "", b: "" };
+let gameParams = {
+    size: 20,
+    x: 7,
+    y: 15,
+    alive: "#ffffff",
+    dead: "#808080",
+};
 
 // create a map of all the templates in the document by id
 let templates = Array.from(document.getElementsByTagName("template")).reduce((prev, cur) => {
@@ -330,13 +336,20 @@ function handleDiffChange() {
 
 async function conwayStart() {
     let canvas = document.getElementById("game-canvas");
-    window.GAME = new GameOfLife(10, 10, 20);
+    window.GAME = new GameOfLife(gameParams.x, gameParams.y, gameParams.size);
     GAME.set_on([[0, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
-    GAME.draw(canvas, "#FFFFFF", "#808080");
+    GAME.draw(canvas, gameParams.alive, gameParams.dead);
+    canvas.addEventListener('click', e => {
+        const rect = canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) / gameParams.size);
+        const y = Math.floor((e.clientY - rect.top) / gameParams.size);
+        GAME.invert([[y, x]]);
+        GAME.draw(canvas, gameParams.alive, gameParams.dead);
+    })
 }
 
 async function conwayStep() {
     let canvas = document.getElementById("game-canvas");
     GAME.step();
-    GAME.draw(canvas, "#FFFFFF", "#808080");
+    GAME.draw(canvas, gameParams.alive, gameParams.dead);
 }

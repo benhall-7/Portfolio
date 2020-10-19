@@ -234,7 +234,36 @@ export class GameOfLife {
     * @param {Array<any>} coordinates
     */
     set_on(coordinates) {
-        wasm.gameoflife_set_on(this.ptr, addHeapObject(coordinates));
+        try {
+            wasm.gameoflife_set_on(this.ptr, addBorrowedObject(coordinates));
+        } finally {
+            heap[stack_pointer++] = undefined;
+        }
+    }
+    /**
+    * @param {Array<any>} coordinates
+    */
+    set_off(coordinates) {
+        try {
+            wasm.gameoflife_set_off(this.ptr, addBorrowedObject(coordinates));
+        } finally {
+            heap[stack_pointer++] = undefined;
+        }
+    }
+    /**
+    * @param {Array<any>} coordinates
+    */
+    invert(coordinates) {
+        try {
+            wasm.gameoflife_invert(this.ptr, addBorrowedObject(coordinates));
+        } finally {
+            heap[stack_pointer++] = undefined;
+        }
+    }
+    /**
+    */
+    clear() {
+        wasm.gameoflife_clear(this.ptr);
     }
     /**
     */

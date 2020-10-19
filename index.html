@@ -182,11 +182,10 @@
 
       <template id="input-conway">
         <h2>Conway's Game of Life</h2>
-        <iframe hidden onload="conwayStart()"></iframe>
-        <canvas
-          id="game-canvas"
-        ><p>This browser does not support the canvas element!</p></canvas>
+        <canvas id="game-canvas"><p>This browser does not support the canvas element!</p></canvas>
         <button onclick="conwayStep()">Step</button>
+        <!-- this will run on load. Note also that conwayStart is async -->
+        <script>conwayStart()</script>
       </template>
     </section>
     <footer>
