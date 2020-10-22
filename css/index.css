@@ -201,6 +201,10 @@ button {
     padding: 4pt;
   }
 }
+button:disabled {
+  background: #304252;
+  color: #ccc39c;
+}
 @media (max-width: 800px) {
   .desktop-only {
     display: none;

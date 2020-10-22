@@ -250,6 +250,16 @@ function handleCommand(args) {
     }
 }
 
+function clean() {
+    if (gameIntervalHandle) {
+        clearInterval(gameIntervalHandle);
+        gameIntervalHandle = null;
+    }
+    if (window.GAME) {
+        GAME = null;
+    }
+}
+
 function submitCmd(commandStr) {
     let cmd = commandStr || consoleMain.value;
     // trim front and back, and split words up by spaces
@@ -258,6 +268,7 @@ function submitCmd(commandStr) {
     consoleMain.value = "";
     consoleMain.blur();
     if (typeof cb == "function") cb();
+    clean();
 }
 
 consoleMain.addEventListener("keydown", e => {
@@ -376,6 +387,13 @@ async function conwayStep() {
 async function conwayPlay() {
     if (!gameIntervalHandle) {
         gameIntervalHandle = setInterval(__conwayStep, 1000 / 10);
+
+        let play = document.getElementById("conway-controls-play");
+        let pause = document.getElementById("conway-controls-pause");
+        let step = document.getElementById("conway-controls-step");
+        play.disabled = true;
+        pause.disabled = false;
+        step.disabled = true;
     }
 }
 
@@ -383,6 +401,13 @@ async function conwayStop() {
     if (gameIntervalHandle) {
         clearInterval(gameIntervalHandle)
         gameIntervalHandle = null;
+        
+        let play = document.getElementById("conway-controls-play");
+        let pause = document.getElementById("conway-controls-pause");
+        let step = document.getElementById("conway-controls-step");
+        play.disabled = false;
+        pause.disabled = true;
+        step.disabled = false;
     }
 }
 

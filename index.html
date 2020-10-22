@@ -205,10 +205,10 @@
           </form>
           <h3>Controls</h3>
           <div class="conway-controls">
+            <button id="conway-controls-play" onclick="conwayPlay()">Play</button>
+            <button id="conway-controls-pause" onclick="conwayStop()" disabled>Pause</button>
+            <button id="conway-controls-step" onclick="conwayStep()">Step</button>
             <button onclick="conwayReset()">Reset</button>
-            <button onclick="conwayPlay()">Play</button>
-            <button onclick="conwayStop()">Pause</button>
-            <button onclick="conwayStep()">Step</button>
           </div>
           <canvas id="game-canvas"><p>This browser does not support the canvas element!</p></canvas>
         </section>
