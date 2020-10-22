@@ -138,6 +138,18 @@ input {
 	border: none;
 }
 
+button {
+	display: block;
+	margin:  @pad / 2;
+	outline: unset;
+	border: none;
+	font: unset;
+	padding: @pad / 2;
+	background: @emph-col;
+	color: @bg-col-light;
+	font-weight: bold;
+}
+
 .desktop-only {
 	@media @tablet {
 		display: none;
@@ -296,6 +308,41 @@ img.icon {
 .diff-alter-b {
 	background: green;
 	margin-right: @pad / 4;
+}
+
+.conway h2 {
+	text-align: center;
+}
+
+.conway h3 {
+	text-align: center;
+	font-weight: bold;
+}
+
+.conway-presets {
+	text-align: center;
+}
+
+.conway-presets, .conway-controls {
+	display: flex;
+	justify-content: center;
+}
+
+.conway-size-inputs {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+
+	div {
+		margin: @pad / 2;
+	}
+}
+
+.conway-size-form button {
+	width: 200px;
+	height: 30px;
+	padding: 0;
+	margin: auto;
 }
 
 .help {

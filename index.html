@@ -181,11 +181,37 @@
       </template>
 
       <template id="input-conway">
-        <h2>Conway's Game of Life</h2>
-        <canvas id="game-canvas"><p>This browser does not support the canvas element!</p></canvas>
-        <button onclick="conwayStep()">1 Step</button>
-        <button onclick="conwayPlay()">Play</button>
-        <button onclick="conwayStop()">Stop</button>
+        <section class="conway">
+          <h2>Conway's Game of Life</h2>
+          <h3>Presets</h3>
+          <div class="conway-presets">
+            <button onclick="setPreset('blinker')">Blinker</button>
+            <button onclick="setPreset('pentadec')">Pentadecathlon</button>
+            <button onclick="setPreset('lwss')">Spaceship</button>
+          </div>
+          <h3>Size</h3>
+          <form id="conway-size-form">
+            <div class="conway-size-inputs">
+              <div>
+                <label for="conway-width">Rows</label>
+                <input type="number" min="1" max="50" id="conway-width"/>
+              </div>
+              <div>
+                <label for="conway-height">Columns</label>
+                <input type="number" min="1" max="50" id="conway-height"/>
+              </div>
+            </div>
+            <button>Set</button>
+          </form>
+          <h3>Controls</h3>
+          <div class="conway-controls">
+            <button onclick="conwayReset()">Reset</button>
+            <button onclick="conwayPlay()">Play</button>
+            <button onclick="conwayStop()">Pause</button>
+            <button onclick="conwayStep()">Step</button>
+          </div>
+          <canvas id="game-canvas"><p>This browser does not support the canvas element!</p></canvas>
+        </section>
         <!-- this will run on load. Note also that conwayStart is async -->
         <script>conwayStart()</script>
       </template>

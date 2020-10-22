@@ -183,6 +183,17 @@ input {
   font: unset;
   border: none;
 }
+button {
+  display: block;
+  margin: 8pt;
+  outline: unset;
+  border: none;
+  font: unset;
+  padding: 8pt;
+  background: #ccc39c;
+  color: #304252;
+  font-weight: bold;
+}
 @media (max-width: 800px) {
   .desktop-only {
     display: none;
@@ -331,6 +342,35 @@ img.icon {
 .diff-alter-b {
   background: green;
   margin-right: 4pt;
+}
+.conway h2 {
+  text-align: center;
+}
+.conway h3 {
+  text-align: center;
+  font-weight: bold;
+}
+.conway-presets {
+  text-align: center;
+}
+.conway-presets,
+.conway-controls {
+  display: flex;
+  justify-content: center;
+}
+.conway-size-inputs {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.conway-size-inputs div {
+  margin: 8pt;
+}
+.conway-size-form button {
+  width: 200px;
+  height: 30px;
+  padding: 0;
+  margin: auto;
 }
 .help {
   text-align: center;

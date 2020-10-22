@@ -3,11 +3,12 @@ let consoleWrapper = document.getElementById("console-wrapper");
 let content = document.getElementById("content");
 let gameParams = {
     size: 20,
-    x: 7,
-    y: 15,
+    x: 10,
+    y: 10,
     alive: "#ffffff",
     dead: "#808080",
 };
+let gameIntervalHandle = null;
 
 // create a map of all the templates in the document by id
 let templates = Array.from(document.getElementsByTagName("template")).reduce((prev, cur) => {
@@ -334,31 +335,47 @@ function handleDiffChange() {
     }
 }
 
-let gameIntervalHandle = null;
-
 async function conwayStart() {
     let canvas = document.getElementById("game-canvas");
     window.GAME = new GameOfLife(gameParams.x, gameParams.y, gameParams.size);
     GAME.set_on([[0, 1], [1, 2], [2, 0], [2, 1], [2, 2]]);
     GAME.draw(canvas, gameParams.alive, gameParams.dead);
+    
     canvas.addEventListener('click', e => {
         const rect = canvas.getBoundingClientRect();
         const x = Math.floor((e.clientX - rect.left) / gameParams.size);
         const y = Math.floor((e.clientY - rect.top) / gameParams.size);
         GAME.invert([[y, x]]);
         GAME.draw(canvas, gameParams.alive, gameParams.dead);
+    });
+
+    let size_form = document.getElementById("conway-size-form");
+    size_form.addEventListener("submit", e => {
+        e.preventDefault();
+        let height = document.getElementById("conway-width").value;
+        let width = document.getElementById("conway-height").value;
+        height = height.length > 0 ? Number(height) : gameParams.y;
+        width = width.length > 0 ? Number(width) : gameParams.x;
+        GAME = new GameOfLife(width, height, gameParams.size);
+        GAME.draw(canvas, gameParams.alive, gameParams.dead);
     })
 }
 
-async function conwayStep() {
+function __conwayStep() {
     let canvas = document.getElementById("game-canvas");
     GAME.step();
     GAME.draw(canvas, gameParams.alive, gameParams.dead);
 }
 
+async function conwayStep() {
+    if (!gameIntervalHandle) {
+        __conwayStep()
+    }
+}
+
 async function conwayPlay() {
     if (!gameIntervalHandle) {
-        gameIntervalHandle = setInterval(() => conwayStep(), 1000 / 10);
+        gameIntervalHandle = setInterval(__conwayStep, 1000 / 10);
     }
 }
 
@@ -367,4 +384,40 @@ async function conwayStop() {
         clearInterval(gameIntervalHandle)
         gameIntervalHandle = null;
     }
+}
+
+async function conwayReset() {
+    await conwayStop();
+    let canvas = document.getElementById("game-canvas");
+    GAME.clear();
+    GAME.draw(canvas, gameParams.alive, gameParams.dead);
+}
+
+async function setPreset(type) {
+    let canvas = document.getElementById("game-canvas");
+    switch (type) {
+        case "blinker": {
+            GAME = new GameOfLife(5, 5, gameParams.size);
+            GAME.set_on([[1, 2], [2, 2], [3, 2]]);
+            break;
+        }
+        case "pentadec": {
+            GAME = new GameOfLife(11, 18, gameParams.size);
+            GAME.set_on([
+                [4, 5], [5, 5],
+                [6, 4], [6, 6],
+                [7, 5], [8, 5], [9, 5], [10, 5],
+                [11, 4], [11, 6],
+                [12, 5], [13, 5]
+            ]);
+            break;
+        }
+        case "lwss": {
+            GAME = new GameOfLife(25, 7, gameParams.size);
+            GAME.set_on([[1, 1], [3, 1], [4, 2], [4, 3], [4, 4], [4, 5], [3, 5], [2, 5], [1, 4]]);
+            break;
+        }
+        default: return;
+    }
+    GAME.draw(canvas, gameParams.alive, gameParams.dead);
 }
