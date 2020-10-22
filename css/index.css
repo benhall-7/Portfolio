@@ -348,6 +348,7 @@ img.icon {
 }
 .conway h3 {
   text-align: center;
+  color: #f29559;
   font-weight: bold;
 }
 .conway-presets {
@@ -356,20 +357,34 @@ img.icon {
 .conway-presets,
 .conway-controls {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .conway-size-inputs {
   display: flex;
-  justify-content: center;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .conway-size-inputs div {
   margin: 8pt;
 }
-.conway-size-form button {
+@media (max-width: 800px) {
+  .conway-size-inputs div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+#conway-size-form button {
   width: 200px;
   height: 30px;
   padding: 0;
+  margin: auto;
+}
+#game-canvas {
+  display: block;
   margin: auto;
 }
 .help {
