@@ -148,6 +148,12 @@ button {
 	background: @emph-col;
 	color: @bg-col-light;
 	font-weight: bold;
+	cursor: pointer;
+	
+	@media @tablet {
+		margin: @pad / 2 @pad / 4;
+		padding: @pad / 4;
+	}
 }
 
 .desktop-only {

@@ -193,6 +193,13 @@ button {
   background: #ccc39c;
   color: #304252;
   font-weight: bold;
+  cursor: pointer;
+}
+@media (max-width: 800px) {
+  button {
+    margin: 8pt 4pt;
+    padding: 4pt;
+  }
 }
 @media (max-width: 800px) {
   .desktop-only {
