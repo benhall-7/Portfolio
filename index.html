@@ -80,7 +80,14 @@
             </ul>
           </li>
           <li><span class="cmd" tabindex="0" onclick="submitCmd('diff')">diff</span>: a sample text differ compiled to WASM, based off of <a class="link" href="https://github.com/BenHall-7/diff-struct">diff-struct</a></li>
-          <li><span class="cmd" tabindex="0" onclick="submitCmd('conway')">conway</span>: an implementation of <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a> in the browser! Compiled to WASM</li>
+          <li>
+            <span class="cmd" tabindex="0" onclick="submitCmd('conway')">conway</span>: Conway's Game of Life in the web browser.
+            <p>Default behavior: displays an interactive Game of Life page</p>
+            <h3>Subcommands:</h3>
+            <ul>
+              <li><span class="cmd" tabindex="0" onclick="submitCmd('conway about')">about</span>: a write-up explaining the game and its implementation here.</li>
+            </ul>
+          </li>
         </ul>
       </template>
 
