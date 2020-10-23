@@ -171,7 +171,14 @@ const COMMANDS = {
         ]
     },
     diff: { template: "input-diff" },
-    conway: { template: "input-conway" }
+    conway: {
+        default: { template: "input-conway" },
+        commands: {
+            "about": {
+                template: "input-conway-about",
+            },
+        }
+    }
 }
 
 function findCommand(commands, arg) {

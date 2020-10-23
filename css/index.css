@@ -143,6 +143,9 @@ body {
 .emph {
   color: #ccc39c;
 }
+.ital {
+  font-style: italic;
+}
 a,
 .cmd {
   cursor: pointer;
@@ -354,6 +357,15 @@ img.icon {
   background: green;
   margin-right: 4pt;
 }
+.conway-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
+.conway-title span {
+  margin-left: 8pt;
+}
 .conway h2 {
   text-align: center;
 }
@@ -397,6 +409,13 @@ img.icon {
 #game-canvas {
   display: block;
   margin: auto;
+}
+.conway-about h2,
+.conway-about h3 {
+  text-align: center;
+}
+.conway-about ul {
+  margin: 8pt 0;
 }
 .help {
   text-align: center;

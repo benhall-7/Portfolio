@@ -92,6 +92,10 @@ html, body {
 	color: @emph-col;
 }
 
+.ital {
+	font-style: italic;
+}
+
 a, .cmd {
 	cursor: pointer;
 	color: @link-col;
@@ -321,6 +325,17 @@ img.icon {
 	margin-right: @pad / 4;
 }
 
+.conway-title {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: baseline;
+
+	span {
+		margin-left: @pad / 2;
+	}
+}
+
 .conway h2 {
 	text-align: center;
 }
@@ -369,6 +384,15 @@ img.icon {
 #game-canvas {
 	display: block;
 	margin: auto;
+}
+
+.conway-about {
+	h2, h3 {
+		text-align: center;
+	}
+	ul {
+		margin: @pad / 2 0;
+	}
 }
 
 .help {
