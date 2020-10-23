@@ -261,6 +261,7 @@ function clean() {
 }
 
 function submitCmd(commandStr) {
+    clean();
     let cmd = commandStr || consoleMain.value;
     // trim front and back, and split words up by spaces
     let cb = handleCommand(cmd.toLowerCase().trim().split(/ +/g));
@@ -268,7 +269,6 @@ function submitCmd(commandStr) {
     consoleMain.value = "";
     consoleMain.blur();
     if (typeof cb == "function") cb();
-    clean();
 }
 
 consoleMain.addEventListener("keydown", e => {
