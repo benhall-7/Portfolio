@@ -1,2 +1,1 @@
-pub mod input;
-pub mod cmd;
+pub mod cmd_link;
