@@ -3,14 +3,21 @@
 mod components;
 mod args;
 
+use structopt::clap;
+use structopt::StructOpt;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 use yew::start_app;
+
+use args::Args;
+use std::rc::Rc;
 
 #[derive(Debug, Clone)]
 pub struct App {
     link: ComponentLink<Self>,
     input: String,
+    args_input: Option<Result<Args, Rc<clap::Error>>>,
+    args: Option<Args>,
 }
 
 pub enum Msg {
@@ -26,6 +33,8 @@ impl Component for App {
         App {
             link,
             input: String::new(),
+            args_input: None,
+            args: None,
         }
     }
 
@@ -33,16 +42,26 @@ impl Component for App {
         match msg {
             Msg::SetInput(s) => {
                 self.input = s;
+                self.args_input = Some(
+                    <Args as StructOpt>::from_iter_safe(self.input.split_ascii_whitespace())
+                        .map_err(|e| Rc::new(e))
+                );
                 true
             }
             Msg::SubmitInput => {
-                false // temp
+                if let Some(some) = &self.args_input {
+                    if let Ok(args) = some {
+                        self.args = Some(args.clone());
+                        return true
+                    }
+                }
+                false
             }
         }
     }
 
     fn change(&mut self, _props: Self::Properties) -> ShouldRender {
-        true
+        false
     }
 
     fn view(&self) -> Html {
@@ -50,7 +69,15 @@ impl Component for App {
             <header><h1>{"Portfolio Terminal"}</h1></header>
             <section>
                 {self.view_input()}
-                <main id="content" role="main"></main>
+                {self.view_main()}
+                {if self.args_input.as_ref().is_some() && self.args_input.as_ref().unwrap().is_err() {
+                    let some = self.args_input.as_ref().unwrap();
+                    // get out of the RC, then convert the &Result<T, E> to Result<&T, &E>
+                    let err = (*some).as_ref().unwrap_err();
+                    format!("{}", err)
+                } else {
+                    String::from("")
+                }}
 
                 <div class="help">
                     <div class="short-border"></div>
@@ -86,6 +113,20 @@ impl App {
                     })
                 />
             </form>
+        }
+    }
+
+    fn view_main(&self) -> Html {
+        html! {
+            <main id="content" role="main">
+                {self.args.as_ref().map(|a| a.view_content()).unwrap_or(self.view_default_main())}
+            </main>
+        }
+    }
+
+    fn view_default_main(&self) -> Html {
+        html! {
+            "Type in a command to get started... (TODO)"
         }
     }
 }
