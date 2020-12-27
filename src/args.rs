@@ -27,9 +27,7 @@ pub enum HistorySubCommand {
     #[structopt(about = "Clears all of this terminal's history")]
     Clear,
     #[structopt(about = "Gets the history of this terminal at a specific index.")]
-    Index {
-        num: i32
-    },
+    Index { num: i32 },
 }
 
 #[derive(Debug, Clone, StructOpt)]
@@ -46,17 +44,15 @@ impl Args {
                     <div><img class="icon" src="img/self.jpg" alt="Photo of myself in front of pink blossoms"/></div>
                     <p>
                         {"Hi! My name is "}<span class="emph">{"Benjamin Hall"}</span>
-                        {",I'm a software engineer and full-stack web developer. Although born and raised in Northern California, I'm currently living near Pittsburgh, PA."}<br/><br/>
+                        {", I'm a software engineer and full-stack web developer. Although born and raised in Northern California, I'm currently living near Pittsburgh, PA."}<br/><br/>
                         {"As a lifelong advocate (and prior student) for Mathematics, I seek to find creative and generic solution to problems that not only improve consistency in user experience, but to ease future development too."}
                     </p>
                     // guarantees the containing div at least matches the height of the floating image
                     <div style="clear:both;"></div>
                 </> }
             }
-            _ => html! { "" }
-            // Args::Contact => {
-
-            // }
+            _ => html! { "" },
+            // Args::Contact => {}
             // Args::Skills => {}
             // Args::Projects => {}
             // Args::History => {}

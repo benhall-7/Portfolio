@@ -1,7 +1,7 @@
-#![recursion_limit="256"]
+#![recursion_limit = "256"]
 
-mod components;
 mod args;
+mod components;
 
 use structopt::clap;
 use structopt::StructOpt;
@@ -44,7 +44,7 @@ impl Component for App {
                 self.input = s;
                 self.args_input = Some(
                     <Args as StructOpt>::from_iter_safe(self.input.split_ascii_whitespace())
-                        .map_err(|e| Rc::new(e))
+                        .map_err(|e| Rc::new(e)),
                 );
                 true
             }
@@ -52,7 +52,7 @@ impl Component for App {
                 if let Some(some) = &self.args_input {
                     if let Ok(args) = some {
                         self.args = Some(args.clone());
-                        return true
+                        return true;
                     }
                 }
                 false
