@@ -1,4 +1,4 @@
-#![recursion_limit = "256"]
+#![recursion_limit = "512"]
 
 mod args;
 mod components;
@@ -17,6 +17,7 @@ pub struct App {
     link: ComponentLink<Self>,
     input: String,
     args_input: Option<Result<Args, Rc<clap::Error>>>,
+    args_error: Option<Rc<clap::Error>>,
     args: Option<Args>,
 }
 
@@ -34,6 +35,7 @@ impl Component for App {
             link,
             input: String::new(),
             args_input: None,
+            args_error: None,
             args: None,
         }
     }
@@ -50,10 +52,17 @@ impl Component for App {
             }
             Msg::SubmitInput => {
                 if let Some(some) = &self.args_input {
-                    if let Ok(args) = some {
-                        self.args = Some(args.clone());
-                        return true;
+                    match some {
+                        Ok(args) => {
+                            self.args = Some(args.clone());
+                            self.args_error = None;
+                        }
+                        Err(e) => {
+                            self.args = None;
+                            self.args_error = Some(e.clone())
+                        }
                     }
+                    return true;
                 }
                 false
             }
@@ -70,14 +79,6 @@ impl Component for App {
             <section>
                 {self.view_input()}
                 {self.view_main()}
-                {if self.args_input.as_ref().is_some() && self.args_input.as_ref().unwrap().is_err() {
-                    let some = self.args_input.as_ref().unwrap();
-                    // get out of the RC, then convert the &Result<T, E> to Result<&T, &E>
-                    let err = (*some).as_ref().unwrap_err();
-                    format!("{}", err)
-                } else {
-                    String::from("")
-                }}
 
                 <div class="help">
                     <div class="short-border"></div>
@@ -118,15 +119,23 @@ impl App {
 
     fn view_main(&self) -> Html {
         html! {
-            <main id="content" role="main">
-                {self.args.as_ref().map(|a| a.view_content()).unwrap_or(self.view_default_main())}
-            </main>
-        }
-    }
-
-    fn view_default_main(&self) -> Html {
-        html! {
-            "Type in a command to get started... (TODO)"
+            <main id="content" role="main">{
+                self.args
+                    .as_ref()
+                    .map(|a| a.view_content())
+                    .unwrap_or(html! {})
+            }{
+                self.args_error
+                    .as_ref()
+                    .map(|e| html! { <>
+                        {format!("MESSAGE: {}", e.message)}
+                        <br/>
+                        {format!("KIND: {:?}", e.kind)}
+                        <br/>
+                        {format!("INFO: {:?}", e.info)}
+                    </> })
+                    .unwrap_or(html! {})
+            }</main>
         }
     }
 }
