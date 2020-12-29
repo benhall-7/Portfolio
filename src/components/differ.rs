@@ -50,6 +50,7 @@ impl Component for Differ {
                     <input
                         type="text"
                         id="diff-a"
+                        value={&self.a}
                         oninput=self.link.callback(|e: InputData| DifferMessage::SetA(e.value))
                     />
                 </div>
@@ -58,6 +59,7 @@ impl Component for Differ {
                     <input
                         type="text"
                         id="diff-b"
+                        value={&self.b}
                         oninput=self.link.callback(|e: InputData| DifferMessage::SetB(e.value))
                     />
                 </div>
