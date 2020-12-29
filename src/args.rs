@@ -3,6 +3,7 @@ use structopt::StructOpt;
 use yew::prelude::*;
 
 use super::components::history::History;
+use super::components::differ::Differ;
 
 #[derive(Debug, Clone, StructOpt)]
 #[structopt(settings(&[NoBinaryName]))]
@@ -139,8 +140,12 @@ impl Args {
                     }
                 }
             }
+            Args::Diff => {
+                html! {
+                    <Differ />
+                }
+            }
             _ => html! {},
-            // Args::Diff => {}
             // Args::Conway => {}
         }
     }

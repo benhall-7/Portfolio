@@ -2,6 +2,7 @@
 
 mod args;
 mod components;
+mod utils;
 
 use structopt::clap;
 use structopt::StructOpt;
@@ -109,9 +110,7 @@ impl App {
                     autofocus=true
                     placeholder="..."
                     value=self.input
-                    oninput=self.link.callback(|e: InputData| {
-                        Msg::SetInput(e.value)
-                    })
+                    oninput=self.link.callback(|e: InputData| Msg::SetInput(e.value))
                 />
             </form>
         }
