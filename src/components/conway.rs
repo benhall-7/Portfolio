@@ -3,10 +3,10 @@ use std::str::FromStr;
 use std::time::Duration;
 
 use yew::prelude::*;
-use yew::FocusEvent;
+use yew::{FocusEvent, MouseEvent};
 use yew::services::interval::{IntervalService, IntervalTask};
 use wasm_bindgen::{JsCast, JsValue};
-use web_sys::HtmlCanvasElement;
+use web_sys::{HtmlCanvasElement};
 
 const DEFAULT_WIDTH: usize = 10;
 const DEFAULT_HEIGHT: usize = 10;
@@ -36,6 +36,7 @@ pub enum ConwayMessage {
     SetFormWidth(String),
     SetFormHeight(String),
     SetDimensions(),
+    Click([usize; 2]),
 }
 
 impl Component for Conway {
@@ -108,6 +109,18 @@ impl Component for Conway {
                 );
                 self.draw();
                 true
+            }
+            ConwayMessage::Click(mut coord) => {
+                if coord[0] >= self.height {
+                    coord[0] = self.height - 1;
+                }
+                if coord[1] >= self.width {
+                    coord[0] = self.width - 1;
+                }
+                // TODO: this iteration (trying to avoid allocation) is ugly
+                self.game.invert([coord].iter().map(|a| *a));
+                self.draw();
+                false
             }
         }
     }
@@ -196,6 +209,13 @@ impl Component for Conway {
             </div>
             <canvas
                 ref=self.canvas.clone()
+                onclick=self.link.callback(|e: MouseEvent| {
+                    // TODO: There seems to be an off by 1 issue with y coordinates, which is resolved manually here
+                    ConwayMessage::Click([
+                        (e.offset_y() as usize - 1)  / DEFAULT_SIZE,
+                        (e.offset_x() as usize) / DEFAULT_SIZE,
+                    ])
+                })
             ><p>{"This browser does not support the canvas element!"}</p></canvas>
         </div> }
     }
