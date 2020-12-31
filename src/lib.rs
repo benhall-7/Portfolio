@@ -87,7 +87,7 @@ impl Component for App {
     fn view(&self) -> Html {
         html! {<>
             <header><h1>{"Portfolio Terminal"}</h1></header>
-            <section>
+            <section id="content">
                 {self.view_input()}
                 {self.view_main()}
 
@@ -128,7 +128,7 @@ impl App {
 
     fn view_main(&self) -> Html {
         html! {
-            <main id="content" role="main">{
+            <main role="main">{
                 self.args
                     .as_ref()
                     .map(|a| self.view_args(a))
