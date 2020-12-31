@@ -1,3 +1,3 @@
 pub mod diff;
-pub mod conway;
+pub mod game;
 pub mod history_store;

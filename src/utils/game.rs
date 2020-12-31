@@ -3,6 +3,7 @@
 use ndarray::Array2;
 
 /// An instance of Conway's Game of Life.
+#[derive(Debug, Clone)]
 pub struct Game {
     /// The double buffer used to update the game state.
     /// When one grid is used to view the game state, the other is used to update before their purposes switch.
@@ -166,3 +167,40 @@ fn test_glider() {
     assert_eq!(game.front().row(2).to_slice(), Some([0, 0, 0, 1].as_ref()));
     assert_eq!(game.front().row(3).to_slice(), Some([0, 1, 1, 1].as_ref()));
 }
+
+#[derive(Debug, Clone)]
+pub struct GamePreset {
+    pub width: usize,
+    pub height: usize,
+    pub cells: &'static [[usize; 2]],
+}
+
+pub const DEFAULT_PRESET: GamePreset = GamePreset {
+    width: 10,
+    height: 10,
+    cells: &[[0, 1], [1, 2], [2, 0], [2, 1], [2, 2]],
+};
+
+pub const BLINKER_PRESET: GamePreset = GamePreset {
+    width: 5,
+    height: 5,
+    cells: &[[1, 2], [2, 2], [3, 2]],
+};
+
+pub const PENTADEC_PRESET: GamePreset = GamePreset {
+    width: 11,
+    height: 18,
+    cells: &[
+        [4, 5], [5, 5],
+        [6, 4], [6, 6],
+        [7, 5], [8, 5], [9, 5], [10, 5],
+        [11, 4], [11, 6],
+        [12, 5], [13, 5]
+    ],
+};
+
+pub const LWSS_PRESET: GamePreset = GamePreset {
+    width: 25,
+    height: 7,
+    cells: &[[1, 1], [3, 1], [4, 2], [4, 3], [4, 4], [4, 5], [3, 5], [2, 5], [1, 4]],
+};

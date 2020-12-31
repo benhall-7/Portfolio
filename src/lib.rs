@@ -11,6 +11,7 @@ use yew::prelude::*;
 use yew::start_app;
 
 use args::*;
+use components::conway::Conway;
 use components::differ::Differ;
 use components::history::History;
 use std::rc::Rc;
@@ -251,7 +252,7 @@ impl App {
             }
             Args::Conway(ConwayArg { about: _ }) => {
                 html! {
-
+                    <Conway />
                 }
             },
         }
