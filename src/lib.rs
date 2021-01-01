@@ -16,14 +16,14 @@ use components::differ::Differ;
 use components::history::History;
 use std::rc::Rc;
 use utils::history_store::HistoryStore;
+use utils::ansi_html::{convert, start_regex};
 
 #[derive(Debug, Clone)]
 pub struct App {
     link: ComponentLink<Self>,
     input: String,
     args_input: Option<Result<Args, Rc<clap::Error>>>,
-    args_error: Option<Rc<clap::Error>>,
-    args: Option<Args>,
+    args: Option<Result<Args, Rc<clap::Error>>>,
     history: HistoryStore,
 }
 
@@ -41,7 +41,6 @@ impl Component for App {
             link,
             input: String::new(),
             args_input: None,
-            args_error: None,
             args: None,
             history: HistoryStore::new(),
         }
@@ -62,16 +61,9 @@ impl Component for App {
                 self.history.push(self.input.clone());
 
                 if let Some(some) = &self.args_input {
-                    match some {
-                        Ok(args) => {
-                            self.args = Some(args.clone());
-                            self.args_error = None;
-                            self.execute_args();
-                        }
-                        Err(e) => {
-                            self.args = None;
-                            self.args_error = Some(e.clone())
-                        }
+                    self.args = Some(some.clone());
+                    if some.is_ok() {
+                        self.execute_args();
                     }
                     return true;
                 }
@@ -82,6 +74,11 @@ impl Component for App {
 
     fn change(&mut self, _props: Self::Properties) -> ShouldRender {
         false
+    }
+
+    fn rendered(&mut self, _: bool) {
+        // static value initialization
+        start_regex();
     }
 
     fn view(&self) -> Html {
@@ -127,28 +124,16 @@ impl App {
     }
 
     fn view_main(&self) -> Html {
-        html! {
-            <main role="main">{
-                self.args
-                    .as_ref()
-                    .map(|a| self.view_args(a))
-                    .unwrap_or(html! {})
-            }{
-                self.args_error
-                    .as_ref()
-                    .map(|e| html! { <>
-                        {format!("MESSAGE: {}", e.message)}
-                        <br/>
-                        {format!("KIND: {:?}", e.kind)}
-                        <br/>
-                        {format!("INFO: {:?}", e.info)}
-                    </> })
-                    .unwrap_or(html! {})
-            }</main>
-        }
+        html! { <main role="main"> {
+            match self.args.as_ref() {
+                Some(Ok(args)) => html! {self.view_args(args)},
+                Some(Err(err)) => convert(&err.message),
+                None => html! {},
+            }
+        } </main> }
     }
 
-    pub fn view_args(&self, args: &Args) -> Html {
+    fn view_args(&self, args: &Args) -> Html {
         match args {
             Args::About => {
                 html! { <>
@@ -258,14 +243,12 @@ impl App {
         }
     }
 
-    pub fn execute_args(&mut self) {
-        if self.args.is_some() {
-            match self.args.as_ref().unwrap() {
-                Args::History(HistoryArg { sub: Some(HistorySubCommand::Clear) }) => {
-                    self.history.clear();
-                }
-                _ => {}
+    fn execute_args(&mut self) {
+        match &self.args {
+            Some(Ok(Args::History(HistoryArg { sub: Some(HistorySubCommand::Clear) }))) => {
+                self.history.clear();
             }
+            _ => {}
         }
     }
 }

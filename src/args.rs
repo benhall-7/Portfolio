@@ -1,8 +1,8 @@
-use structopt::clap::AppSettings::NoBinaryName;
+use structopt::clap::AppSettings::*;
 use structopt::StructOpt;
 
 #[derive(Debug, Clone, StructOpt)]
-#[structopt(settings(&[NoBinaryName]))]
+#[structopt(settings(&[NoBinaryName, ColorAlways, DisableVersion]))]
 pub enum Args {
     #[structopt(about = "Introduction of myself")]
     About,
