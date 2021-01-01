@@ -96,6 +96,18 @@ html, body {
 	font-style: italic;
 }
 
+.highlight-red {
+	color: red;
+}
+
+.highlight-green {
+	color: green;
+}
+
+.highlight-yellow {
+	color: yellow;
+}
+
 a, .cmd {
 	cursor: pointer;
 	color: @link-col;
@@ -372,6 +384,10 @@ img.icon {
 			align-items: flex-start;
 		}
 	}
+
+	label {
+		margin-right: @pad / 2;
+	}
 }
 
 #conway-size-form button {
@@ -381,7 +397,7 @@ img.icon {
 	margin: auto;
 }
 
-#game-canvas {
+.conway canvas {
 	display: block;
 	margin: auto;
 }
@@ -404,7 +420,7 @@ img.icon {
 	.short-border {
 		width: 200px;
 		padding: 0;
-		margin: 0 auto @pad / 2;
+		margin: @pad / 2 auto;
 		border-top: 1px dashed @emph-col;
 	}
 
