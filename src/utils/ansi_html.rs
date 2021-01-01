@@ -1,4 +1,4 @@
-use yew::{html, Html};
+use yew::{html, Html, services::ConsoleService};
 use regex::Regex;
 use lazy_static::{lazy_static, initialize};
 
