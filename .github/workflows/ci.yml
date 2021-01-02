@@ -5,9 +5,10 @@ jobs:
     name: BUILD AND DEPLOY
     runs-on: ubuntu-latest
     steps:
-    # uses checkout, cargo, npm, python, and wasm-pack. Whew
-    # TODO: removing the lessc dependency cuts off our need for npm and simplifies the build script
-    # it may nullify the need for a build script entirely
+    # uses checkout, cargo, npm, and wasm-pack. Whew.
+    # TODO: removing the lessc dependency cuts off our need for npm
+
+    # setup steps
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup Cargo
@@ -24,13 +25,16 @@ jobs:
         version: 'latest'
     - name: Setup lessc
       run: npm install lessc
-    # python script uses dependencies to create the static site folder
-    - name: Setup Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.8"
-    - name: Run Python build script
-      run: python build.py
+
+    # build steps
+    - name: Build Rust project
+      run: wasm-pack build --no-typescript --target web
+    - name: Move files to build directory
+      run: cp -r static/* pkg/portfolio.js pkg/portfolio_bg.wasm build
+    - name: Compile LESS to build directory
+      run: npx lessc less/index.less build/css/index.css
+
+    # deployment steps
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
