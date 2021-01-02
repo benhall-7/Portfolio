@@ -21,7 +21,7 @@ copytree("static/", "build/", dirs_exist_ok=True)
 copyfile("pkg/portfolio.js", "build/portfolio.js")
 copyfile("pkg/portfolio_bg.wasm", "build/portfolio_bg.wasm")
 
-less_args = ["lessc", "less/index.less", "build/css/index.css"]
+less_args = ["npx", "lessc", "less/index.less", "build/css/index.css"]
 print("BUILD: compiling CSS")
 build = run(less_args, shell=True)
 build.check_returncode()
