@@ -141,10 +141,6 @@ impl Component for Conway {
         html! { <div class="conway">
             <div class="conway-title">
                 <h2>{"Conway's Game of Life"}</h2>
-                <span
-                    class="cmd ital"
-                    // onclick="submitCmd('conway about')"
-                >{"(about)"}</span>
             </div>
             <h3>{"Presets"}</h3>
             <div class="conway-presets">

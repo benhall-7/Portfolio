@@ -230,14 +230,45 @@ impl App {
                     }
                 }
             }
-            Args::Diff => {
-                html! {
-                    <Differ />
-                }
-            }
-            Args::Conway(ConwayArg { about: _ }) => {
-                html! {
-                    <Conway />
+            Args::Diff => html! { <Differ /> },
+            Args::Conway(ConwayArg { about }) => {
+                if !about {
+                    html! { <Conway /> }
+                } else {
+                    html! { <div class="conway-about">
+                        <h2>{"Conway's Game of Life"}</h2>
+                        <p>
+                            {"Devised by the late British mathematician "}
+                            <a href="https://en.wikipedia.org/wiki/John_Horton_Conway">{"John Horton Conway"}</a>
+                            {", the Game of Life is a simple 2D simulation of cells treated as organisms. These cells follow a simple set of mathematical rules meant to emulate basic rules of populations, determining whether they are considered \"alive\" or \"dead\". The rules are as follows:"}
+                        </p>
+                        <ul>
+                            <li>
+                                {"If a living cell has 2 or 3 neighbors ('neighbors' includes diagonals), it remains living. Otherwise, it dies"}
+                            </li>
+                            <li>
+                                {"If a dead cell (or rather, empty cell) has 3 neighbors exactly, it becomes alive. Otherwise it remains dead."}
+                            </li>
+                        </ul>
+                        <p>
+                            {"In this way, a strategically placed set of cells may remain in existence forever, in a loop. Many configurations of cells die off completely; many explode first and can lead into either outcome."}
+                            <br />
+                            {"The Game of Life is only one such example of a broader topic of interest, known as "}
+                            <a href="https://en.wikipedia.org/wiki/Cellular_automaton">{"Cellular Automata."}</a>
+                            {" Cellular Automata (CA for short) describes systems of these cells in grids (which may not necessarily be 2D) and how they behave under certain other rulesets. These are useful in some branches of science for examining behavior of real systems such as those studied under Biology or Chemistry."}
+                            <br />
+                            {"Another interesting property of the game is that it exhibits Turing Completeness, a quality of a system by which you can perform arbitrary calculations. This is made possible through cell patterns such as the Gosper Gun, which if set up correctly may emulate a NAND gate instruction, an essential logical operator seen in hardware necessary to run machine instructions. Note that we also give ourselves infinite time and grid space when discussing the game's Turing Completeness. This means also that it is possible to replicate the Game of Life "}
+                            <a href="https://www.youtube.com/watch?v=xP5-iIeKXE8">{"inside the Game of Life itself"}</a>
+                            {" with huge blocks of cells that work to calculate the results of their neighbor blocks."}
+                        </p>
+                        <h2>{"Implementation"}</h2>
+                        <p>
+                            {"The implementation on this website was designed initially with a Rust backend and Javascript frontend. Since then, it has been rewritten entirely in Rust using the Yew framework. This is made possible using a recent browser standard called "}
+                            <a href="https://webassembly.org/">{"WebAssembly (WASM)"}</a>
+                            {", which provides a compilation target for languages designed for native performance apps such as C, C++, and of course Rust."}
+                            <br />
+                        </p>
+                    </div> }
                 }
             }
         }
