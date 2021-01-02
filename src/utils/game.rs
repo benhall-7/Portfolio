@@ -25,23 +25,23 @@ impl Game {
             front: 0,
             repeating,
             width,
-            height
+            height,
         }
     }
 
-    pub fn set_on<I: IntoIterator<Item=[usize; 2]>>(&mut self, cells: I) {
+    pub fn set_on<I: IntoIterator<Item = [usize; 2]>>(&mut self, cells: I) {
         for coord in cells {
             self.grid[self.front as usize][coord] = 1;
         }
     }
 
-    pub fn set_off<I: IntoIterator<Item=[usize; 2]>>(&mut self, cells: I) {
+    pub fn set_off<I: IntoIterator<Item = [usize; 2]>>(&mut self, cells: I) {
         for coord in cells {
             self.grid[self.front as usize][coord] = 0;
         }
     }
 
-    pub fn invert<I: IntoIterator<Item=[usize; 2]>>(&mut self, cells: I) {
+    pub fn invert<I: IntoIterator<Item = [usize; 2]>>(&mut self, cells: I) {
         for coord in cells {
             let current = &mut self.grid[self.front as usize][coord];
             if *current == 0 {
@@ -68,7 +68,7 @@ impl Game {
     pub fn front(&self) -> &Array2<u8> {
         &self.grid[self.front as usize]
     }
-    
+
     pub fn back(&self) -> &Array2<u8> {
         &self.grid[1 - self.front as usize]
     }
@@ -77,7 +77,7 @@ impl Game {
     fn alive(already_alive: bool, neighbors: usize) -> bool {
         match (already_alive, neighbors) {
             (_, 3) | (true, 2) => true,
-            _ => false
+            _ => false,
         }
     }
 
@@ -85,7 +85,7 @@ impl Game {
         let front = self.front();
 
         // TODO: handle repeating case
-        
+
         let mut neighbors = 0;
         let (y, x) = (coord[0], coord[1]);
         // representing if we have a neighbor in X direction:
@@ -96,18 +96,36 @@ impl Game {
 
         macro_rules! check_coord {
             ($y:expr, $x:expr) => {
-                if front[[$y, $x]] != 0 { neighbors += 1; }
-            }
+                if front[[$y, $x]] != 0 {
+                    neighbors += 1;
+                }
+            };
         }
-        
-        if left { check_coord!(y, x - 1) }
-        if left && top { check_coord!(y - 1, x - 1) }
-        if top { check_coord!(y - 1, x) }
-        if top && right { check_coord!(y - 1, x + 1) }
-        if right { check_coord!(y, x + 1) }
-        if right && bottom { check_coord!(y + 1, x + 1) }
-        if bottom { check_coord!(y + 1, x) }
-        if bottom && left { check_coord!(y + 1, x - 1) }
+
+        if left {
+            check_coord!(y, x - 1)
+        }
+        if left && top {
+            check_coord!(y - 1, x - 1)
+        }
+        if top {
+            check_coord!(y - 1, x)
+        }
+        if top && right {
+            check_coord!(y - 1, x + 1)
+        }
+        if right {
+            check_coord!(y, x + 1)
+        }
+        if right && bottom {
+            check_coord!(y + 1, x + 1)
+        }
+        if bottom {
+            check_coord!(y + 1, x)
+        }
+        if bottom && left {
+            check_coord!(y + 1, x - 1)
+        }
 
         self.back_mut()[coord] = Self::alive(front[coord] != 0, neighbors) as u8;
     }
@@ -191,16 +209,33 @@ pub const PENTADEC_PRESET: GamePreset = GamePreset {
     width: 11,
     height: 18,
     cells: &[
-        [4, 5], [5, 5],
-        [6, 4], [6, 6],
-        [7, 5], [8, 5], [9, 5], [10, 5],
-        [11, 4], [11, 6],
-        [12, 5], [13, 5]
+        [4, 5],
+        [5, 5],
+        [6, 4],
+        [6, 6],
+        [7, 5],
+        [8, 5],
+        [9, 5],
+        [10, 5],
+        [11, 4],
+        [11, 6],
+        [12, 5],
+        [13, 5],
     ],
 };
 
 pub const LWSS_PRESET: GamePreset = GamePreset {
     width: 25,
     height: 7,
-    cells: &[[1, 1], [3, 1], [4, 2], [4, 3], [4, 4], [4, 5], [3, 5], [2, 5], [1, 4]],
+    cells: &[
+        [1, 1],
+        [3, 1],
+        [4, 2],
+        [4, 3],
+        [4, 4],
+        [4, 5],
+        [3, 5],
+        [2, 5],
+        [1, 4],
+    ],
 };

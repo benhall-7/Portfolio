@@ -1,5 +1,5 @@
 use yew::format::Json;
-use yew::services::storage::{StorageService, Area};
+use yew::services::storage::{Area, StorageService};
 
 const HISTORY_KEY: &str = "portolio.history";
 
@@ -12,10 +12,12 @@ impl HistoryStore {
     pub fn new() -> Self {
         if let Ok(store) = StorageService::new(Area::Local) {
             if let Json(Ok(history)) = store.restore(HISTORY_KEY) {
-                return HistoryStore { history }
+                return HistoryStore { history };
             }
         }
-        HistoryStore { history: Vec::new() }
+        HistoryStore {
+            history: Vec::new(),
+        }
     }
 
     pub fn history(&self) -> Vec<String> {

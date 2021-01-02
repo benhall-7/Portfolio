@@ -1,4 +1,4 @@
-#![recursion_limit="1024"]
+#![recursion_limit = "1024"]
 
 mod args;
 mod components;
@@ -15,8 +15,8 @@ use components::conway::Conway;
 use components::differ::Differ;
 use components::history::History;
 use std::rc::Rc;
-use utils::history_store::HistoryStore;
 use utils::ansi_html::{convert, start_regex};
+use utils::history_store::HistoryStore;
 
 #[derive(Debug, Clone)]
 pub struct App {
@@ -217,7 +217,7 @@ impl App {
                     match sub {
                         HistorySubCommand::Clear => {
                             html! { <p>{"History cleared"}</p> }
-                        },
+                        }
                         HistorySubCommand::Index { num } => {
                             html! {
                                 <History items=self.history.history() index=num />
@@ -239,13 +239,15 @@ impl App {
                 html! {
                     <Conway />
                 }
-            },
+            }
         }
     }
 
     fn execute_args(&mut self) {
         match &self.args {
-            Some(Ok(Args::History(HistoryArg { sub: Some(HistorySubCommand::Clear) }))) => {
+            Some(Ok(Args::History(HistoryArg {
+                sub: Some(HistorySubCommand::Clear),
+            }))) => {
                 self.history.clear();
             }
             _ => {}

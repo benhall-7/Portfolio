@@ -76,7 +76,7 @@ impl Differ {
 
         let mut output: Vec<Html> = Vec::new();
         let mut position = 0_usize;
-        
+
         for d in &diff.0 {
             match d {
                 VecDiffType::Removed { index, len } => {
