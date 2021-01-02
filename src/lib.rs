@@ -90,7 +90,7 @@ impl Component for App {
 
                 <div class="help">
                     <div class="short-border"></div>
-                    <p>{"(For a list of commands, press, or type and enter the \"<span class=\"cmd\" tabindex=\"0\" onclick=\"submitCmd('help')\">help</span>\" command)"}</p>
+                    <p>{"(For a list of other commands, type and enter 'help' into the console)"}</p>
                 </div>
             </section>
             <footer>
