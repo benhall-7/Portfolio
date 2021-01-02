@@ -2,31 +2,33 @@ name: Build and deploy Yew project
 on: [push]
 jobs:
   download:
-    name: DOWNLOAD DEPENDENCIES
-    runs-on: ubuntu-latest
+    name: BUILD AND DEPLOY
+    runs-on: windows-latest
     steps:
     # uses checkout, cargo, npm, python, and wasm-pack. Whew
     # TODO: removing the lessc dependency cuts off our need for npm and simplifies the build script
-    # it may even nullify the need for a build script
-    - uses: actions/checkout@v2
-    - uses: actions-rs/toolchain@v1
+    # it may nullify the need for a build script entirely
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup Cargo
+      uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
-    - uses: actions/setup-node@v2
+    - name: Setup Node
+      uses: actions/setup-node@v2
       with:
         node-version: '12'
-    - uses: jetli/wasm-pack-action@v0.3.0
+    - name: Download wasm-pack
+      uses: jetli/wasm-pack-action@v0.3.0
       with:
         version: 'latest'
-    - name: Install lessc with npm
+    - name: Setup lessc
       run: npm install -g lessc
     # python script uses dependencies to create the static site folder
-    - name: Set up Python 3.8
+    - name: Setup Python 3.8
       uses: actions/setup-python@v2
       with:
         python-version: "3.8"
-    # - run: cd $GITHUB_WORKSPACE
-    # - run: ls
     - name: Run Python build script
       run: python build.py
     - name: Deploy
@@ -35,14 +37,3 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: build
-  
-  # build:
-  #   name: BUILD STATIC SITE
-  #   needs: [download]
-  #   runs-on: ubuntu-latest
-  
-  # deploy:
-  #   name: DEPLOY SITE TO GH PAGES
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
