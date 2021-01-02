@@ -20,30 +20,29 @@ jobs:
         version: 'latest'
     - name: Install lessc with npm
       run: npm install -g lessc
-  
-  build:
-    name: BUILD STATIC SITE
-    needs: [download]
-    runs-on: ubuntu-latest
-    steps:
     # python script uses dependencies to create the static site folder
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
       with:
         python-version: "3.8"
-    - run: cd $GITHUB_WORKSPACE
-    - run: ls
+    # - run: cd $GITHUB_WORKSPACE
+    # - run: ls
     - name: Run Python build script
       run: python build.py
-  
-  deploy:
-    name: DEPLOY SITE TO GH PAGES
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: build
+  
+  # build:
+  #   name: BUILD STATIC SITE
+  #   needs: [download]
+  #   runs-on: ubuntu-latest
+  
+  # deploy:
+  #   name: DEPLOY SITE TO GH PAGES
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
