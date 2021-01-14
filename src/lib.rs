@@ -51,8 +51,10 @@ impl Component for App {
             Msg::SetInput(s) => {
                 self.input = s;
                 self.args_input = Some(
-                    <Args as StructOpt>::from_iter_safe(self.input.split_ascii_whitespace())
-                        .map_err(|e| Rc::new(e)),
+                    <Args as StructOpt>::from_iter_safe(
+                        self.input.to_lowercase().split_ascii_whitespace(),
+                    )
+                    .map_err(|e| Rc::new(e)),
                 );
                 true
             }
