@@ -170,7 +170,7 @@ impl App {
                     <h2>{"Software related"}</h2>
                     <ul>
                         <li>{"Emphasis on cross-platform technologies (where possible)"}</li>
-                        <li>{"C# &amp; .NET: writing CLIs, Libraries, WinForms and WPF"}</li>
+                        <li>{"C# & .NET: writing CLIs, Libraries, WinForms and WPF"}</li>
                         <li>{"Rust: applications, file IO libraries, TUI, Yew, proc-macros"}</li>
                         <li>{"Utilizing Lua as an application scripting language"}</li>
                     </ul>
