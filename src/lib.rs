@@ -96,7 +96,7 @@ impl Component for App {
                 </div>
             </section>
             <footer>
-                <p>{"© Benjamin Hall 2020"}</p>
+                <p>{"© Benjamin Hall 2021"}</p>
                 <p><a href="https://github.com/BenHall-7/Portfolio/blob/master/LICENSE">{"License"}</a></p>
             </footer>
         </>}
