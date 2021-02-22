@@ -76,14 +76,48 @@ pub const CURRENT_PROJECTS: &'static [Project] = &[
     },
 ];
 
+pub const OTHER_PROJECTS: &'static [Project] = &[
+    Project {
+        title: "prc-rs",
+        deployment: Some("https://github.com/ultimate-research/prc-rs/releases"),
+        summary: "Rewrite of paracobNET library for SSBU param files (Rust)",
+        bullets: &[
+            "Read + write speeds up to 10x faster than C# implementation",
+            "param-xml reimplementation compatible with version on paracobNET",
+        ],
+        sources: &[("Source", "https://github.com/ultimate-research/prc-rs")],
+    },
+    Project {
+        title: "pyprc",
+        deployment: None,
+        summary: "Python extension module based on prc-rs (PyO3)",
+        bullets: &[
+            "Write scripts to edit param files dynamically",
+            "Save time when game updates are released by defining what changes to make",
+        ],
+        sources: &[("Source", "https://github.com/BenHall-7/pyprc")],
+    },
+    Project {
+        title: "yamlist",
+        deployment: Some("https://github.com/ultimate-research/motion_lib/releases/"),
+        summary: "Open source game modding tools for SSBU motion_list.bin files",
+        bullets: &[
+            "Edit animation flags, such as blending, invincibility, cancellability, etc",
+            "Converts from motion_list.bin into YML and back",
+            "Supports diffing and patching changed files via diff-struct!"
+        ],
+        sources: &[("Source", "https://github.com/ultimate-research/motion_lib")],
+    },
+];
+
 pub fn render_projects(projects: &[Project]) -> Html {
     html! {
         for projects.iter().map(|project| {
-            html! {<li>
-                <h1>{ match project.deployment {
+            html! {<li class="project">
+                <h2>{ match project.deployment {
                     None => html! {project.title},
                     Some(dep) => html! {<a href=dep>{project.title}</a>},
-                }}</h1>
+                }}</h2>
                 <p>{project.summary}</p>
                 {
                     if !project.bullets.is_empty() {

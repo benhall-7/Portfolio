@@ -141,7 +141,7 @@ impl App {
         match args {
             Args::About => {
                 html! { <>
-                    <div><img class="icon" src="img/self.jpg" alt="Photo of myself in front of pink blossoms"/></div>
+                    <div><img class="icon" src="img/self.jpg" alt="Photo of my face with a lighthouse in the distance"/></div>
                     <p>
                         {"Hi! My name is "}<span class="emph">{"Benjamin Hall"}</span>
                         {", I'm a software engineer and full-stack web developer. Although born and raised in Northern California, I'm currently living near Pittsburgh, PA."}<br/><br/>
@@ -172,11 +172,13 @@ impl App {
                 }
             }
             Args::Projects => {
-                html! {<>
+                html! {<div>
                     {projects::render_projects(projects::PROJECTS)}
-                    <h1>{"Current projects:"}</h1>
+                    <h1 class="cent">{"Current projects:"}</h1>
                     {projects::render_projects(projects::CURRENT_PROJECTS)}
-                </>}
+                    <h1 class="cent">{"Other projects:"}</h1>
+                    {projects::render_projects(projects::OTHER_PROJECTS)}
+                </div>}
             }
             Args::History(history) => {
                 if let Some(sub) = &history.sub {
