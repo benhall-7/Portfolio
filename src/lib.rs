@@ -17,7 +17,7 @@ use components::conway::Conway;
 use components::differ::Differ;
 use components::history::History;
 use std::rc::Rc;
-use utils::ansi_html::{convert, start_regex};
+use utils::ansi_html::convert;
 use utils::history_store::HistoryStore;
 
 #[derive(Debug, Clone)]
@@ -80,11 +80,6 @@ impl Component for App {
         false
     }
 
-    fn rendered(&mut self, _: bool) {
-        // static value initialization
-        start_regex();
-    }
-
     fn view(&self) -> Html {
         html! {<>
             <header><h1>{"Portfolio Terminal"}</h1></header>
@@ -98,8 +93,8 @@ impl Component for App {
                 </div>
             </section>
             <footer>
-                <p>{"© Benjamin Hall 2021"}</p>
-                <p><a href="https://github.com/BenHall-7/Portfolio/blob/master/LICENSE">{"License"}</a></p>
+                <p>{"© Benjamin Hall 2025"}</p>
+                <p><a href="https://github.com/benhall-7/Portfolio/blob/master/LICENSE">{"License"}</a></p>
             </footer>
         </>}
     }
@@ -144,7 +139,7 @@ impl App {
                     <div><img class="icon" src="img/self.jpg" alt="Photo of my face with a lighthouse in the distance"/></div>
                     <p>
                         {"Hi! My name is "}<span class="emph">{"Benjamin Hall"}</span>
-                        {", I'm a software engineer and full-stack web developer. Although born and raised in Northern California, I'm currently living near Pittsburgh, PA."}<br/><br/>
+                        {", I'm a software engineer and full-stack web developer. Although born and raised in Northern CA, I'm currently living in Harrisburg, PA."}<br/><br/>
                         {"As a lifelong advocate (and prior student) for Mathematics, I seek to find creative and generic solution to problems that not only improve consistency in user experience, but to ease future development too."}
                     </p>
                     // guarantees the containing div at least matches the height of the floating image
@@ -156,7 +151,7 @@ impl App {
                     <h2>{"Contact links:"}</h2>
                     <ul>
                         <li><a href="mailto:Benjaminjahall@gmail.com">{"Email"}</a></li>
-                        <li><a href="https://github.com/BenHall-7">{"GitHub"}</a></li>
+                        <li><a href="https://github.com/benhall-7">{"GitHub"}</a></li>
                         <li><a href="https://www.linkedin.com/in/benjaminjahall/">{"LinkedIn"}</a></li>
                     </ul>
                 </> }

@@ -1,14 +1,10 @@
-use lazy_static::{initialize, lazy_static};
+use std::cell::LazyCell;
+
 use regex::Regex;
 use yew::{html, Html};
 
-lazy_static! {
-    static ref COLOR_REGEX: Regex = Regex::new(r"\u{1b}\[(?P<fg>\d{1,2})(;\d{1,2})?m").unwrap();
-}
-
-pub fn start_regex() {
-    initialize(&COLOR_REGEX);
-}
+const COLOR_REGEX: LazyCell<Regex> =
+    LazyCell::new(|| Regex::new(r"\u{1b}\[(?P<fg>\d{1,2})(;\d{1,2})?m").unwrap());
 
 #[derive(Debug, Clone, Copy)]
 enum Color {

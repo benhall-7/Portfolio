@@ -6,11 +6,15 @@ pub struct Skill {
 pub const SKILLS: &[Skill] = &[
     Skill {
         category: "Languages",
-        bullets: &["Rust, Python, Javascript, C#, Lua (ordered)"],
+        bullets: &["TypeScript", "Javascript", "Rust, Python, Ruby, C#, Lua (roughly ordered)"],
     },
     Skill {
         category: "Frontend",
         bullets: &["HTML, CSS", ".NET Core (WPF)"],
+    },
+    Skill {
+        category: "Backend",
+        bullets: &["NodeJS", "Ruby on Rails"],
     },
     Skill {
         category: "Web Frameworks",
@@ -18,7 +22,7 @@ pub const SKILLS: &[Skill] = &[
     },
     Skill {
         category: "Databases",
-        bullets: &["SQLite3, Postgres"],
+        bullets: &["MySQL, Postgres"],
     },
     Skill {
         category: "Build systems",

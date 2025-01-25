@@ -56,11 +56,6 @@ impl Game {
         *self = Game::new(self.width, self.height, self.repeating)
     }
 
-    // TODO:
-    // pub fn resize(&mut self, width: usize, height: usize) {
-
-    // }
-
     pub fn back_mut(&mut self) -> &mut Array2<u8> {
         &mut self.grid[1 - self.front as usize]
     }
