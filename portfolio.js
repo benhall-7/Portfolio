@@ -202,12 +202,12 @@ export function main() {
     wasm.main();
 }
 
-function __wbg_adapter_18(arg0, arg1, arg2) {
-    wasm.closure929_externref_shim(arg0, arg1, arg2);
+function __wbg_adapter_18(arg0, arg1) {
+    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h179c395dc16971de(arg0, arg1);
 }
 
-function __wbg_adapter_21(arg0, arg1) {
-    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h48f8328b8270ae42(arg0, arg1);
+function __wbg_adapter_21(arg0, arg1, arg2) {
+    wasm.closure926_externref_shim(arg0, arg1, arg2);
 }
 
 async function __wbg_load(module, imports) {
@@ -513,12 +513,12 @@ function __wbg_get_imports() {
         const ret = false;
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper2441 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 930, __wbg_adapter_18);
+    imports.wbg.__wbindgen_closure_wrapper2492 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 925, __wbg_adapter_18);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper2442 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 928, __wbg_adapter_21);
+    imports.wbg.__wbindgen_closure_wrapper2493 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 927, __wbg_adapter_21);
         return ret;
     };
     imports.wbg.__wbindgen_debug_string = function(arg0, arg1) {
