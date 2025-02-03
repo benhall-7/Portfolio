@@ -136,7 +136,7 @@ impl App {
         match args {
             Args::About => {
                 html! { <>
-                    <div><img class="icon" src="img/self.jpg" alt="Photo of my face with a lighthouse in the distance"/></div>
+                    <div><img class="icon" src="img/me.jpg" alt="Photo of my face with a lighthouse in the distance"/></div>
                     <p>
                         {"Hi! My name is "}<span class="emph">{"Benjamin Hall"}</span>
                         {", I'm a software engineer and full-stack web developer. Although born and raised in Northern CA, I'm currently living in Harrisburg, PA."}<br/><br/>
