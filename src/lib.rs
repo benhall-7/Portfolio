@@ -115,7 +115,7 @@ impl App {
                 <input
                     id="console"
                     autofocus=true
-                    placeholder="...test"
+                    placeholder="..."
                     value={self.input.clone()}
                     oninput={oninput}
                 />
