@@ -120,7 +120,7 @@ pub fn render_projects(projects: &[Project]) -> Html {
             html! {<li class="project">
                 <h2>{ match project.deployment {
                     None => html! {project.title},
-                    Some(dep) => html! {<a href=dep>{project.title}</a>},
+                    Some(dep) => html! {<a href={dep}>{project.title}</a>},
                 }}</h2>
                 <p>{project.summary}</p>
                 {
@@ -137,7 +137,7 @@ pub fn render_projects(projects: &[Project]) -> Html {
                             .enumerate()
                             .map(|(i, (t, url))| html! { <>
                                 {if i > 0 { " / " } else { "" }}
-                                <a href=*url>{t}</a>
+                                <a href={*url}>{t}</a>
                             </>})
                             .collect::<Html>()
                     } else {

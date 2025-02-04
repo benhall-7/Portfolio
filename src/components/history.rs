@@ -8,7 +8,7 @@ pub enum History {
     OOB,
 }
 
-#[derive(Debug, Clone, Properties)]
+#[derive(Debug, Clone, PartialEq, Properties)]
 pub struct HistoryProps {
     pub items: Vec<String>,
     #[prop_or(None)]
@@ -19,7 +19,8 @@ impl Component for History {
     type Message = ();
     type Properties = HistoryProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(context: &Context<Self>) -> Self {
+        let props = context.props();
         if let Some(i) = props.index {
             if i >= props.items.len() {
                 History::OOB
@@ -27,15 +28,15 @@ impl Component for History {
                 History::One(props.items[i].clone())
             }
         } else {
-            History::All(props.items)
+            History::All(props.items.clone())
         }
     }
 
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
+    fn update(&mut self, _: &Context<Self>, _: Self::Message) -> bool {
         true
     }
 
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
+    fn changed(&mut self, _: &Context<Self>, props: &Self::Properties) -> bool {
         *self = if let Some(i) = props.index {
             if i >= props.items.len() {
                 History::OOB
@@ -43,12 +44,12 @@ impl Component for History {
                 History::One(props.items[i].clone())
             }
         } else {
-            History::All(props.items)
+            History::All(props.items.clone())
         };
         true
     }
 
-    fn view(&self) -> Html {
+    fn view(&self, _: &Context<Self>) -> Html {
         match self {
             History::All(h) => {
                 html! { <>

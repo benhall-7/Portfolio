@@ -8,8 +8,8 @@ mod utils;
 
 use clap::{Error, Parser};
 use wasm_bindgen::prelude::*;
-use yew::prelude::*;
-use yew::start_app;
+use yew::html::Scope;
+use yew::{prelude::*, Renderer};
 
 use args::*;
 use components::conway::Conway;
@@ -21,7 +21,7 @@ use utils::history_store::HistoryStore;
 
 #[derive(Debug, Clone)]
 pub struct App {
-    link: ComponentLink<Self>,
+    link: Scope<Self>,
     input: String,
     args_input: Option<Result<Cli, Rc<Error>>>,
     args: Option<Result<Cli, Rc<Error>>>,
@@ -37,9 +37,9 @@ impl Component for App {
     type Message = Msg;
     type Properties = ();
 
-    fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(context: &Context<Self>) -> Self {
         App {
-            link,
+            link: context.link().clone(),
             input: String::new(),
             args_input: None,
             args: None,
@@ -47,7 +47,7 @@ impl Component for App {
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Msg::SetInput(s) => {
                 self.input = s;
@@ -75,11 +75,7 @@ impl Component for App {
         }
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
-        false
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, _: &Context<Self>) -> Html {
         html! {<>
             <header><h1>{"Portfolio Terminal"}</h1></header>
             <section id="content">
@@ -104,18 +100,18 @@ impl App {
         html! {
             <form
                 id="console-wrapper"
-                onsubmit=self.link.callback(|e: FocusEvent| {
+                onsubmit={self.link.callback(|e: FocusEvent| {
                     e.prevent_default();
                     Msg::SubmitInput
-                })
+                })}
             >
                 <label for="console">{"Command"}</label>
                 <input
                     id="console"
                     autofocus=true
                     placeholder="..."
-                    value=self.input
-                    oninput=self.link.callback(|e: InputData| Msg::SetInput(e.value))
+                    value={self.input}
+                    oninput={self.link.callback(|e: InputData| Msg::SetInput(e.value))}
                 />
             </form>
         }
@@ -182,13 +178,13 @@ impl App {
                         }
                         HistorySubcommand::Index { num } => {
                             html! {
-                                <History items=self.history.history() index=num />
+                                <History items={self.history.history()} index={num} />
                             }
                         }
                     }
                 } else {
                     html! {
-                        <History items=self.history.history() />
+                        <History items={self.history.history()} />
                     }
                 }
             }
@@ -253,5 +249,5 @@ impl App {
 
 #[wasm_bindgen(start)]
 pub fn main() {
-    start_app::<App>();
+    Renderer::<App>::new().render();
 }

@@ -4,8 +4,9 @@ use std::time::Duration;
 
 use wasm_bindgen::{JsCast, JsValue};
 use web_sys::HtmlCanvasElement;
+use yew::html::Scope;
 use yew::prelude::*;
-use yew::services::interval::{IntervalService, IntervalTask};
+// use yew::interval::{IntervalService, IntervalTask};
 use yew::{FocusEvent, MouseEvent};
 
 const DEFAULT_WIDTH: usize = 10;
@@ -17,7 +18,7 @@ const DEFAULT_DEAD_COLOR: &str = "#808080";
 
 #[derive(Debug)]
 pub struct Conway {
-    link: ComponentLink<Self>,
+    link: Scope<Self>,
     job: Option<IntervalTask>,
     game: Game,
     width: usize,
@@ -43,9 +44,9 @@ impl Component for Conway {
     type Message = ConwayMessage;
     type Properties = ();
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(context: &Context<Self>) -> Self {
         Conway {
-            link,
+            link: context.link().clone(),
             job: None,
             game: Game::new(DEFAULT_WIDTH, DEFAULT_HEIGHT, false),
             width: DEFAULT_WIDTH,
@@ -56,7 +57,7 @@ impl Component for Conway {
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             ConwayMessage::Start => {
                 let handle = IntervalService::spawn(
@@ -125,18 +126,18 @@ impl Component for Conway {
         }
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+    fn changed(&mut self, _: &Context<Self>, _props: &Self::Properties) -> bool {
         false
     }
 
-    fn rendered(&mut self, first_render: bool) {
+    fn rendered(&mut self, _: &Context<Self>, first_render: bool) {
         if first_render {
             self.set_preset(DEFAULT_PRESET);
             self.draw();
         }
     }
 
-    fn view(&self) -> Html {
+    fn view(&self, _: &Context<Self>) -> Html {
         let playing = self.job.is_some();
         html! { <div class="conway">
             <div class="conway-title">
@@ -145,22 +146,22 @@ impl Component for Conway {
             <h3>{"Presets"}</h3>
             <div class="conway-presets">
                 <button
-                    onclick=self.link.callback(|_| ConwayMessage::SetPreset(BLINKER_PRESET))
+                    onclick={self.link.callback(|_| ConwayMessage::SetPreset(BLINKER_PRESET))}
                 >{"Blinker"}</button>
                 <button
-                    onclick=self.link.callback(|_| ConwayMessage::SetPreset(PENTADEC_PRESET))
+                    onclick={self.link.callback(|_| ConwayMessage::SetPreset(PENTADEC_PRESET))}
                 >{"Pentadecathlon"}</button>
                 <button
-                    onclick=self.link.callback(|_| ConwayMessage::SetPreset(LWSS_PRESET))
+                    onclick={self.link.callback(|_| ConwayMessage::SetPreset(LWSS_PRESET))}
                 >{"Spaceship"}</button>
             </div>
             <h3>{"Size"}</h3>
             <form
                 id="conway-size-form"
-                onsubmit=self.link.callback(|e: FocusEvent| {
+                onsubmit={self.link.callback(|e: FocusEvent| {
                     e.prevent_default();
                     ConwayMessage::SetDimensions()
-                })
+                })}
             >
                 <div class="conway-size-inputs">
                 <div>
@@ -169,7 +170,7 @@ impl Component for Conway {
                         type="number"
                         min="1"
                         max="50"
-                        oninput=self.link.callback(|e: InputData| ConwayMessage::SetFormWidth(e.value))
+                        oninput={self.link.callback(|e: InputData| ConwayMessage::SetFormWidth(e.value))}
                     />
                 </div>
                 <div>
@@ -178,7 +179,7 @@ impl Component for Conway {
                         type="number"
                         min="1"
                         max="50"
-                        oninput=self.link.callback(|e: InputData| ConwayMessage::SetFormHeight(e.value))
+                        oninput={self.link.callback(|e: InputData| ConwayMessage::SetFormHeight(e.value))}
                     />
                 </div>
                 </div>
@@ -188,30 +189,30 @@ impl Component for Conway {
             <div class="conway-controls">
                 <button
                     id="conway-controls-play"
-                    disabled=playing
-                    onclick=self.link.callback(|_| ConwayMessage::Start)
+                    disabled={playing}
+                    onclick={self.link.callback(|_| ConwayMessage::Start)}
                 >{"Play"}</button>
                 <button
                     id="conway-controls-pause"
-                    disabled=!playing
-                    onclick=self.link.callback(|_| ConwayMessage::Pause)
+                    disabled={!playing}
+                    onclick={self.link.callback(|_| ConwayMessage::Pause)}
                 >{"Pause"}</button>
                 <button
                     id="conway-controls-step"
-                    disabled=playing
-                    onclick=self.link.callback(|_| ConwayMessage::Step)
+                    disabled={playing}
+                    onclick={self.link.callback(|_| ConwayMessage::Step)}
                 >{"Step"}</button>
-                <button onclick=self.link.callback(|_| ConwayMessage::Reset)>{"Reset"}</button>
+                <button onclick={self.link.callback(|_| ConwayMessage::Reset)}>{"Reset"}</button>
             </div>
             <canvas
-                ref=self.canvas.clone()
-                onclick=self.link.callback(|e: MouseEvent| {
+                ref={self.canvas.clone()}
+                onclick={self.link.callback(|e: MouseEvent| {
                     // TODO: There seems to be an off by 1 issue with y coordinates, which is resolved manually here
                     ConwayMessage::Click([
                         (e.offset_y() as usize - 1)  / DEFAULT_SIZE,
                         (e.offset_x() as usize) / DEFAULT_SIZE,
                     ])
-                })
+                })}
             ><p>{"This browser does not support the canvas element!"}</p></canvas>
         </div> }
     }

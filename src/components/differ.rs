@@ -1,11 +1,11 @@
 use diff::VecDiffType;
-use yew::prelude::*;
+use yew::{html::Scope, prelude::*};
 
 use crate::utils::diff::get_diff;
 
 #[derive(Debug, Clone)]
 pub struct Differ {
-    link: ComponentLink<Self>,
+    link: Scope<Self>,
     a: String,
     b: String,
 }
@@ -20,15 +20,15 @@ impl Component for Differ {
     type Message = DifferMessage;
     type Properties = ();
 
-    fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(context: &Context<Self>,) -> Self {
         Differ {
-            link,
+            link: context.link().clone(),
             a: String::new(),
             b: String::new(),
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             DifferMessage::SetA(a) => self.a = a,
             DifferMessage::SetB(b) => self.b = b,
@@ -36,12 +36,12 @@ impl Component for Differ {
         true
     }
 
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
+    fn changed(&mut self, _: &Context<Self>, props: Self::Properties) -> bool {
         *self = Self::create(props, self.link.clone());
         true
     }
 
-    fn view(&self) -> Html {
+    fn view(&self, _: &Context<Self>) -> Html {
         html! { <>
             <h2>{"Diff inputs:"}</h2>
             <form id="diff-form">
@@ -50,8 +50,8 @@ impl Component for Differ {
                     <input
                         type="text"
                         id="diff-a"
-                        value={&self.a}
-                        oninput=self.link.callback(|e: InputData| DifferMessage::SetA(e.value))
+                        value={self.a}
+                        oninput={self.link.callback(|e: InputData| DifferMessage::SetA(e.value))}
                     />
                 </div>
                 <div>
@@ -59,8 +59,8 @@ impl Component for Differ {
                     <input
                         type="text"
                         id="diff-b"
-                        value={&self.b}
-                        oninput=self.link.callback(|e: InputData| DifferMessage::SetB(e.value))
+                        value={self.b}
+                        oninput={self.link.callback(|e: InputData| DifferMessage::SetB(e.value))}
                     />
                 </div>
             </form>
