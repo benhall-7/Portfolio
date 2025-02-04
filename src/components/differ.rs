@@ -1,11 +1,11 @@
 use diff::VecDiffType;
-use yew::{html::Scope, prelude::*};
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 use crate::utils::diff::get_diff;
 
 #[derive(Debug, Clone)]
 pub struct Differ {
-    link: Scope<Self>,
     a: String,
     b: String,
 }
@@ -20,9 +20,8 @@ impl Component for Differ {
     type Message = DifferMessage;
     type Properties = ();
 
-    fn create(context: &Context<Self>,) -> Self {
+    fn create(_: &Context<Self>) -> Self {
         Differ {
-            link: context.link().clone(),
             a: String::new(),
             b: String::new(),
         }
@@ -36,12 +35,29 @@ impl Component for Differ {
         true
     }
 
-    fn changed(&mut self, _: &Context<Self>, props: Self::Properties) -> bool {
-        *self = Self::create(props, self.link.clone());
+    // TODO: this is confusing
+    fn changed(&mut self, context: &Context<Self>, _: &Self::Properties) -> bool {
+        *self = <Self as BaseComponent>::create(context);
         true
     }
 
-    fn view(&self, _: &Context<Self>) -> Html {
+    fn view(&self, context: &Context<Self>) -> Html {
+        let link = context.link();
+        let oninput_a = link.callback(|e: InputEvent| {
+            DifferMessage::SetA(
+                e.target_dyn_into::<HtmlInputElement>()
+                    .map(|elem| elem.value())
+                    .unwrap_or_default(),
+            )
+        });
+        let oninput_b = link.callback(|e: InputEvent| {
+            DifferMessage::SetB(
+                e.target_dyn_into::<HtmlInputElement>()
+                    .map(|elem| elem.value())
+                    .unwrap_or_default(),
+            )
+        });
+
         html! { <>
             <h2>{"Diff inputs:"}</h2>
             <form id="diff-form">
@@ -50,8 +66,8 @@ impl Component for Differ {
                     <input
                         type="text"
                         id="diff-a"
-                        value={self.a}
-                        oninput={self.link.callback(|e: InputData| DifferMessage::SetA(e.value))}
+                        value={self.a.clone()}
+                        oninput={oninput_a}
                     />
                 </div>
                 <div>
@@ -59,8 +75,8 @@ impl Component for Differ {
                     <input
                         type="text"
                         id="diff-b"
-                        value={self.b}
-                        oninput={self.link.callback(|e: InputData| DifferMessage::SetB(e.value))}
+                        value={self.b.clone()}
+                        oninput={oninput_b}
                     />
                 </div>
             </form>

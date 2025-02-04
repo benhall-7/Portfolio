@@ -1,19 +1,17 @@
-use yew::format::Json;
-use yew::services::storage::{Area, StorageService};
+use gloo::storage::{LocalStorage, Storage};
+use serde::{Deserialize, Serialize};
 
 const HISTORY_KEY: &str = "portolio.history";
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HistoryStore {
     history: Vec<String>,
 }
 
 impl HistoryStore {
     pub fn new() -> Self {
-        if let Ok(store) = StorageService::new(Area::Local) {
-            if let Json(Ok(history)) = store.restore(HISTORY_KEY) {
-                return HistoryStore { history };
-            }
+        if let Ok(store) = LocalStorage::get::<HistoryStore>(HISTORY_KEY) {
+            return store;
         }
         HistoryStore {
             history: Vec::new(),
@@ -26,17 +24,11 @@ impl HistoryStore {
 
     pub fn push(&mut self, item: String) {
         self.history.push(item);
-        // flush result if failed to get StorageResult
-        let _ = StorageService::new(Area::Local).map(|mut s| {
-            s.store(HISTORY_KEY, Json(&self.history));
-        });
+        let _ = LocalStorage::set(HISTORY_KEY, self);
     }
 
     pub fn clear(&mut self) {
         self.history = Vec::new();
-        // flush result if failed to get StorageResult
-        let _ = StorageService::new(Area::Local).map(|mut s| {
-            s.store(HISTORY_KEY, Json(&self.history));
-        });
+        let _ = LocalStorage::set(HISTORY_KEY, self);
     }
 }

@@ -8,6 +8,7 @@ mod utils;
 
 use clap::{Error, Parser};
 use wasm_bindgen::prelude::*;
+use web_sys::HtmlInputElement;
 use yew::html::Scope;
 use yew::{prelude::*, Renderer};
 
@@ -21,7 +22,6 @@ use utils::history_store::HistoryStore;
 
 #[derive(Debug, Clone)]
 pub struct App {
-    link: Scope<Self>,
     input: String,
     args_input: Option<Result<Cli, Rc<Error>>>,
     args: Option<Result<Cli, Rc<Error>>>,
@@ -37,9 +37,8 @@ impl Component for App {
     type Message = Msg;
     type Properties = ();
 
-    fn create(context: &Context<Self>) -> Self {
+    fn create(_: &Context<Self>) -> Self {
         App {
-            link: context.link().clone(),
             input: String::new(),
             args_input: None,
             args: None,
@@ -75,11 +74,11 @@ impl Component for App {
         }
     }
 
-    fn view(&self, _: &Context<Self>) -> Html {
+    fn view(&self, context: &Context<Self>) -> Html {
         html! {<>
             <header><h1>{"Portfolio Terminal"}</h1></header>
             <section id="content">
-                {self.view_input()}
+                {self.view_input(context.link())}
                 {self.view_main()}
 
                 <div class="help">
@@ -96,11 +95,18 @@ impl Component for App {
 }
 
 impl App {
-    fn view_input(&self) -> Html {
+    fn view_input(&self, link: &Scope<Self>) -> Html {
+        let oninput = link.callback(|e: InputEvent| {
+            Msg::SetInput(
+                e.target_dyn_into::<HtmlInputElement>()
+                    .map(|elem| elem.value())
+                    .unwrap_or_default(),
+            )
+        });
         html! {
             <form
                 id="console-wrapper"
-                onsubmit={self.link.callback(|e: FocusEvent| {
+                onsubmit={link.callback(|e: SubmitEvent| {
                     e.prevent_default();
                     Msg::SubmitInput
                 })}
@@ -109,9 +115,9 @@ impl App {
                 <input
                     id="console"
                     autofocus=true
-                    placeholder="..."
-                    value={self.input}
-                    oninput={self.link.callback(|e: InputData| Msg::SetInput(e.value))}
+                    placeholder="...test"
+                    value={self.input.clone()}
+                    oninput={oninput}
                 />
             </form>
         }

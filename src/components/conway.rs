@@ -1,13 +1,11 @@
 use crate::utils::game::*;
 use std::str::FromStr;
-use std::time::Duration;
 
 use wasm_bindgen::{JsCast, JsValue};
 use web_sys::HtmlCanvasElement;
-use yew::html::Scope;
 use yew::prelude::*;
 // use yew::interval::{IntervalService, IntervalTask};
-use yew::{FocusEvent, MouseEvent};
+use gloo::timers::callback::Interval;
 
 const DEFAULT_WIDTH: usize = 10;
 const DEFAULT_HEIGHT: usize = 10;
@@ -18,8 +16,7 @@ const DEFAULT_DEAD_COLOR: &str = "#808080";
 
 #[derive(Debug)]
 pub struct Conway {
-    link: Scope<Self>,
-    job: Option<IntervalTask>,
+    job: Option<Interval>,
     game: Game,
     width: usize,
     height: usize,
@@ -44,9 +41,8 @@ impl Component for Conway {
     type Message = ConwayMessage;
     type Properties = ();
 
-    fn create(context: &Context<Self>) -> Self {
+    fn create(_: &Context<Self>) -> Self {
         Conway {
-            link: context.link().clone(),
             job: None,
             game: Game::new(DEFAULT_WIDTH, DEFAULT_HEIGHT, false),
             width: DEFAULT_WIDTH,
@@ -57,13 +53,12 @@ impl Component for Conway {
         }
     }
 
-    fn update(&mut self, _: &Context<Self>, msg: Self::Message) -> bool {
+    fn update(&mut self, context: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             ConwayMessage::Start => {
-                let handle = IntervalService::spawn(
-                    Duration::from_secs_f32(1.0 / 10.0),
-                    self.link.callback(|_| ConwayMessage::Step),
-                );
+                let link = context.link().clone();
+                let handle =
+                    Interval::new(1000 / 10, move || link.send_message(ConwayMessage::Step));
                 self.job = Some(handle);
                 true
             }
@@ -137,7 +132,7 @@ impl Component for Conway {
         }
     }
 
-    fn view(&self, _: &Context<Self>) -> Html {
+    fn view(&self, context: &Context<Self>) -> Html {
         let playing = self.job.is_some();
         html! { <div class="conway">
             <div class="conway-title">
@@ -146,19 +141,19 @@ impl Component for Conway {
             <h3>{"Presets"}</h3>
             <div class="conway-presets">
                 <button
-                    onclick={self.link.callback(|_| ConwayMessage::SetPreset(BLINKER_PRESET))}
+                    onclick={context.link().callback(|_| ConwayMessage::SetPreset(BLINKER_PRESET))}
                 >{"Blinker"}</button>
                 <button
-                    onclick={self.link.callback(|_| ConwayMessage::SetPreset(PENTADEC_PRESET))}
+                    onclick={context.link().callback(|_| ConwayMessage::SetPreset(PENTADEC_PRESET))}
                 >{"Pentadecathlon"}</button>
                 <button
-                    onclick={self.link.callback(|_| ConwayMessage::SetPreset(LWSS_PRESET))}
+                    onclick={context.link().callback(|_| ConwayMessage::SetPreset(LWSS_PRESET))}
                 >{"Spaceship"}</button>
             </div>
             <h3>{"Size"}</h3>
             <form
                 id="conway-size-form"
-                onsubmit={self.link.callback(|e: FocusEvent| {
+                onsubmit={context.link().callback(|e: SubmitEvent| {
                     e.prevent_default();
                     ConwayMessage::SetDimensions()
                 })}
@@ -170,7 +165,7 @@ impl Component for Conway {
                         type="number"
                         min="1"
                         max="50"
-                        oninput={self.link.callback(|e: InputData| ConwayMessage::SetFormWidth(e.value))}
+                        oninput={context.link().callback(|e: InputEvent| ConwayMessage::SetFormWidth(e.data().unwrap_or_default()))}
                     />
                 </div>
                 <div>
@@ -179,7 +174,7 @@ impl Component for Conway {
                         type="number"
                         min="1"
                         max="50"
-                        oninput={self.link.callback(|e: InputData| ConwayMessage::SetFormHeight(e.value))}
+                        oninput={context.link().callback(|e: InputEvent| ConwayMessage::SetFormHeight(e.data().unwrap_or_default()))}
                     />
                 </div>
                 </div>
@@ -190,23 +185,23 @@ impl Component for Conway {
                 <button
                     id="conway-controls-play"
                     disabled={playing}
-                    onclick={self.link.callback(|_| ConwayMessage::Start)}
+                    onclick={context.link().callback(|_| ConwayMessage::Start)}
                 >{"Play"}</button>
                 <button
                     id="conway-controls-pause"
                     disabled={!playing}
-                    onclick={self.link.callback(|_| ConwayMessage::Pause)}
+                    onclick={context.link().callback(|_| ConwayMessage::Pause)}
                 >{"Pause"}</button>
                 <button
                     id="conway-controls-step"
                     disabled={playing}
-                    onclick={self.link.callback(|_| ConwayMessage::Step)}
+                    onclick={context.link().callback(|_| ConwayMessage::Step)}
                 >{"Step"}</button>
-                <button onclick={self.link.callback(|_| ConwayMessage::Reset)}>{"Reset"}</button>
+                <button onclick={context.link().callback(|_| ConwayMessage::Reset)}>{"Reset"}</button>
             </div>
             <canvas
                 ref={self.canvas.clone()}
-                onclick={self.link.callback(|e: MouseEvent| {
+                onclick={context.link().callback(|e: MouseEvent| {
                     // TODO: There seems to be an off by 1 issue with y coordinates, which is resolved manually here
                     ConwayMessage::Click([
                         (e.offset_y() as usize - 1)  / DEFAULT_SIZE,
