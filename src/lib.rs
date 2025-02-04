@@ -6,8 +6,7 @@ mod projects;
 mod skills;
 mod utils;
 
-use structopt::clap;
-use structopt::StructOpt;
+use clap::{Error, Parser};
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 use yew::start_app;
@@ -24,8 +23,8 @@ use utils::history_store::HistoryStore;
 pub struct App {
     link: ComponentLink<Self>,
     input: String,
-    args_input: Option<Result<Args, Rc<clap::Error>>>,
-    args: Option<Result<Args, Rc<clap::Error>>>,
+    args_input: Option<Result<Cli, Rc<Error>>>,
+    args: Option<Result<Cli, Rc<Error>>>,
     history: HistoryStore,
 }
 
@@ -53,7 +52,7 @@ impl Component for App {
             Msg::SetInput(s) => {
                 self.input = s;
                 self.args_input = Some(
-                    <Args as StructOpt>::from_iter_safe(
+                    <Cli as Parser>::try_parse_from(
                         self.input.to_lowercase().split_ascii_whitespace(),
                     )
                     .map_err(|e| Rc::new(e)),
@@ -126,15 +125,15 @@ impl App {
         html! { <main role="main"> {
             match self.args.as_ref() {
                 Some(Ok(args)) => html! {self.view_args(args)},
-                Some(Err(err)) => convert(&err.message),
+                Some(Err(err)) => convert(Rc::as_ref(err)),
                 None => html! {},
             }
         } </main> }
     }
 
-    fn view_args(&self, args: &Args) -> Html {
-        match args {
-            Args::About => {
+    fn view_args(&self, args: &Cli) -> Html {
+        match &args.command {
+            Command::About => {
                 html! { <>
                     <div><img class="icon" src="img/me.jpg" alt="Photo of my face with a lighthouse in the distance"/></div>
                     <p>
@@ -146,7 +145,7 @@ impl App {
                     <div style="clear:both;"></div>
                 </> }
             }
-            Args::Contact => {
+            Command::Contact => {
                 html! { <>
                     <h2>{"Contact links:"}</h2>
                     <ul>
@@ -156,7 +155,7 @@ impl App {
                     </ul>
                 </> }
             }
-            Args::Skills => {
+            Command::Skills => {
                 html! {
                     for skills::SKILLS.iter().map(|skill| {
                         html! { <>
@@ -166,7 +165,7 @@ impl App {
                     })
                 }
             }
-            Args::Projects => {
+            Command::Projects => {
                 html! {<div>
                     {projects::render_projects(projects::PROJECTS)}
                     <h1 class="cent">{"Current projects:"}</h1>
@@ -175,13 +174,13 @@ impl App {
                     {projects::render_projects(projects::OTHER_PROJECTS)}
                 </div>}
             }
-            Args::History(history) => {
-                if let Some(sub) = &history.sub {
+            Command::History(history) => {
+                if let Some(sub) = &history.command {
                     match sub {
-                        HistorySubCommand::Clear => {
+                        HistorySubcommand::Clear => {
                             html! { <p>{"History cleared"}</p> }
                         }
-                        HistorySubCommand::Index { num } => {
+                        HistorySubcommand::Index { num } => {
                             html! {
                                 <History items=self.history.history() index=num />
                             }
@@ -193,8 +192,8 @@ impl App {
                     }
                 }
             }
-            Args::Diff => html! { <Differ /> },
-            Args::Conway(ConwayArg { about }) => {
+            Command::Diff => html! { <Differ /> },
+            Command::Conway(ConwayArg { about }) => {
                 if !about {
                     html! { <Conway /> }
                 } else {
@@ -239,9 +238,12 @@ impl App {
 
     fn execute_args(&mut self) {
         match &self.args {
-            Some(Ok(Args::History(HistoryArg {
-                sub: Some(HistorySubCommand::Clear),
-            }))) => {
+            Some(Ok(Cli {
+                command:
+                    Command::History(HistoryArg {
+                        command: Some(HistorySubcommand::Clear),
+                    }),
+            })) => {
                 self.history.clear();
             }
             _ => {}

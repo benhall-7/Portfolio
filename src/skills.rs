@@ -6,7 +6,11 @@ pub struct Skill {
 pub const SKILLS: &[Skill] = &[
     Skill {
         category: "Languages",
-        bullets: &["TypeScript", "Javascript", "Rust, Python, Ruby, C#, Lua (roughly ordered)"],
+        bullets: &[
+            "TypeScript",
+            "Javascript",
+            "Rust, Python, Ruby, C#, Lua (roughly ordered)",
+        ],
     },
     Skill {
         category: "Frontend",

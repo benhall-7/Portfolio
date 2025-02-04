@@ -47,7 +47,9 @@ pub const PROJECTS: &'static [Project] = &[
         title: "This Portfolio!",
         deployment: None,
         summary: "A super cool, dynamic, terminal-powered single page app of awesomeness",
-        bullets: &["Powered by Rust, and cool libraries like StructOpt (Rust, Yew, WASM)"],
+        bullets: &[
+            "Powered by Rust, and cool libraries like Clap and Yew, (compiled in WebAssembly)",
+        ],
         sources: &[("Source", "https://github.com/benhall-7/Portfolio")],
     },
     Project {

@@ -1,5 +1,6 @@
 use std::cell::LazyCell;
 
+use clap::Error;
 use regex::Regex;
 use yew::{html, Html};
 
@@ -25,14 +26,15 @@ impl<'a> From<&'a str> for Color {
     }
 }
 
-pub fn convert(ansi_str: &str) -> Html {
+pub fn convert(err: &Error) -> Html {
+    let ansi_str = format!("{}", err.render());
     let mut chunks: Vec<(Color, &str)> = Vec::new();
     let mut last_text = 0;
     let mut last_color = Color::None;
 
     COLOR_REGEX
-        .captures_iter(ansi_str)
-        .zip(COLOR_REGEX.find_iter(ansi_str))
+        .captures_iter(&ansi_str)
+        .zip(COLOR_REGEX.find_iter(&ansi_str))
         .for_each(|(capture, m)| {
             if m.start() > last_text {
                 chunks.push((last_color, &ansi_str[last_text..m.start()]));
