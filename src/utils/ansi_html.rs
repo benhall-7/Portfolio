@@ -1,6 +1,7 @@
 use std::cell::LazyCell;
 
 use clap::Error;
+use gloo::console;
 use regex::Regex;
 use yew::{html, Html};
 
@@ -27,7 +28,7 @@ impl<'a> From<&'a str> for Color {
 }
 
 pub fn convert(err: &Error) -> Html {
-    let ansi_str = format!("{}", err.render());
+    let ansi_str = format!("{}", err.render().ansi());
     let mut chunks: Vec<(Color, &str)> = Vec::new();
     let mut last_text = 0;
     let mut last_color = Color::None;
