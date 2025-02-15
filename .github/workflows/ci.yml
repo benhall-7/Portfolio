@@ -21,6 +21,8 @@ jobs:
           version: "latest"
 
       # build steps
+      - name: Install target
+        run: rustup target add wasm32-unknown-unknown
       - name: Compile
         run: trunk build
 
