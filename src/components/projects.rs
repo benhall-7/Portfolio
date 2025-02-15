@@ -269,7 +269,7 @@ impl Component for Projects {
 
             <hr />
 
-            <h1>{"MISC PROJECTS"}</h1>
+            <h1>{"Misc PROJECTS"}</h1>
             {for MISC_PROJECTS.iter().map(|project| html! {
                 <Project ..project.clone()/>
             })}
