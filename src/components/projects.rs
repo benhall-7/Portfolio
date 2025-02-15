@@ -12,6 +12,7 @@ type S = &'static str;
 struct ProjectProps {
     pub title: S,
     pub deployment: Option<S>, // hyperlinks on the title
+    pub iframe: Option<Html>,
     pub summary: S,
     pub bullets: Vec<S>,
     pub sources: Vec<(S, S)>,
@@ -26,6 +27,17 @@ const CURRENT_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
     vec![ProjectProps {
         title: "melon-rs",
         deployment: None,
+        iframe: Some(html! {
+        <iframe
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/vTKrAoVcFmA"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        >
+        </iframe>
+            }),
         summary: "An experimental frontend for the DS emulator, based on melonDS",
         bullets: vec![
             "Utilizes FFI to C++ using CXX",
@@ -41,6 +53,7 @@ const WEB_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "cube-ts",
             deployment: Some("https://www.npmjs.com/package/@benhall-7/cube-ts"),
+            iframe: None,
             summary: "TypeScript utility library for querying Cube.JS",
             bullets: vec![
                 "Define cube schemas, and automatically serialize typed data",
@@ -53,6 +66,7 @@ const WEB_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
             title: "This Portfolio!",
             deployment: None,
             summary: "A single-page static portfolio with an integrated terminal",
+            iframe: None,
             bullets: vec![
                 "Powered by Rust and compiled in WebAssembly.",
                 "Uses cool libraries like Clap, Yew, diff-struct, and more.",
@@ -62,6 +76,7 @@ const WEB_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "TidyHive",
             deployment: None,
+            iframe: None,
             summary: "Task management app for groups",
             bullets: vec![
                 "Interact with other users and todo's",
@@ -87,6 +102,7 @@ const PRC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "prc-rs",
             deployment: Some("https://github.com/ultimate-research/prc-rs/releases"),
+            iframe: None,
             summary: "Rewrite of paracobNET library for SSBU param files (Rust)",
             bullets: vec![
                 "Read + write speeds 10x faster than the C# implementation",
@@ -98,6 +114,7 @@ const PRC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "pyprc",
             deployment: None,
+            iframe: None,
             summary: "Python extension module based on prc-rs (PyO3)",
             bullets: vec![
                 "Write scripts to edit param files dynamically",
@@ -108,6 +125,7 @@ const PRC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "prickly",
             deployment: None,
+            iframe: None,
             summary: "A 'prc-cli', a TUI interface for editing PRC files",
             bullets: vec![
                 "Open and edit PRC files from the terminal, no GUI libraries needed",
@@ -118,6 +136,7 @@ const PRC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "paracobNET",
             deployment: Some("https://github.com/benhall-7/paracobNET/releases/tag/v3.0"),
+            iframe: None,
             summary: "Open source game modding tools for SSBU parameters",
             bullets: vec![
                 "Alter character stats, playlists, and much more",
@@ -134,6 +153,7 @@ const MISC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "diff-struct",
             deployment: None,
+            iframe: None,
             summary: "Diffing functionality for generic structs, written in Rust",
             bullets: vec![],
             sources: vec![("Source", "https://github.com/benhall-7/diff-struct")],
@@ -141,6 +161,7 @@ const MISC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "musicli",
             deployment: None,
+            iframe: None,
             summary: "A terminal-based MIDI file editor (Rust, TUI)",
             bullets: vec![],
             sources: vec![("Source", "https://github.com/benhall-7/musicli")],
@@ -148,6 +169,7 @@ const MISC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
         ProjectProps {
             title: "yamlist",
             deployment: Some("https://github.com/ultimate-research/motion_lib/releases/"),
+            iframe: None,
             summary: "Open source game modding tools for SSBU motion_list.bin files",
             bullets: vec![
                 "Edit animation flags, such as blending, invincibility, cancellability, etc",
@@ -221,12 +243,16 @@ impl Component for Projects {
     }
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
-        html! {<div>
+        html! {<div class="comp-projects">
             <h1>{"Current Projects"}</h1>
-            {for CURRENT_PROJECTS.iter().map(|project| html! {
-                <Project ..project.clone()/>
-            })}
-
+            <div class="project-iframe">
+                {for CURRENT_PROJECTS.iter().filter_map(|project| project.iframe.clone())}
+            </div>
+            <div >
+                {for CURRENT_PROJECTS.iter().map(|project| html! {
+                    <Project ..project.clone()/>
+                })}
+            </div>
             <hr />
 
             <h1>{"Web Projects"}</h1>

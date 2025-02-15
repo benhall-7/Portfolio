@@ -142,6 +142,7 @@ body {
 
 :root {
   --bg-col: #202c39;
+  --bg-shadow-col: #18212b;
   --text-col: #f29559;
   --bg-col-light: #304252;
   --emph-col: #ccc39c;
@@ -366,6 +367,21 @@ img.icon {
 #console {
   height: var(--console-height);
   padding: var(--console-padding);
+}
+
+.comp-projects .project-iframe {
+  float: right;
+  width: 256px;
+  height: 384px;
+  max-width: 30vw;
+  max-height: calc(30vw * 1.5);
+  box-shadow: 4px 4px 0px var(--bg-shadow-col);
+  margin-bottom: 8px;
+  margin-left: 4px;
+}
+
+.comp-projects hr {
+  clear: both;
 }
 
 #diff-form {
