@@ -1,21 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Benjamin Hall</title>
 
-    <link rel="icon" type="image/png" href="sandpiper.png"/>
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="prefetch" href="img/me.jpg">
-  </head>
+    <link rel="icon" type="image/png" href="sandpiper.png" />
+    <link rel="prefetch" href="img/me.jpg" />
+
+    <!-- trunk config -->
+    
+    
+    
+    <link rel="stylesheet" href="/index-83ab80ab38715142.css" integrity="sha384&#x2D;YmKE5ZB7UpwkiU08oIsqE8i6Ii73n1wMqg6Y5qPXxy00xSzhAEYJW0N15O5imX3b"/>
+  <link rel="modulepreload" href="/portfolio-5a76d7e8c4b5d43.js" crossorigin="anonymous" integrity="sha384-b2OQybZfVYilqKSbnVheG2RuJAMn8ISdA/z+qtkonfBrB2MZdH2kOiabcB3nT/Go"><link rel="preload" href="/portfolio-5a76d7e8c4b5d43_bg.wasm" crossorigin="anonymous" integrity="sha384-W0ZvH6IFGTu2fRfIH5q0hdNtsF+/fCvqefHnF+YPUBDZ/BSnE0n2XgwOLxwH/NPo" as="fetch" type="application/wasm"></head>
 
   <body>
-    <script type="module">
-      import init from "./portfolio.js";
-      init();
-    </script>
-  </body>
+<script type="module">
+import init, * as bindings from '/portfolio-5a76d7e8c4b5d43.js';
+const wasm = await init({ module_or_path: '/portfolio-5a76d7e8c4b5d43_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
 </html>
