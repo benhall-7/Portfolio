@@ -2,11 +2,11 @@
 
 mod args;
 mod components;
-mod projects;
 mod skills;
 mod utils;
 
 use clap::{Error, Parser};
+use components::projects::Projects;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlInputElement;
 use yew::html::Scope;
@@ -167,15 +167,7 @@ impl App {
                     })
                 }
             }
-            Command::Projects => {
-                html! {<div>
-                    {projects::render_projects(projects::PROJECTS)}
-                    <h1 class="cent">{"Current projects:"}</h1>
-                    {projects::render_projects(projects::CURRENT_PROJECTS)}
-                    <h1 class="cent">{"Other projects:"}</h1>
-                    {projects::render_projects(projects::OTHER_PROJECTS)}
-                </div>}
-            }
+            Command::Projects => html! { <Projects /> },
             Command::History(history) => {
                 if let Some(sub) = &history.command {
                     match sub {
