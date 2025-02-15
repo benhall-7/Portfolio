@@ -42,6 +42,6 @@ pub const SKILLS: &[Skill] = &[
     },
     Skill {
         category: "Testing",
-        bullets: &["Jest, Cargo"],
+        bullets: &["Jest, Cargo, RSpec"],
     },
 ];

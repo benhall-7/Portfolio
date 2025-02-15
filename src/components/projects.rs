@@ -36,50 +36,26 @@ const CURRENT_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
     }]
 });
 
-const PRC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
-    vec![
-        ProjectProps {
-            title: "prc-rs",
-            deployment: Some("https://github.com/ultimate-research/prc-rs/releases"),
-            summary: "Rewrite of paracobNET library for SSBU param files (Rust)",
-            bullets: vec![
-                "Read + write speeds up to 10x faster than the C# implementation",
-                "param-xml reimplementation compatible with version on paracobNET",
-            ],
-            sources: vec![("Source", "https://github.com/ultimate-research/prc-rs")],
-        },
-        ProjectProps {
-            title: "pyprc",
-            deployment: None,
-            summary: "Python extension module based on prc-rs (PyO3)",
-            bullets: vec![
-                "Write scripts to edit param files dynamically",
-                "Save time when game updates are released by defining what changes to make",
-            ],
-            sources: vec![("Source", "https://github.com/benhall-7/pyprc")],
-        },
-        ProjectProps {
-            title: "paracobNET",
-            deployment: Some("https://github.com/benhall-7/paracobNET/releases/tag/v3.0"),
-            summary: "Open source game modding tools for SSBU parameters",
-            bullets: vec![
-                "Alter character stats, playlists, and much more",
-                "Code library to interact with '.prc' filetype (C#)",
-                "User interface for easy editing capability (WPF, XML)",
-            ],
-            sources: vec![("Source", "https://github.com/benhall-7/paracobNET/")],
-        },
-    ]
-});
-
 const WEB_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
     vec![
         ProjectProps {
+            title: "cube-ts",
+            deployment: Some("https://www.npmjs.com/package/@benhall-7/cube-ts"),
+            summary: "TypeScript utility library for querying Cube.JS",
+            bullets: vec![
+                "Define cube schemas, and automatically serialize typed data",
+                "Allows fully customized types",
+                "Creates parsers to automatically deserialize results",
+            ],
+            sources: vec![("Source", "https://github.com/benhall-7/Portfolio")],
+        },
+        ProjectProps {
             title: "This Portfolio!",
             deployment: None,
-            summary: "A super cool, dynamic, terminal-powered single page app of awesomeness",
+            summary: "A single-page static portfolio with an integrated terminal",
             bullets: vec![
-                "Powered by Rust, and cool libraries like Clap and Yew, (compiled in WebAssembly)",
+                "Powered by Rust and compiled in WebAssembly.",
+                "Uses cool libraries like Clap, Yew, diff-struct, and more.",
             ],
             sources: vec![("Source", "https://github.com/benhall-7/Portfolio")],
         },
@@ -102,6 +78,53 @@ const WEB_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
                     "https://github.com/Lambda-School-Labs/homerun-be",
                 ),
             ],
+        },
+    ]
+});
+
+const PRC_PROJECTS: LazyCell<Vec<ProjectProps>> = LazyCell::new(|| {
+    vec![
+        ProjectProps {
+            title: "prc-rs",
+            deployment: Some("https://github.com/ultimate-research/prc-rs/releases"),
+            summary: "Rewrite of paracobNET library for SSBU param files (Rust)",
+            bullets: vec![
+                "Read + write speeds 10x faster than the C# implementation",
+                "XML format conversion, compatible with version from paracobNET",
+                "Derive macro to automatically interpret param data as a given type",
+            ],
+            sources: vec![("Source", "https://github.com/ultimate-research/prc-rs")],
+        },
+        ProjectProps {
+            title: "pyprc",
+            deployment: None,
+            summary: "Python extension module based on prc-rs (PyO3)",
+            bullets: vec![
+                "Write scripts to edit param files dynamically",
+                "Save time when game updates are released by defining what changes to make",
+            ],
+            sources: vec![("Source", "https://github.com/benhall-7/pyprc")],
+        },
+        ProjectProps {
+            title: "prickly",
+            deployment: None,
+            summary: "A 'prc-cli', a TUI interface for editing PRC files",
+            bullets: vec![
+                "Open and edit PRC files from the terminal, no GUI libraries needed",
+                "Supports diverse set of operating systems",
+            ],
+            sources: vec![("Source", "https://github.com/benhall-7/prickly")],
+        },
+        ProjectProps {
+            title: "paracobNET",
+            deployment: Some("https://github.com/benhall-7/paracobNET/releases/tag/v3.0"),
+            summary: "Open source game modding tools for SSBU parameters",
+            bullets: vec![
+                "Alter character stats, playlists, and much more",
+                "Code library to interact with '.prc' filetype (C#)",
+                "User interface for easy editing capability (WPF, XML)",
+            ],
+            sources: vec![("Source", "https://github.com/benhall-7/paracobNET/")],
         },
     ]
 });
