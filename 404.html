@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Benjamin Hall</title>
+
+    <link rel="icon" type="image/png" href="sandpiper.png" />
+    <link rel="prefetch" href="img/me.jpg" />
+    <link rel="prefetch" href="img/melon-rs.png" />
+    <link rel="prefetch" href="img/musicli.jpg" />
+    <link rel="prefetch" href="img/prcEditor.png" />
+    <link rel="prefetch" href="img/prickly.webp" />
+
+    <!-- trunk config -->
+    
+    
+    
+    <link rel="stylesheet" href="/index-36aac12b27a55c0e.css" integrity="sha384&#x2D;gHAo&#x2F;NqI0atY34IJ&#x2F;ZxXRYP3O5x1Egp9EKcQ7B1YoVM&#x2F;&#x2F;SYCFG&#x2F;MvM&#x2B;gjS&#x2B;Ec2SB"/>
+  <link rel="modulepreload" href="/portfolio-cdd2c25e65d93b6a.js" crossorigin="anonymous" integrity="sha384-dv4QevrNghKwJBGOuMZDSGYCjqA383pIS086y9YEUYfkIj5ZI47jONXnllPlN0H6"><link rel="preload" href="/portfolio-cdd2c25e65d93b6a_bg.wasm" crossorigin="anonymous" integrity="sha384-8uwJ9A/zip+BDBnO2CGLQYkufDYZU/k4WXSig7BaDEWHYc/n2qNGbA42qrthQ2HV" as="fetch" type="application/wasm"></head>
+
+  <body>
+<script type="module">
+import init, * as bindings from '/portfolio-cdd2c25e65d93b6a.js';
+const wasm = await init({ module_or_path: '/portfolio-cdd2c25e65d93b6a_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
+</html>
