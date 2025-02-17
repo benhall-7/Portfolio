@@ -226,6 +226,14 @@ body {
   color: yellow;
 }
 
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
 a,
 .cmd {
   cursor: pointer;
@@ -369,16 +377,7 @@ img.icon {
   padding: var(--console-padding);
 }
 
-.comp-projects .project-iframe {
-  float: right;
-  width: 256px;
-  height: 384px;
-  max-width: 30vw;
-  max-height: calc(30vw * 1.5);
-  box-shadow: 4px 4px 0px var(--bg-shadow-col);
-  margin-bottom: 8px;
-  margin-left: 4px;
-}
+
 
 .comp-projects hr {
   clear: both;

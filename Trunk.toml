@@ -1,0 +1,13 @@
+# A sem-ver version requirement of trunk required for this project
+trunk-version = "*"
+
+[[hooks]]
+# Create a 404.html file which is a copy of our index.html file.
+# This allows us to route all "invalid" path requests in GitHub pages to our app,
+# allowing us to support an in-memory router, even though it's a static app
+stage = "post_build"
+command = "sh"
+command_arguments = [
+    "-c",
+    "cp $TRUNK_STAGING_DIR/index.html $TRUNK_STAGING_DIR/404.html",
+]
