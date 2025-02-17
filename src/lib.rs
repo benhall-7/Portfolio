@@ -6,6 +6,7 @@ mod skills;
 mod utils;
 
 use clap::{Error, Parser};
+use components::about::About;
 use components::projects::Projects;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlInputElement;
@@ -135,18 +136,7 @@ impl App {
 
     fn view_args(&self, args: &Cli) -> Html {
         match &args.command {
-            Command::About => {
-                html! { <>
-                    <div><img class="icon" src="img/me.jpg" alt="Photo of my face with a lighthouse in the distance"/></div>
-                    <p>
-                        {"Hi! My name is "}<span class="emph">{"Benjamin Hall"}</span>
-                        {", I'm a software engineer and full-stack web developer. Although born and raised in Northern CA, I'm currently living in Harrisburg, PA."}<br/><br/>
-                        {"As a lifelong advocate (and prior student) for Mathematics, I seek to find creative and generic solution to problems that not only improve consistency in user experience, but to ease future development too."}
-                    </p>
-                    // guarantees the containing div at least matches the height of the floating image
-                    <div style="clear:both;"></div>
-                </> }
-            }
+            Command::About => html! { <About /> },
             Command::Contact => {
                 html! { <>
                     <h2>{"Contact links:"}</h2>
