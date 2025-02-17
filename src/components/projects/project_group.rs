@@ -39,27 +39,28 @@ impl Component for ProjectGroup {
     fn view(&self, ctx: &Context<Self>) -> Html {
         let props = ctx.props();
 
-        let float_class = match props.content_side {
-            Side::Left => "float-left",
-            Side::Right => "float-right",
+        let group_data_class = match props.content_side {
+            Side::Left => "project-group-data row",
+            Side::Right => "project-group-data row-reverse",
         };
-        let props_content_class = format!("project-group-content {}", float_class);
 
         html! {<div class="comp-project-group">
             <h1>{props.title}</h1>
-            {if !props.content.is_empty() {
-                html! {<div class={props_content_class}>
-                    {for props.content.iter().map(|image_props| html!{
-                        <img src={image_props.src} alt={image_props.alt} />
+            <div class={group_data_class}>
+                {if !props.content.is_empty() {
+                    html! {<div class="project-group-content">
+                        {for props.content.iter().map(|image_props| html!{
+                            <img src={image_props.src} alt={image_props.alt} />
+                        })}
+                    </div>}
+                } else {
+                    html!{}
+                }}
+                <div class="project-group-details">
+                    {for props.projects.iter().map(|project| html! {
+                        <Project ..project.clone()/>
                     })}
-                </div>}
-            } else {
-                html!{}
-            }}
-            <div>
-                {for props.projects.iter().map(|project| html! {
-                    <Project ..project.clone()/>
-                })}
+                </div>
             </div>
         </div>}
     }

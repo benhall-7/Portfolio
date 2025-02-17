@@ -161,6 +161,9 @@ body {
 
   --diff-form-div-align-items: center;
   --diff-form-div-margin: 0 0 0 16px;
+
+  --project-group-data-flex-direction: row;
+  --project-group-data-reverse-flex-direction: row-reverse;
 }
 
 /* tablet size */
@@ -175,6 +178,9 @@ body {
     --conway-size-inputs-div-display: flex;
     --conway-size-inputs-div-flex-direction: column;
     --conway-size-inputs-div-align-items: flex-start;
+
+    --project-group-data-flex-direction: column-reverse;
+    --project-group-data-reverse-flex-direction: column-reverse;
   }
 
   .desktop-only {
@@ -224,14 +230,6 @@ body {
 
 .highlight-yellow {
   color: yellow;
-}
-
-.float-left {
-  float: left;
-}
-
-.float-right {
-  float: right;
 }
 
 a,
@@ -377,10 +375,29 @@ img.icon {
   padding: var(--console-padding);
 }
 
+.project-group-data {
+  display: flex;
+  gap: 8px;
+  flex-direction: var(--project-group-data-flex-direction);
+}
 
+.project-group-data.row-reverse {
+  flex-direction: var(--project-group-data-reverse-flex-direction);
+}
 
-.comp-projects hr {
-  clear: both;
+.project-group-content {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-group-details {
+  flex: 1 1 0;
+}
+
+.project-group-content img {
+  width: 100%;
 }
 
 #diff-form {

@@ -1,7 +1,7 @@
 use std::cell::LazyCell;
 use yew::prelude::*;
 
-use project_group::{ProjectGroup, ProjectGroupProps, ProjectInfo, Side};
+use project_group::{ImageProps, ProjectGroup, ProjectGroupProps, ProjectInfo, Side};
 
 mod project_group;
 
@@ -20,7 +20,11 @@ pub const CURRENT_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| Proje
             sources: vec![("Source", "https://github.com/benhall-7/diff-struct")],
         }),
     ],
-    content: vec![],
+    content: vec![ImageProps {
+        src: "img/melon-rs.png",
+        alt: "an image showing two windows, one with a terminal and some debug \
+              info and another demonstrating the game: Kirby Super Star Ultra",
+    }],
     content_side: Side::Right,
 });
 
@@ -119,8 +123,19 @@ pub const PRC_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| ProjectGr
             sources: vec![("Source", "https://github.com/benhall-7/paracobNET/")],
         }),
     ],
-    content: vec![],
-    content_side: Side::Right,
+    content: vec![
+        ImageProps {
+            src: "img/prcEditor.png",
+            alt: "An image showing a desktop application. On the left hand side is \
+                  a tree=like structure, and the right side is a table of data",
+        },
+        ImageProps {
+            src: "img/prickly.webp",
+            alt: "An image of a terminal program featuring nested directories, and \
+                  in each one is a list of names as well as their types and values",
+        },
+    ],
+    content_side: Side::Left,
 });
 
 pub const MISC_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| ProjectGroupProps {
@@ -152,7 +167,11 @@ pub const MISC_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| ProjectG
             sources: vec![("Source", "https://github.com/ultimate-research/motion_lib")],
         }),
     ],
-    content: vec![],
+    content: vec![ImageProps {
+        src: "img/musicli.jpg",
+        alt: "An image of a terminal program showing a piano keyboard on the left \
+                  and notes of a piece of music to the right of the keys",
+    }],
     content_side: Side::Right,
 });
 
