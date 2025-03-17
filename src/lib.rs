@@ -11,7 +11,7 @@ use components::projects::Projects;
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlInputElement;
 use yew::html::Scope;
-use yew::{prelude::*, Renderer};
+use yew::{Renderer, prelude::*};
 
 use args::*;
 use components::conway::Conway;

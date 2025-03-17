@@ -3,7 +3,7 @@ use std::cell::LazyCell;
 use clap::Error;
 use gloo::console;
 use regex::Regex;
-use yew::{html, Html};
+use yew::{Html, html};
 
 const COLOR_REGEX: LazyCell<Regex> =
     LazyCell::new(|| Regex::new(r"\u{1b}\[(?P<fg>\d{1,2})(;\d{1,2})?m").unwrap());

@@ -2,7 +2,7 @@
 name = "portfolio"
 version = "0.1.0"
 authors = ["benhall-7 <benjaminjahall@gmail.com>"]
-edition = "2018"
+edition = "2024"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -26,5 +26,4 @@ serde = { version = "1.0.217", features = ["derive"] }
 wasm-bindgen-test = "0.3.13"
 
 [profile.release]
-# Tell `rustc` to optimize for small code size.
 opt-level = "s"

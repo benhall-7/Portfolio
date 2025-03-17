@@ -10,6 +10,22 @@ pub const CURRENT_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| Proje
     projects: vec![
         (ProjectInfo {
             title: "melon-rs",
+            deployment: Some("https://taxonia.app"),
+            summary: "A quizzy webapp to help users learn scientific taxonomy",
+            bullets: vec![
+                "Built with React and MaterialUI",
+                "Utilizes the iNaturalist API",
+            ],
+            sources: vec![
+                ("Source", "https://github.com/benhall-7/taxonia"),
+                (
+                    "Discussion",
+                    "https://forum.inaturalist.org/t/taxonia-an-inaturalist-based-taxonomy-quiz/62710/43",
+                ),
+            ],
+        }),
+        (ProjectInfo {
+            title: "melon-rs",
             deployment: None,
             summary: "An experimental frontend for the DS emulator, based on melonDS",
             bullets: vec![
@@ -20,11 +36,18 @@ pub const CURRENT_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| Proje
             sources: vec![("Source", "https://github.com/benhall-7/diff-struct")],
         }),
     ],
-    content: vec![ImageProps {
-        src: "img/melon-rs.png",
-        alt: "an image showing two windows, one with a terminal and some debug \
-              info and another demonstrating the game: Kirby Super Star Ultra",
-    }],
+    content: vec![
+        ImageProps {
+            src: "img/taxonia1.png",
+            alt: "an image showing a browser window at the 'taxonia.app' URL. On the \
+                page there is an autocomplete dropdown with the input 'orchid'",
+        },
+        ImageProps {
+            src: "img/melon-rs.png",
+            alt: "an image showing two windows, one with a terminal and some debug \
+                info and another demonstrating the game: Kirby Super Star Ultra",
+        },
+    ],
     content_side: Side::Right,
 });
 
