@@ -9,7 +9,7 @@ pub const CURRENT_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| Proje
     title: "Current projects",
     projects: vec![
         (ProjectInfo {
-            title: "melon-rs",
+            title: "taxonia",
             deployment: Some("https://taxonia.app"),
             summary: "A quizzy webapp to help users learn scientific taxonomy",
             bullets: vec![
