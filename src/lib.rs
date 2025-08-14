@@ -17,21 +17,32 @@ use args::*;
 use components::conway::Conway;
 use components::differ::Differ;
 use components::history::History;
+use std::ops::Add;
 use std::rc::Rc;
 use utils::ansi_html::convert;
 use utils::history_store::HistoryStore;
 
+use crate::utils::autocomplete::get_autocomplete;
+
 #[derive(Debug, Clone)]
 pub struct App {
     input: String,
-    args_input: Option<Result<Cli, Rc<Error>>>,
-    args: Option<Result<Cli, Rc<Error>>>,
+    cmd: Option<Result<Cli, Rc<Error>>>,
+    autocomplete: Vec<String>,
+    autocomplete_open: bool,
+    autocomplete_selection: Option<usize>,
     history: HistoryStore,
 }
 
+#[derive(Debug)]
 pub enum Msg {
-    SetInput(String),
-    SubmitInput,
+    InputSet(String),
+    InputFocus(bool),
+    AutocompleteHover(usize),
+    AutocompleteShift(isize),
+    AutocompleteSelect,
+    FormSubmit,
+    None,
 }
 
 impl Component for App {
@@ -41,37 +52,102 @@ impl Component for App {
     fn create(_: &Context<Self>) -> Self {
         App {
             input: String::new(),
-            args_input: None,
-            args: None,
+            cmd: None,
+            autocomplete: get_autocomplete("".into()),
+            autocomplete_open: false,
+            autocomplete_selection: None,
             history: HistoryStore::new(),
         }
     }
 
     fn update(&mut self, _: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Msg::SetInput(s) => {
+            Msg::InputSet(s) => {
                 self.input = s;
-                self.args_input = Some(
-                    <Cli as Parser>::try_parse_from(
-                        self.input.to_lowercase().split_ascii_whitespace(),
-                    )
-                    .map_err(|e| Rc::new(e)),
-                );
+                self.autocomplete = get_autocomplete(self.input.clone());
+                self.autocomplete_selection = None;
                 true
             }
-            Msg::SubmitInput => {
-                // add to history
-                self.history.push(self.input.clone());
+            Msg::InputFocus(focused) => {
+                // TODO
+                self.autocomplete_open = focused;
+                self.autocomplete_selection = None;
+                true
+            }
+            Msg::AutocompleteHover(index) => {
+                self.autocomplete_selection = Some(index);
+                true
+            }
+            Msg::AutocompleteShift(shift) => {
+                if !self.autocomplete.is_empty() {
+                    let size = self.autocomplete.len() as isize;
+                    let prev = self
+                        .autocomplete_selection
+                        .map(|s| s as isize)
+                        .unwrap_or_else(|| if shift < 0 { size } else { -1 });
 
-                if let Some(some) = &self.args_input {
-                    self.args = Some(some.clone());
-                    if some.is_ok() {
-                        self.execute_args();
+                    self.autocomplete_selection = Some(prev.add(shift).rem_euclid(size) as usize);
+
+                    true
+                } else {
+                    false
+                }
+            }
+            Msg::AutocompleteSelect => {
+                if let Some(selected) = self.autocomplete_selection {
+                    if let Some(autocomplete) = self.autocomplete.get(selected) {
+                        let mut parts: Vec<String> = self
+                            .input
+                            .split_whitespace()
+                            .map(|s| s.to_string())
+                            .collect();
+
+                        if self.input.ends_with(' ') {
+                            // User just finished a token, so append new one
+                            parts.push(autocomplete.clone());
+                        } else if let Some(last) = parts.last_mut() {
+                            // Replace last token
+                            *last = autocomplete.clone();
+                        } else {
+                            // No tokens yet
+                            parts.push(autocomplete.clone());
+                        }
+
+                        self.input = parts.join(" ");
+                        self.autocomplete = get_autocomplete(self.input.clone());
+                        self.autocomplete_selection = None;
+                        return true;
                     }
-                    return true;
                 }
                 false
             }
+            Msg::FormSubmit => {
+                if let Some(selected) = self.autocomplete_selection {
+                    if let Some(autocomplete) = self.autocomplete.get(selected) {
+                        self.input = autocomplete.clone();
+                        self.autocomplete = get_autocomplete(self.input.clone());
+                        self.autocomplete_selection = None;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    // add to history
+                    self.history.push(self.input.clone());
+
+                    // looks messy, fix up later
+                    let cmd =
+                        Cli::try_parse_from(self.input.to_lowercase().split_ascii_whitespace())
+                            .map_err(|e| Rc::new(e));
+                    let is_ok = cmd.is_ok();
+                    self.cmd = Some(cmd);
+                    if is_ok {
+                        self.execute_args();
+                    }
+                }
+
+                true
+            }
+            Msg::None => false,
         }
     }
 
@@ -84,7 +160,7 @@ impl Component for App {
 
                 <div class="help">
                     <div class="short-border"></div>
-                    <p>{"(For a list of other commands, type and enter 'help' into the console)"}</p>
+                    <p>{"(For the full list of commands and descriptions, type and enter 'help' into the console)"}</p>
                 </div>
             </section>
             <footer>
@@ -97,44 +173,104 @@ impl Component for App {
 
 impl App {
     fn view_input(&self, link: &Scope<Self>) -> Html {
+        let show_autocomplete = self.autocomplete_open && !self.autocomplete.is_empty();
+        let selected_autocomplete = show_autocomplete && self.autocomplete_selection.is_some();
         let oninput = link.callback(|e: InputEvent| {
-            Msg::SetInput(
+            Msg::InputSet(
                 e.target_dyn_into::<HtmlInputElement>()
                     .map(|elem| elem.value())
                     .unwrap_or_default(),
             )
         });
+        let onfocus = link.callback(|_| Msg::InputFocus(true));
+        let onblur = link.callback(|_| Msg::InputFocus(false));
+
+        let onkeydown = link.callback(move |e: KeyboardEvent| match e.key().as_str() {
+            "ArrowDown" => {
+                e.prevent_default();
+                Msg::AutocompleteShift(1)
+            }
+            "ArrowUp" => {
+                e.prevent_default();
+                Msg::AutocompleteShift(-1)
+            }
+            "Enter" => {
+                if selected_autocomplete {
+                    e.prevent_default();
+                    Msg::AutocompleteSelect
+                } else {
+                    Msg::None
+                }
+            }
+            _ => Msg::None,
+        });
+
+        let get_option_class = |index: usize| {
+            (Some(index) == self.autocomplete_selection)
+                .then(|| "option-selected")
+                .unwrap_or("")
+        };
+
         html! {
             <form
-                id="console-wrapper"
+                id="console-form"
                 onsubmit={link.callback(|e: SubmitEvent| {
                     e.prevent_default();
-                    Msg::SubmitInput
+                    Msg::FormSubmit
                 })}
             >
                 <label for="console">{"Command"}</label>
-                <input
-                    id="console"
-                    autofocus=true
-                    placeholder="..."
-                    value={self.input.clone()}
-                    oninput={oninput}
-                />
+                <div id="console-wrapper">
+                    <input
+                        id="console"
+                        autofocus=true
+                        placeholder="..."
+                        autocomplete="off"
+                        value={self.input.clone()}
+                        oninput={oninput}
+                        onfocus={onfocus}
+                        onblur={onblur}
+                        onkeydown={onkeydown}
+                    />
+                    {if show_autocomplete {
+                        html! {
+                            <ul>
+                                { for self.autocomplete.iter().enumerate().map(|(index, completion)| {
+                                    let onmouseover = link.callback(move |_| Msg::AutocompleteHover(index));
+                                    let onmousedown = link.callback(move |e: MouseEvent| {
+                                        e.prevent_default();
+                                        Msg::AutocompleteSelect
+                                    });
+                                    html! {
+                                        <li
+                                            class={get_option_class(index)}
+                                            onmouseover={onmouseover}
+                                            onmousedown={onmousedown}
+                                        >
+                                            {completion}
+                                        </li>
+                                    }
+                                })}
+                            </ul>
+                        }
+                    } else { html!() }}
+                </div>
             </form>
         }
     }
 
     fn view_main(&self) -> Html {
         html! { <main role="main"> {
-            match self.args.as_ref() {
-                Some(Ok(args)) => html! {self.view_args(args)},
+            match self.cmd.as_ref() {
+                Some(Ok(args)) => html! {self.view_cmd(args)},
+                // TODO: better error rendering
                 Some(Err(err)) => convert(Rc::as_ref(err)),
                 None => html! {},
             }
         } </main> }
     }
 
-    fn view_args(&self, args: &Cli) -> Html {
+    fn view_cmd(&self, args: &Cli) -> Html {
         match &args.command {
             Command::About => html! { <About /> },
             Command::Contact => {
@@ -220,8 +356,9 @@ impl App {
         }
     }
 
+    /// logic pertaining to state-altering command side effects
     fn execute_args(&mut self) {
-        match &self.args {
+        match &self.cmd {
             Some(Ok(Cli {
                 command:
                     Command::History(HistoryArg {

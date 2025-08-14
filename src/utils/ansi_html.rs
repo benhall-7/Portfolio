@@ -1,7 +1,6 @@
 use std::cell::LazyCell;
 
 use clap::Error;
-use gloo::console;
 use regex::Regex;
 use yew::{Html, html};
 

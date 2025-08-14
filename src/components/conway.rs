@@ -1,7 +1,7 @@
 use crate::utils::game::*;
 use std::str::FromStr;
 
-use wasm_bindgen::{JsCast, JsValue};
+use wasm_bindgen::JsCast;
 use web_sys::HtmlCanvasElement;
 use yew::prelude::*;
 // use yew::interval::{IntervalService, IntervalTask};
@@ -228,9 +228,9 @@ impl Conway {
             .unwrap()
             .dyn_into::<web_sys::CanvasRenderingContext2d>()
             .unwrap();
-        context.set_fill_style(&JsValue::from(DEFAULT_DEAD_COLOR));
+        context.set_fill_style_str(DEFAULT_DEAD_COLOR);
         context.fill_rect(0.0, 0.0, (width * size) as f64, (height * size) as f64);
-        context.set_fill_style(&JsValue::from(DEFAULT_ALIVE_COLOR));
+        context.set_fill_style_str(DEFAULT_ALIVE_COLOR);
         for row in 0..height {
             for col in 0..width {
                 if self.game.front()[[row as usize, col as usize]] != 0 {

@@ -156,7 +156,7 @@ body {
   --content-margin: 0 16px 8px;
 
   --console-height: 60px;
-  --console-padding: 0 16px;
+  --console-padding: 16px;
 
   --diff-form-flex-direction: row;
 
@@ -174,7 +174,7 @@ body {
     --button-padding: 4px;
 
     --console-height: 50px;
-    --console-padding: 0 12px;
+    --console-padding: 12px;
 
     --conway-size-inputs-div-display: flex;
     --conway-size-inputs-div-flex-direction: column;
@@ -195,7 +195,7 @@ body {
     --content-margin: 0 0 8px;
 
     --console-height: 40px;
-    --console-padding: 0 8px;
+    --console-padding: 8px;
 
     --diff-form-flex-direction: column;
     --diff-form-align-items: flex-start;
@@ -336,13 +336,13 @@ main {
   margin: auto;
 }
 
-#console-wrapper {
+#console-form {
   display: flex;
   flex-direction: row;
   margin-bottom: 8px;
 }
 
-#console-wrapper label {
+#console-form label {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -352,15 +352,39 @@ main {
   font-weight: bold;
 }
 
-#console {
+#console-wrapper {
   flex-grow: 1;
-  border-radius: 0 20px 20px 0;
+  position: relative;
 }
 
-#console-wrapper label,
+#console {
+  border-radius: 0 20px 20px 0;
+  width: 100%;
+}
+
+#console-form label,
 #console {
   height: var(--console-height);
-  padding: var(--console-padding);
+  padding-left: var(--console-padding);
+  padding-right: var(--console-padding);
+}
+
+#console-wrapper ul {
+  position: absolute;
+  min-width: 200px;
+  margin-top: 4px;
+  background-color: var(--bg-col-light);
+  border-radius: 4px;
+}
+
+#console-wrapper ul li {
+  margin: 0;
+  padding: 8px var(--console-padding) 8px var(--console-padding);
+  list-style: none;
+}
+
+.option-selected {
+  background-color: var(--bg-shadow-col);
 }
 
 .about-header {
