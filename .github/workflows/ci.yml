@@ -24,7 +24,7 @@ jobs:
       - name: Install target
         run: rustup target add wasm32-unknown-unknown
       - name: Compile
-        run: trunk build
+        run: trunk build --release
 
       # deployment steps
       - name: Deploy
