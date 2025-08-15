@@ -114,6 +114,7 @@ impl Component for App {
                         }
 
                         self.input = parts.join(" ");
+                        self.input.push(' ');
                         self.autocomplete = get_autocomplete(self.input.clone());
                         self.autocomplete_selection = None;
                         return true;
