@@ -2,7 +2,7 @@ use crate::utils::game::*;
 use std::str::FromStr;
 
 use wasm_bindgen::JsCast;
-use web_sys::HtmlCanvasElement;
+use web_sys::{HtmlCanvasElement, HtmlInputElement};
 use yew::prelude::*;
 // use yew::interval::{IntervalService, IntervalTask};
 use gloo::timers::callback::Interval;
@@ -20,8 +20,8 @@ pub struct Conway {
     game: Game,
     width: usize,
     height: usize,
-    form_width: Option<usize>,
-    form_height: Option<usize>,
+    form_width: String,
+    form_height: String,
     canvas: NodeRef,
 }
 
@@ -47,8 +47,8 @@ impl Component for Conway {
             game: Game::new(DEFAULT_WIDTH, DEFAULT_HEIGHT, false),
             width: DEFAULT_WIDTH,
             height: DEFAULT_HEIGHT,
-            form_width: None,
-            form_height: None,
+            form_width: String::from(""),
+            form_height: String::from(""),
             canvas: NodeRef::default(),
         }
     }
@@ -83,26 +83,21 @@ impl Component for Conway {
                 true
             }
             ConwayMessage::SetFormWidth(width) => {
-                self.form_width = if width.is_empty() {
-                    None
-                } else {
-                    usize::from_str(&width).ok()
-                };
-                false
+                self.form_width = width;
+                true
             }
             ConwayMessage::SetFormHeight(height) => {
-                self.form_height = if height.is_empty() {
-                    None
-                } else {
-                    usize::from_str(&height).ok()
-                };
-                false
+                self.form_height = height;
+                true
             }
             ConwayMessage::SetDimensions() => {
-                self.set_dimensions(
-                    self.form_width.unwrap_or(self.width),
-                    self.form_height.unwrap_or(self.height),
-                );
+                let real_width = usize::from_str(&self.form_width)
+                    .map(|res| res.clamp(1, 50))
+                    .unwrap_or(self.width);
+                let real_height = usize::from_str(&self.form_height)
+                    .map(|res| res.clamp(1, 50))
+                    .unwrap_or(self.height);
+                self.set_dimensions(real_width, real_height);
                 self.draw();
                 true
             }
@@ -121,10 +116,6 @@ impl Component for Conway {
         }
     }
 
-    fn changed(&mut self, _: &Context<Self>, _props: &Self::Properties) -> bool {
-        false
-    }
-
     fn rendered(&mut self, _: &Context<Self>, first_render: bool) {
         if first_render {
             self.set_preset(DEFAULT_PRESET);
@@ -134,6 +125,21 @@ impl Component for Conway {
 
     fn view(&self, context: &Context<Self>) -> Html {
         let playing = self.job.is_some();
+        let oninput_width = context.link().callback(|e: InputEvent| {
+            ConwayMessage::SetFormWidth(
+                e.target_dyn_into::<HtmlInputElement>()
+                    .map(|elem| elem.value())
+                    .unwrap_or_default(),
+            )
+        });
+        let oninput_height = context.link().callback(|e: InputEvent| {
+            ConwayMessage::SetFormHeight(
+                e.target_dyn_into::<HtmlInputElement>()
+                    .map(|elem| elem.value())
+                    .unwrap_or_default(),
+            )
+        });
+
         html! { <div class="conway">
             <div class="conway-title">
                 <h2>{"Conway's Game of Life"}</h2>
@@ -142,13 +148,19 @@ impl Component for Conway {
             <div class="conway-presets">
                 <button
                     onclick={context.link().callback(|_| ConwayMessage::SetPreset(BLINKER_PRESET))}
-                >{"Blinker"}</button>
+                >
+                    {"Blinker"}
+                </button>
                 <button
                     onclick={context.link().callback(|_| ConwayMessage::SetPreset(PENTADEC_PRESET))}
-                >{"Pentadecathlon"}</button>
+                >
+                    {"Pentadecathlon"}
+                    </button>
                 <button
                     onclick={context.link().callback(|_| ConwayMessage::SetPreset(LWSS_PRESET))}
-                >{"Spaceship"}</button>
+                >
+                    {"Spaceship"}
+                </button>
             </div>
             <h3>{"Size"}</h3>
             <form
@@ -165,7 +177,8 @@ impl Component for Conway {
                         type="number"
                         min="1"
                         max="50"
-                        oninput={context.link().callback(|e: InputEvent| ConwayMessage::SetFormWidth(e.data().unwrap_or_default()))}
+                        value={self.form_width.clone()}
+                        oninput={oninput_width}
                     />
                 </div>
                 <div>
@@ -174,7 +187,8 @@ impl Component for Conway {
                         type="number"
                         min="1"
                         max="50"
-                        oninput={context.link().callback(|e: InputEvent| ConwayMessage::SetFormHeight(e.data().unwrap_or_default()))}
+                        value={self.form_height.clone()}
+                        oninput={oninput_height}
                     />
                 </div>
                 </div>
@@ -186,25 +200,33 @@ impl Component for Conway {
                     id="conway-controls-play"
                     disabled={playing}
                     onclick={context.link().callback(|_| ConwayMessage::Start)}
-                >{"Play"}</button>
+                >
+                    {"Play"}
+                </button>
                 <button
                     id="conway-controls-pause"
                     disabled={!playing}
                     onclick={context.link().callback(|_| ConwayMessage::Pause)}
-                >{"Pause"}</button>
+                >
+                    {"Pause"}
+                </button>
                 <button
                     id="conway-controls-step"
                     disabled={playing}
                     onclick={context.link().callback(|_| ConwayMessage::Step)}
-                >{"Step"}</button>
-                <button onclick={context.link().callback(|_| ConwayMessage::Reset)}>{"Reset"}</button>
+                >
+                    {"Step"}
+                </button>
+                <button onclick={context.link().callback(|_| ConwayMessage::Reset)}>
+                    {"Reset"}
+                </button>
             </div>
             <canvas
                 ref={self.canvas.clone()}
                 onclick={context.link().callback(|e: MouseEvent| {
                     // TODO: There seems to be an off by 1 issue with y coordinates, which is resolved manually here
                     ConwayMessage::Click([
-                        (e.offset_y() as usize - 1)  / DEFAULT_SIZE,
+                        (e.offset_y() as usize - 1) / DEFAULT_SIZE,
                         (e.offset_x() as usize) / DEFAULT_SIZE,
                     ])
                 })}
