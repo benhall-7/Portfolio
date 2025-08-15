@@ -280,12 +280,23 @@ impl App {
             Command::About => html! { <About /> },
             Command::Contact => {
                 html! { <>
-                    <h2>{"Contact links:"}</h2>
-                    <ul>
-                        <li><a href="mailto:Benjaminjahall@gmail.com">{"Email"}</a></li>
-                        <li><a href="https://github.com/benhall-7">{"GitHub"}</a></li>
-                        <li><a href="https://www.linkedin.com/in/benjaminjahall/">{"LinkedIn"}</a></li>
-                    </ul>
+                    <h2>{"You can send me emails here:"}</h2>
+                    <a href="mailto:Benjaminjahall@gmail.com">{"Benjaminjahall@gmail.com"}</a>
+                    <br />
+                    <br />
+
+                    <h2>{"My projects and code are documented here:"}</h2>
+                    <a href="https://github.com/benhall-7">{"benhall-7"}</a>
+                    <br />
+                    <br />
+
+                    <h2>{"Obligatory LinkedIn:"}</h2>
+                    <a href="https://www.linkedin.com/in/benjaminjahall/">{"benjaminjahall"}</a>
+                    <br />
+                    <br />
+
+                    <h2>{"Check out my observations on iNaturalist:"}</h2>
+                    <a href="https://www.inaturalist.org/observations?user_id=benhall-7&verifiable=any">{"benhall-7"}</a>
                 </> }
             }
             Command::Skills => {
