@@ -69,7 +69,6 @@ impl Component for App {
                 true
             }
             Msg::InputFocus(focused) => {
-                // TODO
                 self.autocomplete_open = focused;
                 self.autocomplete_selection = None;
                 true
@@ -252,7 +251,7 @@ impl App {
                                                 {&completion.0}
                                             </div>
                                             <div class="option-description">
-                                                {completion.1.as_ref().map(|help| format!(" ({help})")).unwrap_or("".into())}
+                                                {completion.1.as_ref().map(|s| s.as_str()).unwrap_or("")}
                                             </div>
                                         </li>
                                     }

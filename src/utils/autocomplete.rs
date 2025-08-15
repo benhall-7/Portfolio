@@ -27,6 +27,7 @@ fn completions_for_command(cmd: &Command) -> Vec<(String, Option<String>)> {
 }
 
 pub fn get_autocomplete(input: String) -> Vec<(String, Option<String>)> {
+    let input = input.to_lowercase();
     let cli = Cli::command();
 
     let mut tokens: Vec<&str> = input.split_whitespace().collect();
