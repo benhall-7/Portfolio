@@ -1,6 +1,6 @@
 #![recursion_limit = "1024"]
 
-mod args;
+mod cli;
 mod components;
 mod skills;
 mod utils;
@@ -13,7 +13,7 @@ use web_sys::HtmlInputElement;
 use yew::html::Scope;
 use yew::{Renderer, prelude::*};
 
-use args::*;
+use cli::*;
 use components::conway::Conway;
 use components::differ::Differ;
 use components::history::History;
@@ -28,7 +28,7 @@ use crate::utils::autocomplete::get_autocomplete;
 pub struct App {
     input: String,
     cmd: Option<Result<Cli, Rc<Error>>>,
-    autocomplete: Vec<String>,
+    autocomplete: Vec<(String, Option<String>)>,
     autocomplete_open: bool,
     autocomplete_selection: Option<usize>,
     history: HistoryStore,
@@ -104,13 +104,13 @@ impl Component for App {
 
                         if self.input.ends_with(' ') {
                             // User just finished a token, so append new one
-                            parts.push(autocomplete.clone());
+                            parts.push(autocomplete.0.clone());
                         } else if let Some(last) = parts.last_mut() {
                             // Replace last token
-                            *last = autocomplete.clone();
+                            *last = autocomplete.0.clone();
                         } else {
                             // No tokens yet
-                            parts.push(autocomplete.clone());
+                            parts.push(autocomplete.0.clone());
                         }
 
                         self.input = parts.join(" ");
@@ -125,7 +125,7 @@ impl Component for App {
             Msg::FormSubmit => {
                 if let Some(selected) = self.autocomplete_selection {
                     if let Some(autocomplete) = self.autocomplete.get(selected) {
-                        self.input = autocomplete.clone();
+                        self.input = autocomplete.0.clone();
                         self.autocomplete = get_autocomplete(self.input.clone());
                         self.autocomplete_selection = None;
                     } else {
@@ -235,10 +235,10 @@ impl App {
                     />
                     {if show_autocomplete {
                         html! {
-                            <ul>
+                            <ul class="autocomplete">
                                 { for self.autocomplete.iter().enumerate().map(|(index, completion)| {
                                     let onmouseover = link.callback(move |_| Msg::AutocompleteHover(index));
-                                    let onmousedown = link.callback(move |e: MouseEvent| {
+                                    let onmousedown = link.callback(|e: MouseEvent| {
                                         e.prevent_default();
                                         Msg::AutocompleteSelect
                                     });
@@ -248,7 +248,12 @@ impl App {
                                             onmouseover={onmouseover}
                                             onmousedown={onmousedown}
                                         >
-                                            {completion}
+                                            <div class="option-value">
+                                                {&completion.0}
+                                            </div>
+                                            <div class="option-description">
+                                                {completion.1.as_ref().map(|help| format!(" ({help})")).unwrap_or("".into())}
+                                            </div>
                                         </li>
                                     }
                                 })}

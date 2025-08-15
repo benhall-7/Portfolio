@@ -2,24 +2,31 @@ use std::ops::Not;
 
 use clap::{Command, CommandFactory};
 
-use crate::args::Cli;
+use crate::cli::Cli;
 
-fn completions_for_command(cmd: &Command) -> Vec<String> {
+fn completions_for_command(cmd: &Command) -> Vec<(String, Option<String>)> {
     let mut completions = Vec::new();
 
     // Subcommands
-    completions.extend(cmd.get_subcommands().map(|sc| sc.get_name().to_string()));
+    completions.extend(cmd.get_subcommands().map(|sc| {
+        (
+            sc.get_name().to_string(),
+            sc.get_about().map(ToString::to_string),
+        )
+    }));
 
     // Flags
     completions.extend(cmd.get_arguments().filter_map(|a| {
         // Only include named flags (skip positional args)
-        a.get_long().map(|name| format!("--{}", name))
+
+        a.get_long()
+            .map(|name| (format!("--{}", name), a.get_help().map(ToString::to_string)))
     }));
 
     completions
 }
 
-pub fn get_autocomplete(input: String) -> Vec<String> {
+pub fn get_autocomplete(input: String) -> Vec<(String, Option<String>)> {
     let cli = Cli::command();
 
     let mut tokens: Vec<&str> = input.split_whitespace().collect();
@@ -53,6 +60,6 @@ pub fn get_autocomplete(input: String) -> Vec<String> {
     // use the last token only to filter the list of options from the previous tokens
     completions
         .into_iter()
-        .filter(|c| c.starts_with(last_token))
+        .filter(|(c, _)| c.starts_with(last_token))
         .collect()
 }

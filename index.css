@@ -369,7 +369,7 @@ main {
   padding-right: var(--console-padding);
 }
 
-#console-wrapper ul {
+.autocomplete {
   position: absolute;
   z-index: 10;
   min-width: 200px;
@@ -378,10 +378,33 @@ main {
   border-radius: 4px;
 }
 
-#console-wrapper ul li {
+.autocomplete li:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.autocomplete li:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.autocomplete li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
   margin: 0;
-  padding: 8px var(--console-padding) 8px var(--console-padding);
+  padding: 8px 8px 8px var(--console-padding);
   list-style: none;
+}
+
+.option-value {
+  font-weight: bold;
+}
+
+.option-description {
+  color: var(--emph-col)
 }
 
 .option-selected {
