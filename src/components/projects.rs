@@ -13,15 +13,15 @@ pub const CURRENT_PROJECTS: LazyCell<ProjectGroupProps> = LazyCell::new(|| Proje
             deployment: Some("https://taxonia.app"),
             summary: "A quizzy webapp to help users learn scientific taxonomy",
             bullets: vec![
-                "Built with React and MaterialUI",
-                "Utilizes the iNaturalist API",
+                "Take and save quizzes using any location or class of organisms",
+                "Features a frontend built in TypeScript and React, and a backend built in Rust",
+                "Additional frontend tools include: the iNaturalist API, Material UI, TanStack Router, and GitHub Actions",
+                "Additional backend tools include: Docker, Postgres, Redis, Poem, and OpenAPI",
             ],
             sources: vec![
                 ("Source", "https://github.com/benhall-7/taxonia"),
-                (
-                    "Discussion",
-                    "https://forum.inaturalist.org/t/taxonia-an-inaturalist-based-taxonomy-quiz/62710/43",
-                ),
+                ("Frontend", "https://taxonia.app"),
+                ("Backend", "https://api.taxonia.app/spec"),
             ],
         }),
         (ProjectInfo {

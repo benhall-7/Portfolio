@@ -8,7 +8,6 @@ pub struct Cli {
 }
 
 #[derive(Debug, Clone, Subcommand)]
-// #[clap(settings(&[NoBinaryName, ColorAlways, DisableVersion]))]
 pub enum Command {
     #[command(about = "Introduction of myself")]
     About,

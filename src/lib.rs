@@ -35,7 +35,7 @@ pub struct App {
 }
 
 #[derive(Debug)]
-pub enum Msg {
+pub enum AppMsg {
     InputSet(String),
     InputFocus(bool),
     AutocompleteHover(usize),
@@ -46,7 +46,7 @@ pub enum Msg {
 }
 
 impl Component for App {
-    type Message = Msg;
+    type Message = AppMsg;
     type Properties = ();
 
     fn create(_: &Context<Self>) -> Self {
@@ -62,22 +62,22 @@ impl Component for App {
 
     fn update(&mut self, _: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Msg::InputSet(s) => {
+            AppMsg::InputSet(s) => {
                 self.input = s;
                 self.autocomplete = get_autocomplete(self.input.clone());
                 self.autocomplete_selection = None;
                 true
             }
-            Msg::InputFocus(focused) => {
+            AppMsg::InputFocus(focused) => {
                 self.autocomplete_open = focused;
                 self.autocomplete_selection = None;
                 true
             }
-            Msg::AutocompleteHover(index) => {
+            AppMsg::AutocompleteHover(index) => {
                 self.autocomplete_selection = Some(index);
                 true
             }
-            Msg::AutocompleteShift(shift) => {
+            AppMsg::AutocompleteShift(shift) => {
                 if !self.autocomplete.is_empty() {
                     let size = self.autocomplete.len() as isize;
                     let prev = self
@@ -92,7 +92,7 @@ impl Component for App {
                     false
                 }
             }
-            Msg::AutocompleteSelect => {
+            AppMsg::AutocompleteSelect => {
                 if let Some(selected) = self.autocomplete_selection {
                     if let Some(autocomplete) = self.autocomplete.get(selected) {
                         let mut parts: Vec<String> = self
@@ -121,7 +121,7 @@ impl Component for App {
                 }
                 false
             }
-            Msg::FormSubmit => {
+            AppMsg::FormSubmit => {
                 if let Some(selected) = self.autocomplete_selection {
                     if let Some(autocomplete) = self.autocomplete.get(selected) {
                         self.input = autocomplete.0.clone();
@@ -147,7 +147,7 @@ impl Component for App {
 
                 true
             }
-            Msg::None => false,
+            AppMsg::None => false,
         }
     }
 
@@ -176,33 +176,33 @@ impl App {
         let show_autocomplete = self.autocomplete_open && !self.autocomplete.is_empty();
         let selected_autocomplete = show_autocomplete && self.autocomplete_selection.is_some();
         let oninput = link.callback(|e: InputEvent| {
-            Msg::InputSet(
+            AppMsg::InputSet(
                 e.target_dyn_into::<HtmlInputElement>()
                     .map(|elem| elem.value())
                     .unwrap_or_default(),
             )
         });
-        let onfocus = link.callback(|_| Msg::InputFocus(true));
-        let onblur = link.callback(|_| Msg::InputFocus(false));
+        let onfocus = link.callback(|_| AppMsg::InputFocus(true));
+        let onblur = link.callback(|_| AppMsg::InputFocus(false));
 
         let onkeydown = link.callback(move |e: KeyboardEvent| match e.key().as_str() {
             "ArrowDown" => {
                 e.prevent_default();
-                Msg::AutocompleteShift(1)
+                AppMsg::AutocompleteShift(1)
             }
             "ArrowUp" => {
                 e.prevent_default();
-                Msg::AutocompleteShift(-1)
+                AppMsg::AutocompleteShift(-1)
             }
             "Enter" => {
                 if selected_autocomplete {
                     e.prevent_default();
-                    Msg::AutocompleteSelect
+                    AppMsg::AutocompleteSelect
                 } else {
-                    Msg::None
+                    AppMsg::None
                 }
             }
-            _ => Msg::None,
+            _ => AppMsg::None,
         });
 
         let get_option_class = |index: usize| {
@@ -216,7 +216,7 @@ impl App {
                 id="console-form"
                 onsubmit={link.callback(|e: SubmitEvent| {
                     e.prevent_default();
-                    Msg::FormSubmit
+                    AppMsg::FormSubmit
                 })}
             >
                 <label for="console">{"Command"}</label>
@@ -236,10 +236,10 @@ impl App {
                         html! {
                             <ul class="autocomplete">
                                 { for self.autocomplete.iter().enumerate().map(|(index, completion)| {
-                                    let onmouseover = link.callback(move |_| Msg::AutocompleteHover(index));
+                                    let onmouseover = link.callback(move |_| AppMsg::AutocompleteHover(index));
                                     let onmousedown = link.callback(|e: MouseEvent| {
                                         e.prevent_default();
-                                        Msg::AutocompleteSelect
+                                        AppMsg::AutocompleteSelect
                                     });
                                     html! {
                                         <li
